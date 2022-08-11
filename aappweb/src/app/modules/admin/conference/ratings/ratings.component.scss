@@ -1,0 +1,66 @@
+.rating-box{
+    font-size: 18px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid gray;
+    &.has-comments{
+        cursor: pointer;
+        &:hover{
+            background: rgb(205, 241, 255);
+        }
+    }
+}
+
+@media(max-width:'599px'){
+    .rating-box{
+        text-align:center;
+        font-size: 18px;
+    }
+}
+
+.comment{
+    font-style: italic;
+    &::before{
+        content: "\"";
+    }
+    &::after{
+        content: "\"";
+    }
+}
+
+.name{
+    color:rgb(0, 0, 99);
+}
+
+.name-tag{
+    font-size: 12px;
+}
+
+.subtitle{
+    color:rgb(0, 0, 138);
+}
+
+.comment-name{
+    color:rgb(0, 0, 80);
+}
+
+.comment-box{
+    padding-bottom:8px;
+    margin-bottom:8px;
+    border-bottom: 1px gray solid;
+}
+
+.submissions{
+    text-align:center;
+    color: rgb(0, 0, 112);
+}
+
+.comment-list{
+    padding-bottom: 10px;
+}
+
+.meta{
+    font-size: .8em;
+    color: rgb(1, 1, 102);
+}
+

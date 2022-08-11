@@ -1,0 +1,104 @@
+<mat-card>
+<div layout="row" layout-xs="column">
+  <div flex flex-order-gt-xs="2" layout="row" layout-align="end center">
+      <button flex-align="end"  mat-button (click)="showAdd = !showAdd"><mat-icon>{{showAdd ? 'remove' : 'add'}}</mat-icon>{{showAdd ? 'Hide Add School' : 'Add School'}}</button>
+  </div>
+  <h2 *ngIf="!showAdd" flex flex-order-gt-xs="1" class="schools-heading">Manage Schools</h2>
+</div>
+
+<mat-card class="add-school-card" *ngIf="showAdd">
+  <h3>Add School</h3>
+  <form [formGroup]="addForm" (ngSubmit)="addSchool()" novalidate>
+    <div layout="column">
+      <div flex layout="row" layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="name" placeholder="Name of School" required/>
+        </mat-form-field>
+        <mat-form-field flex>
+          <input matInput formControlName="director" placeholder="School Director" />
+        </mat-form-field>
+        <mat-form-field flex>
+          <input matInput formControlName="internSupervisor" placeholder="Interns Supervisor" />
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="street" placeholder="Street Address" required/>
+        </mat-form-field>
+        <mat-form-field flex="initial">
+          <input matInput formControlName="city" placeholder="City" required/>
+        </mat-form-field>
+        <mat-form-field flex="initial">
+          <input matInput formControlName="state" placeholder="State/Province/Region" required/>
+        </mat-form-field>
+
+        <mat-form-field flex="initial">
+          <input matInput formControlName="zip" placeholder="Postal Code" required/>
+        </mat-form-field>
+        <mat-form-field flex="100" flex-gt-xs="33" class="join-field">
+          <mat-select formControlName="country" placeholder="Country" required>
+              <mat-option value="United States">United States</mat-option>
+            <mat-option value="Canada">Canada</mat-option>
+            <mat-option value="Columbia">Columbia</mat-option>
+            <mat-option value="Honduras">Honduras</mat-option>
+            <mat-option value="Mexico">Mexico</mat-option>
+            <mat-option value="United Kingdom">United Kingdom</mat-option>
+         
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+        <mat-form-field flex="initial">
+          <input matInput formControlName="phone" placeholder="Main Phone Number" required/>
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-align="end end" layout-margin>
+        <button flex="nogrow" type="button" mat-raised-button (click)="addForm.reset()">Clear</button>
+        <button flex="nogrow" [disabled]="!addForm.valid" type="submit" mat-raised-button color="primary">Add School</button>
+      </div>
+
+    </div>
+  </form>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+      {{ state }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-card>
+
+<div class="search-card">
+  <form [formGroup]="searchForm" novalidate>
+    <div layout="row" layout-align="end center">
+      <div flex="50" flex-xs="100">
+        <mat-form-field style="width:100%">
+          <input matInput #searchInput formControlName="search" />
+          <mat-icon matPrefix>search</mat-icon>
+          <button type="button" *ngIf="searchInput.value" (click)="clearSearch()" mat-icon-button matSuffix><mat-icon>close</mat-icon></button>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div layout="row" layout-xs="column" layout-align="start stretch" layout-wrap layout-margin>
+
+  <mat-card class="school-card" flex *ngFor="let school of schools">
+    <h3>{{school.name}}</h3>
+    <div><span *ngIf="school.director" class="nobreak">Director: {{school.director}},</span> <span class="nobreak" *ngIf="school.internSupervisor">Intern Sup: {{school.internSupervisor}}</span></div>
+    <div class="nobreak">{{school.address?.street}}, {{school.address?.city}}, {{school.address?.state}} {{school.address.zipcode}} {{school.address.country}}</div>
+    <div class="nobreak" *ngIf="school.phone">Phone: {{school.phone | phone}}</div>
+    <div *ngIf="school.educators.length > 0;else noaffiliates">
+      <h5 class="affiliate-heading">Affiliated Users</h5>
+      <div *ngFor="let user of school.educators">
+        {{user.fullname}} - {{user.email}}
+      </div>
+    </div>
+    <ng-template #noaffiliates><h5 class="affiliate-heading">This school has no administrators.</h5></ng-template>
+  </mat-card>
+
+</div>
+
+<div class="pagination-card">
+    <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+  </mat-card>

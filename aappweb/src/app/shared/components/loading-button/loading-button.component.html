@@ -1,0 +1,1 @@
+<button mat-raised-button [color]="color" [disabled]="loading || disabled" (click)="activate()"><mat-icon *ngIf="loading" class="spin">cached</mat-icon><mat-icon *ngIf="icon && !loading">{{icon}}</mat-icon><span class="loading-button-title"><ng-content></ng-content></span></button>

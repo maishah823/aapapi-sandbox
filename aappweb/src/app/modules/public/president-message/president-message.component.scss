@@ -1,0 +1,39 @@
+.aapp-text{
+    font-size: 16px;
+}
+
+.president-image{
+    float:right;
+    margin: 15px;
+    min-width: 200px;
+    width: 25%;
+    border-radius: 15px;
+}
+
+@media(max-width:599px){
+    .president-image{
+        display:block;
+        margin-left: auto;
+        margin-right:auto;
+        width: 100%;
+        border-radius: 15px;
+        margin-top:10px;
+        margin-bottom: 15px;
+    }
+}
+
+.president-name{
+    font-family:'abeezee';
+    font-size: 2em; 
+    color: rgb(0, 0, 99);
+}
+
+.president-title{
+    font-style: italic;
+    font-size: 1.3em;
+}
+
+.president-org{
+    font-size: 1.1em;
+
+}

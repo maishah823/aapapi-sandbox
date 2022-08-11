@@ -1,0 +1,20 @@
+.duplicates-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .duplicates-radio-button {
+    margin: 5px;
+    padding: 5px;
+    border-bottom: 1px gray dotted;
+  }
+
+  .potentials{
+      max-height: 400px;
+      overflow-y: scroll;
+  }
+
+  .in-question, .non-member{
+      color: rgb(24, 24, 82);
+  }
+  

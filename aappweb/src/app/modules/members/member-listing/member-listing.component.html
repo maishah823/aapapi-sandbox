@@ -1,0 +1,21 @@
+<div class="base-layout">
+    <h1>Member Listing</h1>
+    <mat-card>
+    <form [formGroup]="searchForm" novalidate>
+      <div layout layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="search" placeholder="Search Users" />
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </form>
+    </mat-card>
+    <div layout layout-wrap>
+    <aapp-member flex-xs="100" flex-sm="50" flex-md="33" flex-lg="25" flex-xl="20" class="member-listing" *ngFor="let member of members" [user]="member" (onClick)="memberClicked()"></aapp-member>
+      </div>
+    <div class="users-pagination">
+        <mat-paginator class="members-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+          (page)="pageEvent($event)">
+        </mat-paginator>
+      </div>
+    </div>

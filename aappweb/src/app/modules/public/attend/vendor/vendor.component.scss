@@ -1,0 +1,129 @@
+.section-animation-container{
+    height:100%;
+    overflow:hidden;
+}
+
+.section{
+    margin:20px 5px;
+    padding:15px 5px;
+    border: 1px gray dotted;
+    border-radius: 8px;
+}
+
+.section-heading{
+    color: rgb(0, 0, 95);
+}
+
+.agreement-text{
+    font-size: .9em;
+    font-style: italic;
+}
+
+.join-actions{
+    margin: 20px;
+    padding: 20px 15px 30px 0;
+}
+
+.section-done{
+    color: green;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+.participant-container{
+    position:relative;
+    background: rgb(253, 247, 247);
+    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 20px 0;
+}
+
+.delete-button{
+    position:absolute;
+    right: 2px;
+    top: 2px;
+}
+
+.subtotals{
+    text-align: center;
+    border-bottom: 1px gray solid;
+    div{
+        padding: 5px;
+    }
+}
+
+.total{
+    color: red;
+    font-size: 28px;
+    padding: 5px;
+}
+
+.reg-ended{
+    margin: 10%;
+    background: red;
+    border: 5px rgb(0, 0, 97) solid;
+    padding: 10%;
+    text-align:center;
+    color:white;
+}
+
+.dates-times{
+    padding: 20px 10%;
+    font-size: 1.2em;
+    color: rgb(0, 0, 99);
+}
+
+.payment-field{
+    margin: 5px;
+}
+
+.form-error{
+    padding: 5px 10%;
+    font-size: .8em;
+    color: red;
+}
+
+.participant-number{
+    display:inline-block;
+    width: 34px;
+    height: 34px;
+    vertical-align: middle;
+    text-align:center;
+    background: rgb(0, 0, 68);
+    color:white;
+    font-size: 24px;
+    line-height:34px;
+    margin: 10px;
+    border-radius: 17px;
+}
+
+.participant-cost{
+    font-size: 24px;
+    margin: 10px;
+    color: rgb(0, 0, 68);
+}
+
+.coupons{
+    margin-top: 20px;
+}
+
+.coupon-entry{
+    text-align: center;
+    border: 1px rgb(1, 1, 78) solid;
+    color: rgb(1, 1, 78);
+    border-radius: 5px;
+    padding: 5px;
+    font-size:16px;
+    outline:none;
+    :active{
+        outline:none;
+    }
+}
+
+.good-code{
+    background:green;
+    color: white;
+}
+.credit-card-info{
+    margin: 20px 10%;
+}

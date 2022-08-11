@@ -1,0 +1,203 @@
+<ng-container *ngIf="conferenceIsCurrent; else confEnded">
+    <div [@slideInFromBottom]="true" class="section-animation-container">
+        <div class="attend-notice">Use this form only if you are an INDIVIDUAL wishing to register YOURSELF for the seminar.</div>
+        <form [formGroup]="form" connectForm="indv" novalidate>
+            <div class="section" formGroupName="emailGroup">
+                <h3 class="section-heading">Email Address
+                    <mat-icon class="section-done" *ngIf="emailGroup.valid">check_circle</mat-icon>
+                </h3>
+                <div layout *ngIf="found.value && !token.value">
+                    <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="center center" layout-wrap>
+                        <span class="join-error-text">You already have a login. Please authenticate to continue...</span>
+                    </div>
+                </div>
+                <div layout>
+                    <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" *ngIf="!checked.value">
+                        <input matInput placeholder="Email Address" formControlName="email" />
+                        <button type="button" mat-icon-button matSuffix (click)="resetEmail()" *ngIf="checked.value">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button type="button" mat-icon-button matSuffix (click)="help('If you already have login credentials, please enter the email you already use.')"
+                            *ngIf="!checked.value">
+                            <mat-icon>help_outline</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div layout *ngIf="checked.value">
+                    <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0">
+                        <input matInput formControlName="lockedInEmail" [placeholder]="email.value" />
+                        <button type="button" mat-icon-button matSuffix (click)="resetEmail()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <ng-container *ngIf="!checked.value">
+                    <div layout>
+                        <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="end center" layout-wrap>
+                            <button flex="nogrow" [disabled]="!email.valid" (click)="checkEmail()" matSuffix mat-raised-button color="primary">Use Email</button>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="found.value && !token.value">
+                    <div layout>
+                        <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0">
+                            <input matInput type="password" placeholder="Password" #password/>
+                        </mat-form-field>
+                    </div>
+                    <div layout>
+                        <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="end center">
+                            <button [disabled]="authenticating" (click)="login(password.value)" flex="nowgrow" mat-raised-button color="primary" flex="nogrow">Authenticate</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="section" formGroupName="infoGroup" *ngIf="locked.value">
+                <h3 class="section-heading">Your Information
+                    <mat-icon class="section-done" *ngIf="infoGroup.valid">check_circle</mat-icon>
+                </h3>
+                <div layout layout-xs="column" layout-margin>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="firstName" placeholder="First Name" required/>
+                    </mat-form-field>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="lastName" placeholder="Last Name" required/>
+                    </mat-form-field>
+                </div>
+                <aapp-address [formGroup]="infoAddressGroup"></aapp-address>
+                <div flex class="email-display join-field">
+                    Email: {{email.value}}
+                </div>
+            </div>
+            <div class="section" *ngIf="locked.value">
+                <h3 class="section-heading">Event Interests</h3>
+                <p>For seminar planning purposes,
+                    <em>please select the events you plan to attend</em>. This does not obligate you to attend or limit you to
+                    attending only these events. This is simply to give us an idea of how many people may be attending.</p>
+                <div layout layout-align="center center">
+                    <mat-selection-list flex="nogrow" (selectionChange)="eventsChanged($event)">
+                        <mat-list-option checkboxPosition="'before" [value]="event._id" *ngFor="let event of events" [selected]="clonedEvents?.indexOf(event._id) > -1">
+                            <span [matTooltip]="event.description">{{event.name}}</span>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </div>
+            </div>
+            <div class="section" *ngIf="locked.value">
+                <h3 class="section-heading">Add Guests <mat-icon class="section-done" *ngIf="guests.valid">check_circle</mat-icon></h3>
+                <div formArrayName="guests" *ngFor="let guest of guestControls; let i = index;" class="guest-container">
+                    <button mat-icon-button class="delete-button" (click)="deleteGuest(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error>
+                            <div *ngIf="guestControls[i].hasError('noevents')">You must select at least one event for this guest.</div>
+                            <div *ngIf="guest.get('name').hasError('required')">You must enter the guest's name to continue.</div>
+                        </mat-error>
+                    <div layout layout-margin layout-align="center center" [formGroupName]="i">
+                        <mat-form-field flex>
+                            <input matInput formControlName="name" placeholder="Guest's Name" />
+                            <span matPrefix> {{i + 1}}. </span>
+                        </mat-form-field>
+
+                    </div>
+                    <div *ngIf="guestControls[i].get('all').value != true" layout layout-margin [formGroupName]="i">
+                        <mat-form-field flex>
+                            <mat-select formControlName="events" placeholder="Select Specific Events" multiple>
+                                <mat-option *ngFor="let event of events" [value]="event._id">
+                                    <span>{{event.name}} - {{event.cost | currency}}</span>,
+                                    <span matLine>{{event.displayDate}} {{event.displayStartTime}}</span>
+                                </mat-option>
+                            </mat-select>
+                           
+                        </mat-form-field>
+                       
+                       
+                               
+                    </div>
+                   
+                    <div layout layout-align="center center" [formGroupName]="i">
+                        <mat-checkbox flex="nogrow" formControlName="all">All Events</mat-checkbox>
+                    </div>
+                    
+                </div>
+                <div layout layout-margin *ngIf="guestControls.length > 0">
+                    <div flex>Cost: {{calculateGuestCost() | currency}}</div>
+                </div>
+                <button mat-raised-button (click)="addGuest()" *ngIf="guestControls.length == 0 || guestControls[guestControls.length - 1]?.valid">
+                    <mat-icon>add</mat-icon> {{guestControls?.length == 0 ? 'Add a Guest' : 'Add Another Guest'}}</button>
+            </div>
+
+            <div class="section" *ngIf="locked.value">
+                <h3 class="section-heading">Pricing Summary</h3>
+                <div layout="column" layout-align="center center" layout-margin>
+                <div class="subtotals" flex="nogrow">
+                    <div>{{conferencePrice.label}}: {{conferencePrice.amount | currency}}</div>
+                    <div *ngIf="guestTotal > 0">Guests: {{guestTotal | currency}}</div>
+                    <div *ngIf="discount > 0" class="discount-line">Discount: -{{discount | currency}}</div>
+                </div>
+                <div class="total">
+                    {{calculateTotal() | currency}}
+                </div>
+                <div class="coupons">
+                    Coupon Code: <input class="coupon-entry" [ngClass]="{'good-code':discount}" formControlName="coupon"/>
+                </div>
+                </div>
+            </div>
+            <!-- Payment -->
+            <div class="section" *ngIf="locked.value" formGroupName="paymentGroup">
+                <h3 class="section-heading">Payment / Invoice <mat-icon class="section-done" *ngIf="paymentGroup.valid">check_circle</mat-icon></h3>
+                <div class="payment-field">
+                    <h3>Would you like to pay now with a credit card or be sent an invoice?</h3>
+                </div>
+                <div class="payment-field payment-type-selection">
+                    <mat-radio-group formControlName="paymentType">
+                        <mat-radio-button value="credit" *ngIf="calculateTotal() > 0">Credit Card</mat-radio-button>
+                        <mat-radio-button value="invoice">Invoice</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div *ngIf="paymentType.value == 'credit'" class="credit-card-info">
+                    <div layout layout-wrap>
+                        <mat-form-field flex class="payment-field">
+                            <input matInput placeholder="Credit Card Number" formControlName="cc" required/>
+                        </mat-form-field>
+                    </div>
+                    <div layout layout-wrap>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="Exp Month" formControlName="expMonth" required/>
+                        </mat-form-field>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="Exp Year" formControlName="expYear" required/>
+                        </mat-form-field>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="CVV" formControlName="cvv" required/>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="section" *ngIf="locked.value">
+                <h3 class="section-heading">Finalize</h3>
+                <div class="join-field agreement-text">
+                    By clicking the "Submit Application" button below, I attest that:
+                    <br/> I am qualified and eligible to attend ....
+                    <br/>
+
+                </div>
+                <div class="dates-times">
+                    Complete signup for the AAPP seminar in {{conference.city}}, {{conference.state}}; starting on {{ conference.startDateTime | date:'E MM/dd/yyyy,  hh:mm a':conference.utcOffset}}
+                    and ending {{ conference.endDateTime | date:'E MM/dd/yyyy,  hh:mm a':conference.utcOffset}} ...
+                </div>
+
+                <div class="attend-actions">
+                    <div layout layout-align="center center" layout-margin>
+                        <aapp-loading-button flex="initial" color="primary" [loading]="inProgress" (click)="submit()" [disabled]="!form.valid">Complete Order ({{calculateTotal() | currency}})</aapp-loading-button>
+                    </div>
+                    <div class="form-error" *ngIf="!form.valid">Check the form for errors. Be sure to correctly fill in all required information.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-container>
+
+<ng-template #confEnded>
+    <div class="reg-ended">Sorry, the registration for this seminar has ended. Check back in a few weeks for next year's seminar.</div>
+</ng-template>

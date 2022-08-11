@@ -1,0 +1,86 @@
+.class-detail-card{
+    padding:10px;
+}
+
+.date-heading{
+    text-align:center;
+}
+
+.class-description{
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+.speaker-picture{
+    width:200px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.topics-container{
+    text-align: center;
+    color: rgb(0, 0, 97);
+}
+
+.instructors-heading{
+    background: #1f1867;
+    color:white;
+    padding:10px;
+}
+
+.instructor-name{
+    margin-top:0;
+    padding-top:0;
+}
+
+.instructor-title{
+    color:red;
+}
+
+.instructor-container{
+    margin-top:10px;
+    padding: 10px;
+    overflow:hidden;
+}
+
+.instructor-block{
+    min-width: 50%;
+}
+
+.class-topic{
+    display:inline-block;
+    border: 1px gray solid;
+    border-radius:25%;
+    padding: .5em;
+    margin:5px;
+}
+
+.add-to-schedule-button{
+    overflow:hidden;
+    word-wrap: break-word;
+}
+
+.materials{
+    margin-top: 15px;
+    padding-top:15px;
+    border-top: 1px gray solid;
+
+}
+.upload-materials{
+    margin-top: 10px;
+}
+
+.delete{
+    color:red;
+}
+
+@media(max-width:'600px'){
+    .instructor-container{
+        text-align:center;
+    }
+    .speaker-picture{
+        float:none;
+    }
+}

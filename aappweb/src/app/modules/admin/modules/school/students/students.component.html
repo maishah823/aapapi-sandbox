@@ -1,0 +1,79 @@
+<mat-card class="admin-students">
+  <div layout="row" layout-xs="column">
+    <div flex flex-order-gt-xs="2" layout="row" layout-align="end center">
+      <button flex-align="end" mat-button (click)="showAdd = !showAdd">
+        <mat-icon>{{showAdd ? 'remove' : 'add'}}</mat-icon>{{showAdd ? 'Hide Add Student' : 'Add Student'}}</button>
+    </div>
+    <h2 *ngIf="!showAdd" flex flex-order-gt-xs="1" class="schools-heading">Manage Students</h2>
+  </div>
+
+  <mat-card class="add-student-card" *ngIf="showAdd">
+    <h3>Add Student</h3>
+    <form [formGroup]="addForm" (ngSubmit)="addStudent()" novalidate>
+      <div layout="column">
+        <div flex layout="row" layout-xs="column" layout-margin>
+          <mat-form-field flex>
+            <input matInput formControlName="firstName" placeholder="First Name" />
+          </mat-form-field>
+          <mat-form-field flex>
+            <input matInput formControlName="lastName" placeholder="Last Name" />
+          </mat-form-field>
+        </div>
+        <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+          <mat-form-field flex>
+            <input matInput formControlName="email" placeholder="Email Address" />
+          </mat-form-field>
+        </div>
+        <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+          <mat-form-field flex>
+            <input matInput [matDatepicker]="picker" placeholder="Graduation Date" formControlName="graduationDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field flex layout-margin>
+            <mat-select formControlName="school" placeholder="School">
+              <mat-option *ngFor="let school of schools" [value]="school._id">{{school.name}}, {{school.address.city}}, {{school.address.state}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div flex layout="row" layout-align="end end" layout-margin>
+          <button flex="nogrow" type="button" mat-raised-button (click)="addForm.reset()">Clear</button>
+          <button flex="nogrow" [disabled]="!addForm.valid" type="submit" mat-raised-button color="primary">Add Student</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+  <form [formGroup]="form" novalidate>
+    <div layout="row" layout-xs="column" layout-margin>
+      <mat-form-field flex-gt-xs="50" layout-margin>
+        <mat-select formControlName="school" placeholder="School">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let school of schools" [value]="school._id">{{school.name}}, {{school.address.city}}, {{school.address.state}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <mat-card *ngFor="let student of students" class="student-card">
+    <div layout="row" layout-xs="column">
+      <div flex>
+        <h3 class="student-name">{{student.lastName}}, {{student.firstName}}</h3>
+      </div>
+      <div flex="nogrow" flex-align="end">{{student.school?.name}}</div>
+    </div>
+
+    <div layout="row" layout-wrap layout-xs="column">
+      <div flex [ngClass]="{'editable':!student.redeemed && !student.isExpired}" (click)="updateEmail(student)">{{student.email}}</div>
+      <div flex [ngClass]="{'editable':!student.redeemed && !student.isExpired}" (click)="updateGraduationDate(student)">Graduation: {{student.graduationDate | date}}</div>
+      <div flex="nogrow" flex-align="end" style="min-width:100px;">
+        <span class="student-redeemed" *ngIf="student.redeemed">REDEEMED</span>
+        <span class="student-expired" *ngIf="!student.redeemed && student.isExpired">EXPIRED</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+    (page)="pageEvent($event)">
+  </mat-paginator>
+</mat-card>

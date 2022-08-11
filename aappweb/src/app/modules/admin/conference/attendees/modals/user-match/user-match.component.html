@@ -1,0 +1,37 @@
+<h2 mat-dialog-title color="primary">Merge Existing Member</h2>
+<div mat-dialog-content>
+  <h3>Attendee</h3>
+  <p class="in-question" >
+    {{data.lastName}}, {{data.firstName}}<br />
+    <span *ngIf="data.address">{{data.address.street1}}<br />
+    {{data.address.city}}, {{data.address.state}}</span><br />
+    {{data.email}}
+  </p>
+  <p>Search variations of the last name to find potential duplicate users before approving.</p>
+  <form [formGroup]="form" novalidate>
+    <div layout="column">
+      <mat-form-field flex>
+        <input matInput formControlName="search" matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="10"
+          placeholder="Last Name" />
+      </mat-form-field>
+      <div class="potentials">
+        <mat-radio-group class="duplicates-radio-group" formControlName="selected">
+          <mat-radio-button class="duplicates-radio-button non-member" [value]="'non-member'">
+            Confirmed Non-member.
+          </mat-radio-button>
+          <mat-radio-button class="duplicates-radio-button" *ngFor="let potential of potentials" [value]="potential._id">
+            {{potential.lastName}}, {{potential.firstName}}<br />
+            <span *ngIf="potential.address">{{potential.address.city}}, {{potential.address.state}}</span>
+            <br />
+            {{potential.email}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <button (click)="close()" mat-button>Cancel</button>
+  <button color="accent" mat-button (click)="save()" [disabled]="!form.valid">{{form.get('selected').value == 'non-member' ? 'Approve
+    Non-member.':'Link Member'}}</button>
+</div>

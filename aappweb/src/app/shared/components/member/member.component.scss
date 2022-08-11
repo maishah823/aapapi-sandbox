@@ -1,0 +1,23 @@
+.member-display{
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    width:100%;
+    a{
+        color:rgb(0, 0, 66);
+    }
+    a:active{
+        color:rgb(0, 0, 66);
+    }
+    a:hover{
+        color:rgb(90, 0, 0);
+    }
+    a:visited{
+        color:rgb(0, 0, 66);
+    }
+}
+h4.user-fullname{
+    margin:0;
+    padding:0;
+    color:rgb(0, 0, 66);
+}

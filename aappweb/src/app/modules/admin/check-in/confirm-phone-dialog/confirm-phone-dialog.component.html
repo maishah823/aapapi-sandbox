@@ -1,0 +1,29 @@
+<h4 mat-dialog-title color="primary">Check-In {{data.user.fullname}}</h4>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div layout="column" layout-margin>
+      <div flex>Verify or obtain current cell phone number:</div>
+      <mat-form-field flex>
+        <input matInput formControlName="phone" placeholder="Cell Phone" />
+      </mat-form-field>
+     
+      <label id="texting-radio-group-label">Does participant agree to recieve text messages from AAPP during the
+        seminar?</label>
+      <mat-radio-group aria-labelledby="texting-radio-group-label" class="texting-radio-group"
+        formControlName="textAuth">
+        <mat-radio-button class="texting-radio-button" [value]="true">
+          Yes
+        </mat-radio-button>
+        <mat-radio-button class="texting-radio-button" [value]="false">
+          No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <div layout="row" layout-align="end end" layout-margin>
+    <button flex="nogrow" type="button" (click)="close()" mat-button>Cancel</button>
+    <button flex="nogrow" color="accent" mat-flat-button (click)="submit()" [disabled]="!form.valid">CHECK-IN</button>
+  </div>
+</div>

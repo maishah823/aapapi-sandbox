@@ -1,0 +1,13 @@
+<div (click)="clicked()" class="member-display">
+  <h4 class="user-fullname">{{user.lastName}}, {{user.firstName}} {{user.middleName}}</h4>
+  <p *ngIf="user.address; else noaddress">
+    {{user.address.street1}}<br/>
+    <span *ngIf="user.address.street2">{{user.address.street2}}<br/></span>
+    {{user.address.city}}, {{user.address.state}} {{user.address.zipcode}}<br/>
+    {{user.address.workPhone | phone}}<br/>
+  </p>
+  <a href="mailto:{{user.email}}">{{user.email}}</a>
+  <ng-template #noaddress>
+    <p>No address on file.</p>
+  </ng-template>
+</div>

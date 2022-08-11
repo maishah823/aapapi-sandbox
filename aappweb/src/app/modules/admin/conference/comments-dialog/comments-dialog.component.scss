@@ -1,0 +1,15 @@
+.subtitle{
+     text-align:center;
+}
+.name{
+    color: rgb(0, 0, 104);
+}
+.comment{
+    font-style: italic;
+    &::before{
+        content: "\"";
+    }
+    &::after{
+        content: "\"";
+    }
+}

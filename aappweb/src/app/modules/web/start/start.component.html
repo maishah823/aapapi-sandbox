@@ -1,0 +1,82 @@
+<div class="full-height start-screen">
+  
+  <!-- <div class="start-block first" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+      <h3>Menu</h3>
+      <h4>Access resources through the slide-out menu.</h4>
+    </div>
+    <div flex></div>
+    <div flex="nogrow" class="start-links-container" layout-align="end end">
+      <button mat-button [tdLayoutToggle]="true">Open Menu</button>
+    </div>
+  </div> -->
+
+  <div class="start-block first" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+      <h3>Profile</h3>
+      <h4>Update your profile and settings.</h4>
+    </div>
+    <div flex></div>
+    <div flex="nogrow" class="start-links-container" layout layout-wrap layout-align="end end">
+        <button flex="nogrow" mat-button routerLink="/web/user/profile">Profile</button>
+        <button flex="nogrow" mat-button routerLink="/web/user/payment-history">Payment/Invoice History</button>
+        <button *ngIf="user.isAttendee" flex="nogrow" mat-button routerLink="/web/user/conf-info">My Seminar Registration</button>
+    </div>
+  </div>
+
+  <div *ngIf="user.isMember" class="start-block" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+      <h3>Members</h3>
+      <h4>Access members-only resources.</h4>
+    </div>
+    <div flex></div>
+    <div flex="nogrow" class="start-links-container" layout layout-wrap layout-align="end end">
+      <button flex="nogrow" mat-button routerLink="/web/members/news">News</button>
+      <button flex="nogrow" mat-button routerLink="/web/members/member-listing">Listing</button>
+      <button flex="nogrow" mat-button routerLink="/web/members/journals">Journals</button>
+      <!-- <button flex="nogrow" mat-button routerLink="/web/members/photos">Gallery</button> -->
+    </div>
+  </div>
+
+  <div *ngIf="user.isAttendee || user.isInstructor" class="start-block" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+        <h3>Seminar</h3>
+        <h4>Seminar attendee resources</h4>
+      </div>
+      <div flex></div>
+      <div flex="nogrow" class="start-links-container" layout layout-wrap layout-align="end end">
+          <button flex="nogrow" mat-button routerLink="/web/conf/news">News</button>
+          <button flex="nogrow" mat-button routerLink="/web/conf/schedule">Schedule</button>
+          <!-- <button flex="nogrow" mat-button routerLink="/web/conf/events">Events</button> -->
+          <!-- <button flex="nogrow" mat-button routerLink="/web/user/social">Social</button> -->
+          <button flex="nogrow" mat-button routerLink="/web/user/conf-info">My Reg / Add Guest</button>
+      </div>
+  </div>
+
+  <div *ngIf="user.isAdmin" class="start-block" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+        <h3>Admin</h3>
+        <h4>Administer the organization.</h4>
+      </div>
+      <div flex></div>
+      <div flex="nogrow" class="start-links-container" layout layout-wrap layout-align="end end">
+          <button flex="nogrow" mat-button routerLink="/web/admin/users">Users</button>
+          <button flex="nogrow" mat-button routerLink="/web/admin/posts">Posts</button>
+          <button flex="nogrow" mat-button routerLink="/web/admin/applications">Applications</button>
+          <button flex="nogrow" mat-button routerLink="/web/admin/conference">Seminar</button>
+          <button flex="nogrow" mat-button routerLink="/web/admin/financial">Financial</button>
+      </div>
+  </div>
+
+  <div *ngIf="user.isEducator" class="start-block" layout="column" layout-align="start end" [ngStyle]="{'height':'calc(100vh / ' + numberOfSections+')'}">
+    <div flex="nogrow" class="start-title">
+        <h3>School</h3>
+        <h4>Manage graduates.</h4>
+      </div>
+      <div flex></div>
+      <div flex="nogrow" class="start-links-container" layout layout-wrap layout-align="end end">
+          <button mat-button routerLink="/web/school/students">Student Discounts/Graduates</button>
+      </div>
+  </div>
+
+</div>

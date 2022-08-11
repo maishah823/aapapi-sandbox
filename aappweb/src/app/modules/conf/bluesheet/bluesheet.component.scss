@@ -1,0 +1,41 @@
+.checkout-card{
+    padding:15px;
+    .centered{
+        text-align:center;
+    }
+}
+
+.checkout-subtitle{
+    text-align: center;
+}
+
+.course-row{
+    margin:10px;
+    padding:10px;
+    border: 1px solid rgb(236, 236, 236);
+}
+
+.hours-input{
+    width: 7em;
+}
+
+.survey-question{
+    padding: 10px;
+}
+
+.hours{
+    color: orangered;
+    font-size: 1.2em;
+}
+.incomplete{
+    color:red;
+}
+.date{
+    background-color:rgb(255, 255, 160);
+}
+
+@media(max-width:599px){
+    .class-details{
+        text-align: center;
+    }
+}

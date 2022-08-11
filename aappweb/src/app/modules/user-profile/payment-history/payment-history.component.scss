@@ -1,0 +1,18 @@
+.payment-history{
+    margin: 40px 10px 10px 10px;
+    .payment-history-title{
+        padding:15px;
+        margin:0;
+    }
+    .invoice{
+        margin-top:10px;
+        padding-top:10px;
+        padding-bottom: 10px;
+        border-top: 1px lightgray solid;
+    }
+
+    .no-history{
+        padding: 20px;
+        text-align:center;
+    }
+}

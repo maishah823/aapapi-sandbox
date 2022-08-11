@@ -1,0 +1,115 @@
+<h2 class="pay-title">Pay Invoices</h2>
+<p class="instructions">Search for unpaid invoices to add an invoice for payment. Add as many invoices as you'd like, then provide the payment information
+  to complete the transaction.</p>
+<mat-card class="invoice-search">
+  <form [formGroup]="searchForm" novalidate>
+    <div layout layout-xs="column">
+      <div flex></div>
+      <div flex style="position:relative">
+        <h4 class="pay-title">{{searchPlaceholder}}</h4>
+        <input #searchBox formControlName="search" class="invoice-number-search" />
+        <img [@fade] *ngIf="showSearchArrow" src="/assets/images/arrow.svg" style="width:99px;height:53px;" class="large-pulse search-arrow"/>
+      </div>
+      <div flex></div>
+    </div>
+  </form>
+  <div class="candidate" *ngIf="candidate">
+    <div layout layout-xs="column" layout-align="center center" layout-margin>
+      <div flex class="candidate-info">
+        #{{candidate.invoiceNumber}}
+      </div>
+      <div flex class="candidate-info">
+        {{candidate.amount | currency}}
+      </div>
+      <div flex class="candidate-info">
+        {{candidate.created_at | date}}
+      </div>
+      <div flex style="position:relative">
+          <button mat-raised-button color="accent" (click)="addInvoice(candidate)">
+              <mat-icon>add</mat-icon> Add This Invoice</button>
+          <img [@fade] *ngIf="showAddArrow" src="/assets/images/arrow.svg" style="width:99px;height:53px;" class="large-pulse add-arrow"/>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="invoice-payment" *ngIf="invoices.length > 0">
+  <h3 class="pay-title">Payment</h3>
+  <div class="pay-line-items-container">
+    <h3 class="pay-line-items-heading">INVOICES</h3>
+    <div class="pay-line-items">
+      <div *ngFor="let invoice of invoices; let i = index;">
+        <div class="invoice-line" layout layout-align="center center">
+
+          <div flex="nogrow">
+            <button mat-icon-button color="warn" (click)="removeInvoice(invoice,i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div flex="nogrow">
+            {{i + 1}}.
+          </div>
+          <div flex="nogrow">
+            #{{invoice.invoiceNumber}}
+          </div>
+          <div flex="fill"></div>
+          <div flex="nogrow">
+            {{invoice.amount | currency}}
+          </div>
+        </div>
+      </div>
+      <div class="total-line" layout>
+        <div flex="fill"></div>
+        <div flex="nogrow">
+          {{totalAmount() | currency}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-info">
+    <form [formGroup]="paymentForm" novalidate>
+      <div layout>
+        <mat-form-field flex class="payment-field">
+          <input matInput placeholder="Agency Name (if applicable)" formControlName="agency" />
+        </mat-form-field>
+      </div>
+      <div layout layout-xs="column">
+        <mat-form-field flex class="payment-field">
+          <input matInput formControlName="firstName" placeholder="First Name" required/>
+        </mat-form-field>
+        <mat-form-field flex class="payment-field">
+          <input matInput formControlName="lastName" placeholder="Last Name" required/>
+        </mat-form-field>
+      </div>
+      <aapp-address [formGroup]="address"></aapp-address>
+      <div layout>
+        <mat-form-field flex class="payment-field">
+          <input matInput placeholder="Email Address" formControlName="email" required/>
+        </mat-form-field>
+      </div>
+      <div layout>
+        <mat-form-field flex class="payment-field">
+          <input matInput placeholder="Credit Card Number" formControlName="cc" />
+        </mat-form-field>
+      </div>
+      <div layout layout-wrap>
+        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+          <input matInput placeholder="Exp Month" formControlName="expMonth" required/>
+        </mat-form-field>
+        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+          <input matInput placeholder="Exp Year (20XX)" formControlName="expYear" required/>
+        </mat-form-field>
+        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+          <input matInput placeholder="CVV" formControlName="cvv" required/>
+        </mat-form-field>
+      </div>
+      <div class="payment-actions">
+        <div layout layout-align="end center">
+          <aapp-loading-button flex="initial" color="primary" [loading]="inProgress" (click)="submitPayment()" [disabled]="!paymentForm.valid">Make Payment ({{totalAmount() | currency}})</aapp-loading-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-card>
+

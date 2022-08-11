@@ -1,0 +1,33 @@
+.login-background{
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color:rgba(0,0,0,.5);
+    z-index:9998;
+}
+.login-container{
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    background: white;
+    width:300px;
+    z-index:9999;
+    box-shadow: 0 3px 3px rgba(0,0,0,.4);
+}
+
+@media(max-width:'599px'){
+    .login-container{
+       width: 260px;
+    }
+}
+
+.login-links{
+    margin-top: 15px;
+    font-size: .9em;
+    text-align: center;
+}

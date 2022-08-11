@@ -1,0 +1,31 @@
+<div class="news-bg">
+    <div class="header-container">
+        <div layout layout-align="center center" class="main-header">
+            <div flex="nogrow">
+                <img src="/assets/images/logo_white.svg" class="main-logo" />
+            </div>
+            <div flex="nogrow">
+                <div class="main-title">
+                    <h1>American Association of Police Polygraphists</h1>
+                    <h3>News and Events</h3>
+                </div>
+            </div>
+           
+        </div>
+        <div id="menu_arrow"></div>
+    </div>
+    <div class="secondary-title">
+        <h1>AAPP News</h1>
+    </div>
+    <div [@slideInFromBottom]="true" class="blogs section-animation-container">
+        <div class="section" layout="row" layout-xs="column" layout-wrap layout-align="center stretch" layout-align-xs="center center"
+            layout-margin>
+            <aapp-blog-detail class="blog-item" flex="initial" *ngFor="let post of blogs" [post]="post"></aapp-blog-detail>
+        </div>
+        <div class="pagination section">
+            <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+                [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

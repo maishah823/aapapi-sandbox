@@ -1,0 +1,14 @@
+.coupons-container{
+    padding: 10px;
+}
+.coupons-table{
+    width: 100%;
+    table-layout: fixed;
+    thead{
+        text-align: left;
+        
+    }
+    th{
+        border-bottom: 1px black solid;
+    }
+}

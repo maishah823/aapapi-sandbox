@@ -1,0 +1,36 @@
+.times{
+    font-size: 20px;
+    color: darkblue;
+    min-width: 250px;
+}
+
+.conf-line-schedule{
+    padding:15px;
+    background:white;
+    text-align:center;
+}
+
+.day-heading{
+    background-color:#1f1867;
+    padding: 8px;
+    color:white;
+}
+
+.event-name{
+   max-width: 400px;
+}
+
+.event-entry{
+    background: rgb(255, 250, 250);
+    cursor: pointer;
+    &:hover{
+        background: rgb(252, 234, 234);
+    }
+}
+.event-entry-hoverable{
+    
+}
+
+.event-add-container{
+    margin:8px;
+}

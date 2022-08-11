@@ -1,0 +1,39 @@
+.member-apps{
+    margin: 40px 6px 6px 6px;
+}
+.member-apps-stats-panel{
+    padding: 8px;
+    cursor: pointer;
+    &.no-click{
+        cursor: default;
+        &:active{
+            background:inherit;
+        }
+    }
+    &:active{
+        background:rgb(221, 221, 221);
+    }
+}
+
+.stats-number{
+    text-align:center;
+    font-size: 50px;
+}
+
+.stats-label{
+    text-align:center;
+}
+
+.pending-apps{
+    padding: 5px;
+}
+.centered-title{
+    text-align: center;
+}
+
+.app-row{
+    margin-bottom:4px;
+    padding-bottom:4px;
+    padding-top: 5px;
+    border-bottom: 1px gray solid;
+}

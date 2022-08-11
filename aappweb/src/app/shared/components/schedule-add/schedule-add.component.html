@@ -1,0 +1,108 @@
+<div *ngIf="form">
+  <div layout="column" *ngIf="conference; else noconf" layout-align="stretch stretch">
+    <div flex>
+      <div class="add-event-container">
+        <h2 class="add-event-heading">{{prepopulate._id?'Edit':'Add'}} Class for {{conference.city}}, {{conference.state}}
+          <span *ngIf="prepopulate._id">
+            <br/>({{form.get('name').value}})</span>
+        </h2>
+        <div layout="column">
+          <form [formGroup]="form" novalidate>
+            <div layout="row" layout-xs="column" layout-margin layout-wrap>
+              <div flex class="timepicker">
+                <h3>Start Date and Time</h3>
+                <div>
+<!--
+                  <angular2-date-picker formControlName="startDateTime" [settings]="settings" required></angular2-date-picker>
+-->
+                  <ngx-mat-datetime-picker formControl="startDateTime"></ngx-mat-datetime-picker>
+                </div>
+              </div>
+              <div flex class="timepicker">
+                <h3>End Date and Time</h3>
+                <div>
+                  <ngx-mat-datetime-picker formControl="endDateTime"></ngx-mat-datetime-picker>
+                  <!--
+                                    <angular2-date-picker formControlName="endDateTime" [settings]="settings" required></angular2-date-picker>
+                  -->
+                </div>
+              </div>
+            </div>
+            <div layout="column" layout-margin>
+              <mat-form-field flex>
+                <input matInput placeholder="Event Name" formControlName="name" required autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div layout="column" layout-margin>
+              <mat-form-field flex>
+                <input matInput placeholder="Room" formControlName="room" required autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div layout layout-margin>
+              <mat-form-field flex>
+                <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="15"
+                  required></textarea>
+              </mat-form-field>
+            </div>
+            <div [hidden]="!showInstructors">
+              <div class="section-heading">
+                <h3>Topics</h3>
+                <h5>(Select at least one)</h5>
+              </div>
+              <mat-selection-list formControlName="topics">
+                <mat-list-option *ngFor="let topic of topics" [value]="topic._id">
+                  {{topic.name}}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+            <div [hidden]="!showInstructors">
+              <div class="section-heading">
+                <h3>Instructors</h3>
+                <h5 [ngClass]="{'edit-instructors':prepopulate._id && form.get('instructors').value.length < 1}">{{prepopulate._id?'(Re-select at least one instructor)':'(Select at least one)'}}</h5>
+              </div>
+              <div *ngIf="(instructors | instructorFilter:{topics:form.get('topics').value}).length < 1" class="instructors-empty">
+                There are no instructors that are tagged as teaching the topics you have selected; either choose another topic or add the
+                topic to the instructor
+                <a style="color:blue" [routerLink]="['/web/admin/conference/instructors']"
+                  (click)="cancel()">here.</a>
+              </div>
+              <mat-selection-list formControlName="instructors">
+                <mat-list-option *ngFor="let instructor of instructors | instructorFilter:{topics:form.get('topics').value}" [value]="instructor._id">
+                  {{instructor.fullname}}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+
+            <!-- <p>
+              Options selected: {{form.get('instructors').value | json}}
+            </p> -->
+          </form>
+        </div>
+      </div>
+    </div>
+    <div [ngStyle]="{'text-align':'center'}" *ngIf="!showInstructors">
+        <div layout layout-align="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+
+      </div>
+    <div flex="nogrow">
+      <div class="add-event-actions">
+        <div layout layout-margin layout-align="end center">
+          <div flex="nogrow">
+            <button mat-button (click)="cancel()">Cancel</button>
+          </div>
+          <div flex="nogrow">
+            <button mat-raised-button color="primary" [disabled]="!form.valid || submitting" (click)="save()">SAVE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noconf>
+    <h2>Seminar Error</h2>
+    <p>The system could not locate the upcoming seminar. Please contact technical support at
+      <a href="mailto:support@harcomtech.com">support@harcomtech.com</a>
+    </p>
+  </ng-template>
+</div>

@@ -1,0 +1,76 @@
+<div class="base-layout">
+  <h1>Seminar Stats</h1>
+  <div>
+  <form [formGroup]="form" novalidate>
+    <div layout layout-margin layout-align="center center">
+    <mat-form-field>
+      <mat-select formControlName="conf" placeholder="Select Seminar">
+        <mat-option *ngFor="let conf of conferences" [value]="conf._id">{{conf.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+  </form>
+</div>
+<div layout="row" layout-align="center center" layout-wrap class="stats-row">
+  <div flex="nogrow" class="stats-panel">
+    <div class="stats-number">
+      {{stats.totalInvoicesCount || 0}}
+    </div>
+    <div class="stats-label">
+      Total Invoices
+    </div>
+  </div>
+
+  <div flex="nogrow" class="stats-panel">
+      <div class="stats-number">
+        {{stats.totalPaidInvoices || 0}}
+      </div>
+      <div class="stats-label">
+        Total Paid
+      </div>
+    </div>
+
+    <div flex="nogrow" class="stats-panel">
+        <div class="stats-number">
+          {{(stats.totalInvoicesAmount || 0) | currency}}
+        </div>
+        <div class="stats-label">
+          Total Revenue
+        </div>
+      </div>
+
+      <div flex="nogrow" class="stats-panel">
+          <div class="stats-number">
+            {{(stats.totalPaidInvoicesAmount || 0) | currency}}
+          </div>
+          <div class="stats-label">
+            Total Collected
+          </div>
+        </div>
+  
+
+</div>
+<div layout="row" layout-align="center center" layout-wrap class="stats-row">
+    <div flex="nogrow" class="stats-panel">
+      <div class="stats-number">
+        {{(stats.totalInvoicesCount - stats.totalPaidInvoices) || 0}}
+      </div>
+      <div class="stats-label outstanding">
+        Total Outstanding
+      </div>
+    </div>
+  
+  
+      <div flex="nogrow" class="stats-panel">
+          <div class="stats-number">
+            {{((stats.totalInvoicesAmount - stats.totalPaidInvoicesAmount) || 0) | currency}}
+          </div>
+          <div class="stats-label outstanding">
+            Total $ Outstanding
+          </div>
+        </div>
+    
+  
+  
+  
+  </div>

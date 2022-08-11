@@ -1,0 +1,19 @@
+.centered-title{
+    text-align: center;
+}
+.news-bg{
+    background:white;
+    padding-top:50px;
+
+}
+@media(max-width:'599px'){
+    .blogs{
+        margin:0;
+    }
+}
+
+.section-animation-container{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+}

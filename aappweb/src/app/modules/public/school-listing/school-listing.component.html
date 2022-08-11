@@ -1,0 +1,40 @@
+<h2>AAPP Approved Polygraph Schools</h2>
+<p class="links">
+  <span *ngFor="let group of (schools | schoolGroupFilter); let last = last">
+    <a class="jump-to-state" [ngx-scroll-to]="'#' + group._id.state">{{group._id.state}}</a> <span *ngIf="!last"> | </span>
+  </span>
+</p>
+<p class="links">
+  <span *ngFor="let group of (schools | schoolGroupFilter:true); let last = last">
+    <a class="jump-to-state" [ngx-scroll-to]="'#' + group._id.country">{{group._id.country}}</a> <span *ngIf="!last"> | </span>
+  </span>
+</p>
+<mat-divider></mat-divider>
+<div *ngFor="let group of (schools | schoolGroupFilter)" id="{{group._id.state}}" >
+  <h3>{{group._id.state}}</h3>
+  <div layout-gt-xs="row" layout-wrap>
+      <div flex-gt-xs="33" *ngFor="let record of group.records" class="school-listing-record">
+        <div class="school-name">{{record.name}}</div>
+        <div>{{record.street}}</div>
+        <div>{{record.city}}, {{record.state}} {{record.zip}}</div>
+        <div>{{record.country}}</div>
+        <div>{{record.phone | phone}}</div>
+      </div>
+  </div>
+  <mat-divider></mat-divider>
+
+</div>
+<div *ngFor="let group of (schools | schoolGroupFilter:true)" id="{{group._id.country}}" >
+  <h3>{{group._id.country}}</h3>
+  <div layout-gt-xs="row" layout-wrap>
+      <div flex-gt-xs="33" *ngFor="let record of group.records" class="school-listing-record">
+        <div class="school-name">{{record.name}}</div>
+        <div>{{record.street}}</div>
+        <div>{{record.city}}, {{record.state}} {{record.zip}}</div>
+        <div>{{record.country}}</div>
+        <div>{{record.phone | phone}}</div>
+      </div>
+  </div>
+  <mat-divider></mat-divider>
+
+</div>

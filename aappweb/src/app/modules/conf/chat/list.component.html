@@ -1,0 +1,23 @@
+  <mat-list [tdLayoutManageListClose]="!media.query('gt-sm')">
+   
+      <mat-list-item *ngFor="let key of groups()" (click)="select(key,'groups')" class="group" [ngClass]="{'group-selected':key == current}">
+          <mat-icon mat-list-icon class="chat-icon-online">group</mat-icon> 
+        <a mat-line>{{meta.groups[key]}} <span class="new-messages-indicator" *ngIf="stats[key]"> {{stats[key]}}</span></a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <form [formGroup]="form" novalidate>
+         
+            <div layout layout-align="center center">
+            <mat-form-field flex>
+            <input matInput formControlName="search" (click)="$event.stopPropagation()"/>
+            <mat-icon matPrefix>search</mat-icon>
+            <mat-icon matSuffix (click)="clearSearch($event)">close</mat-icon>
+            </mat-form-field>
+            </div>
+         
+          </form>
+      <mat-list-item *ngFor="let key of users()" (click)="select(key,'users')" class="group" [ngClass]="{'group-selected':key == current}">
+          <mat-icon mat-list-icon class="chat-icon-user" [ngClass]="{'chat-icon-online-user': isOnline(key)}">{{isOnline(key) ? 'wifi' : 'signal_wifi_off'}}</mat-icon> 
+           <a mat-line> {{meta.users[key]}}<span class="new-messages-indicator" *ngIf="stats[key]">{{stats[key]}}</span></a>    
+      </mat-list-item>
+  </mat-list>

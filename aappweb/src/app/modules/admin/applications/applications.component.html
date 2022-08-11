@@ -1,0 +1,80 @@
+<div class="member-apps">
+  <h2 class="centered-title">Member Applications</h2>
+  <mat-card *ngIf="stats">
+    <div layout="row" layout-align="center center" layout-wrap>
+      <div flex class="member-apps-stats-panel" (click)="changeType('pending')">
+        <div class="stats-number">
+          {{stats.pending}}
+        </div>
+        <div class="stats-label">
+          PENDING
+        </div>
+      </div>
+      <div flex class="member-apps-stats-panel" (click)="changeType('approved')">
+        <div class="stats-number">
+          {{stats.approved || 0}}
+        </div>
+        <div class="stats-label">
+          Approved
+        </div>
+      </div>
+      <div flex class="member-apps-stats-panel" (click)="changeType('rejected')">
+        <div class="stats-number">
+          {{stats.rejected || 0}}
+        </div>
+        <div class="stats-label">
+          Rejected
+        </div>
+      </div>
+      <div flex class="member-apps-stats-panel" (click)="changeType('unpaid')">
+        <div class="stats-number">
+          {{stats.unpaid || 0}}
+        </div>
+        <div class="stats-label">
+          Unpaid
+        </div>
+      </div>
+      <div flex class="member-apps-stats-panel no-click">
+        <div class="stats-number">
+          {{stats.total || 0}}
+        </div>
+        <div class="stats-label">
+          Total
+        </div>
+      </div>
+      <div flex class="member-apps-stats-panel no-click">
+        <div class="stats-number">
+          {{(stats.percentage | perc) || 0}}
+        </div>
+        <div class="stats-label">
+          Approv. Rate
+        </div>
+      </div>
+
+    </div>
+  </mat-card>
+  <div>
+    <mat-card class="pending-apps" *ngIf="pending">
+      <h3 class="centered-title">{{queryTitle | cap}} Applications ({{total | json}})</h3>
+      <mat-divider></mat-divider>
+      <div layout="row" layout-wrap layout-xs="column" layout-align="center center" layout-margin *ngFor="let item of pending"
+        class="app-row">
+        <div flex>{{item.name}}</div>
+        <div flex>{{item.location}}</div>
+        <div flex>INV# {{item.invoiceNumber}}</div>
+        <div flex>{{item.paid ? 'PAID' : 'UNPAID'}}</div>
+        <div flex>Approved in Region: {{item.regionApproved ? 'YES' : 'NO'}}</div>
+        <div flex><button mat-button color="primary" [routerLink]="['/web/admin/applications',item._id]">View
+            Application</button></div>
+      </div>
+    </mat-card>
+
+
+  </div>
+  <div class="pagination">
+    <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+
+</div>

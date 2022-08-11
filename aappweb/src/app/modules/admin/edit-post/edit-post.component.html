@@ -1,0 +1,43 @@
+<div class="post-edit">
+  <form [formGroup]="form">
+    <div layout="column" class="post-details" >
+      <div layout layout-margin>
+        <mat-form-field flex>
+          <input matInput placeholder="Article Title" formControlName="title" required/>
+        </mat-form-field>
+      </div>
+      <div layout layout-margin layout-xs="column">
+          <div flex="no-grow" flex-xs [ngClass]="{'uploading':uploadInProgress}">
+            <img [src]="file" (error)="imageError($event)" class="cover-image" fileDrop [ngClass]="{'add-image-hover': hover}"
+             (filesChanged)="filesChanged($event)" (fileOver)="fileOver($event)" (click)="openFilePicker()"/>
+             <ng-container *ngIf="uploadInProgress"><div class="spinner"><mat-spinner></mat-spinner></div></ng-container>
+          </div>
+          <div flex class="additional">
+            <div layout="column">
+                <mat-form-field flex>
+                    <mat-select placeholder="Post Type" formControlName="type" required>
+                      <mat-option value="public">Public</mat-option>
+                      <mat-option value="member">Members</mat-option>
+                      <mat-option value="conf">Seminar</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <mat-form-field flex>
+                    <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="summary" placeholder="Summary Text" required></textarea>
+                  </mat-form-field>
+            </div>
+          </div>
+        </div>
+      <div layout>
+        <div flex class="wysiwyg">
+          <textarea [froalaEditor]="options" formControlName="body" placeholder="Article Content" required></textarea>
+        </div>
+      </div>
+      <div layout layout-align="end center" layout-margin>
+          <button mat-flat-button flex="nogrow" color="default" (click)="cancel()">Cancel</button>
+          <button mat-flat-button flex="nogrow" color="primary" (click)="submit()" [disabled]="!form.valid">{{edit ? 'Save Changes' : '
+            Add New Post' }}</button>
+      </div>
+    </div>
+  </form>
+  <input type="file" #fileInput [hidden]="true" (change)="filesChosen($event)" accept="image/*" />
+</div>

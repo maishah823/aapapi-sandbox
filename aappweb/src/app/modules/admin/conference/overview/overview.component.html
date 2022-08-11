@@ -1,0 +1,58 @@
+<h2>Seminar Overview</h2>
+<div layout layout-wrap layout-margin layout-align="center center">
+    <div class="conf-stats-pane" flex="nogrow">
+        <div class="conf-stats-number">
+         {{stats.checkedInAttendees}}
+        </div>
+        <div class="conf-stats-label">
+            Checked-In
+          </div>
+      </div>
+
+      <div class="conf-stats-pane" flex="nogrow">
+          <div class="conf-stats-number">
+           {{((stats.checkedInAttendees / stats.approvedAttendees) || 0) | perc}}
+          </div>
+          <div class="conf-stats-label">
+              Percent Checked-In
+            </div>
+        </div>
+</div>
+
+<div layout layout-wrap layout-margin layout-align="center center">
+    <div class="conf-stats-pane" flex="nogrow">
+        <div class="conf-stats-number">
+         {{stats.approvedAttendees}}
+        </div>
+        <div class="conf-stats-label">
+            Approved Attendees
+          </div>
+      </div>
+      <div class="conf-stats-pane" flex="nogrow">
+        <div class="conf-stats-number">
+         {{stats.paidAttendees}}
+        </div>
+        <div class="conf-stats-label">
+            Paid Attendees
+          </div>
+      </div>
+      <div class="conf-stats-pane" flex="nogrow">
+          <div class="conf-stats-number">
+           {{((stats.paidAttendees / stats.approvedAttendees) || 0) | perc}}
+          </div>
+          <div class="conf-stats-label">
+              Percentage Paid
+            </div>
+        </div>
+</div>
+<mat-divider></mat-divider>
+<div layout layout-wrap layout-margin layout-align="center center">
+    <div class="conf-stats-pane" flex="nogrow">
+        <div class="conf-stats-number">
+         {{stats.guests}}
+        </div>
+        <div class="conf-stats-label">
+            Registered Guests
+          </div>
+      </div>
+</div>

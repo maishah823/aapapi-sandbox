@@ -1,0 +1,18 @@
+.join-field{
+    margin:10px 0;
+}
+
+@media (min-width:601px){
+    .join-field{
+        margin:10px 5px;
+    }
+}
+
+.international-checkbox{
+    margin: 8px 15px;
+    font-size:.8em;
+    display:flex;
+    align-content: flex-end;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

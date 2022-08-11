@@ -1,0 +1,13 @@
+<router-outlet></router-outlet>
+<div class="iphone-install" *ngIf="showIPhoneInstall" (click)="hideInstall()">
+    <div class="instructions">Press the <img src="/assets/images/share-icon-apple.png" /> button and select "Add to Home
+        Screen" to install the mobile app (Safari Only).</div>
+</div>
+<div class="iphone-install" *ngIf="showAndroidInstall">
+    <div class="instructions">
+        <div class="android-instructions">
+            <div style="margin-bottom: 8px;">Would you like to install the AAPP App?</div>
+            <button mat-button (click)="hideInstall()">No, Thanks</button><button mat-flat-button (click)="androidInstall()">Yes, Install</button>
+        </div>
+    </div>
+</div>

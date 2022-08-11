@@ -1,0 +1,26 @@
+<div class="top-links">
+    <a routerLink="/web/conf/news">News</a> |
+    <a routerLink="/web/conf/custom-schedule">My Schedule</a> |
+    <a routerLink="/web/conf/schedule">Master Schedule</a> |
+    <a routerLink="/web/conf/info">Info</a>
+</div>
+<div class="conf-events">
+  <h2>Seminar Events</h2>
+  <div *ngFor="let day of events">
+    <mat-divider></mat-divider>
+      <h3 class="day-heading">{{day._id.displayDate}}</h3>
+      
+      <div *ngFor="let event of day.events | eventLineSort" class="event-entry">
+          <mat-divider></mat-divider>
+               <div class="times">
+                   <span> {{event.displayStartTime}} - {{event.displayEndTime}}</span>
+              </div>
+              <div class="details">
+                <h4>{{event.name}}</h4>
+                <h5>{{event.room}}</h5>
+                <div class="event-desc">{{event.description}}</div>
+              </div>
+      </div>
+
+  </div>
+</div>

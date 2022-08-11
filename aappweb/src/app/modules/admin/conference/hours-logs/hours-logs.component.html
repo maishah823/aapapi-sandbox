@@ -1,0 +1,128 @@
+<div class="hours-logs">
+  <h1>Seminar Hours Logs</h1>
+  <form [formGroup]="searchForm" novalidate>
+    <div layout layout-align="center center">
+          <mat-form-field flex="nogrow">
+          <mat-select formControlName="conf" placeholder="Choose Seminar" (selectionChange)="conferenceChanged()">
+              <mat-option *ngFor="let conference of conferences; let i = index" [value]="conference._id">{{conference.name}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+    </div>
+    <div layout layout-xs="column" layout-margin>
+      <mat-form-field flex>
+        <input matInput formControlName="search" placeholder="Search Attendees" autocomplete="off" />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+  <td-expansion-panel *ngFor="let log of logs" class="hours-panel">
+    <ng-template td-expansion-panel-label>
+      <mat-icon>person</mat-icon>
+      <span>{{log.lastName}}, {{log.firstName}}</span>
+    </ng-template>
+
+    <div class="hours-full">
+      <div>{{log.name}} - {{log.email}}</div>
+      <div>CHECKED OUT on {{log.created_at | date:'MM/dd/yyyy HH:mm'}} hours.</div>
+      <div>TOTAL HOURS: <span class="total">{{log.totalHours | number:'1.1-2'}}</span></div>
+      <h4>Bluesheet Hours</h4>
+      <div>
+        <div *ngFor="let course of log.classes" class="line-item">
+          <div layout layout-margin layout-xs="column" layout-align="center center">
+            <div flex="nogrow">
+              {{course.name}} - {{course.hours}} {{course.hours != 1 ? 'hours' : 'hour'}}.
+            </div>
+            <div flex></div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="course.rating / 2"
+                [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+            </div>
+          </div>
+          <div layout layout-margin *ngIf="course.comment">
+            <div flex class="comment">Comment: {{course.comment}}</div>
+          </div>
+        </div>
+        <div *ngFor="let course of log.events" class="line-item">
+          <div layout layout-margin layout-xs="column" layout-align="center center">
+            <div flex="nogrow">
+              {{course.name}} - {{course.hours}} {{course.hours != 1 ? 'hours' : 'hour'}}.
+            </div>
+            <div flex></div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="course.rating / 2"
+                [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+            </div>
+          </div>
+          <div layout layout-margin *ngIf="course.comment">
+            <div flex class="comment">Comment: {{course.comment}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="satisfaction">
+        <h4>General Satisfaction</h4>
+        <div layout layout-margin layout-xs="column" layout-align="center center">
+          <div flex="nogrow">
+            Organization:
+          </div>
+          <div flex></div>
+          <div flex="nogrow">
+            <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="log.organization / 2"
+              [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+          </div>
+        </div>
+        <div layout layout-margin layout-xs="column" layout-align="center center">
+          <div flex="nogrow">
+            Relevance:
+          </div>
+          <div flex></div>
+          <div flex="nogrow">
+            <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="log.relevance / 2"
+              [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+          </div>
+        </div>
+        <div layout layout-margin layout-xs="column" layout-align="center center">
+          <div flex="nogrow">
+            Issues:
+          </div>
+          <div flex></div>
+          <div flex="nogrow">
+            <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="log.issues / 2"
+              [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+          </div>
+        </div>
+        <div layout layout-margin layout-xs="column" layout-align="center center">
+          <div flex="nogrow">
+            Hotel:
+          </div>
+          <div flex></div>
+          <div flex="nogrow">
+            <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="log.hotel / 2"
+              [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+          </div>
+        </div>
+        <div layout layout-margin layout-xs="column" layout-align="center center">
+          <div flex="nogrow">
+            Location:
+          </div>
+          <div flex></div>
+          <div flex="nogrow">
+            <star-rating-control [numOfStars]="5" [size]="'medium'" [starType]="'svg'" [rating]="log.location / 2"
+              [showHalfStars]="true" [readOnly]="true"></star-rating-control>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="row" layout-xs="column" class="pad-sm">
+      <!--ACTIONS-->
+      <button mat-button [disabled]="inProgress" (click)="download(log)">Download Bluesheet</button>
+      <button mat-button [disabled]="inProgress" (click)="email(log)">Re-Email Bluesheet</button>
+    </div>
+  </td-expansion-panel>
+
+  <div class="attendees-pagination">
+    <mat-paginator class="attendees-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+      [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>

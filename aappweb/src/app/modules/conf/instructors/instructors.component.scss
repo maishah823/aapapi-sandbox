@@ -1,0 +1,39 @@
+.speaker-picture{
+    display:block;
+    width:200px;
+
+}
+
+.instructor-box{
+    margin: 10px;
+    border: 1px gray solid;
+    border-radius: 3px;
+}
+
+.details-pane{
+    max-width: 800px;
+}
+
+.name{
+    color: rgb(0, 0, 102);
+    font-size: 26px;
+}
+
+.title{
+    color:rgb(107, 0, 0);
+}
+
+.summary{
+    font-size: 0.8em;
+    color: rgb(65, 65, 65);
+}
+
+.classes-teaching{
+    margin: 10px 0;
+}
+
+@media(max-width:599px){
+    .details-pane{
+    text-align:center;
+    }
+}

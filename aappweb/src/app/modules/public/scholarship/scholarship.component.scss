@@ -1,0 +1,21 @@
+.scholar{
+    text-align: center;
+    margin: 2em;
+    a{
+        color:rgb(0, 0, 77);
+    }
+    a:visited{
+        color: rgb(112, 0, 0);
+    }
+    a:active{
+        color: rgb(0, 0, 77);
+    }
+    a:hover{
+        color: rgb(43, 43, 43);
+    }
+}
+
+.scholar-name{
+    font-size: 1.2em;
+    color:rgb(90, 0, 0);
+}

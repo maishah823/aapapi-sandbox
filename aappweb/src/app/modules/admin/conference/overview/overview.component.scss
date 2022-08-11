@@ -1,0 +1,12 @@
+.conf-stats-pane{
+    padding: 10px;
+    background:white;
+    text-align: center;
+    border-radius: 10px;
+    .conf-stats-number{
+        font-size: 40px;
+    }
+    .conf-stats-label{
+        font-size: 16px;
+    }
+}

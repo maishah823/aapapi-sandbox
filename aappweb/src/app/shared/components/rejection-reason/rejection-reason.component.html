@@ -1,0 +1,15 @@
+<h2 mat-dialog-title color="primary">Rejection Reason</h2>
+<div mat-dialog-content>
+  <p>This reason will be emailed to the registrant along with notification of the rejection. THIS CANNOT BE UNDONE.</p>
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div layout="column">
+      <mat-form-field flex>
+          <textarea matInput formControlName="text" matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="10" placeholder="Enter Reason"></textarea>
+        </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <button mat-dialog-close mat-button>Cancel</button>
+  <button color="accent" mat-button (click)="save()" [disabled]="!form.valid">REJECT NOW</button>
+</div>

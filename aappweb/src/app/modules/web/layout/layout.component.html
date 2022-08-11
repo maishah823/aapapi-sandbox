@@ -1,0 +1,138 @@
+<td-layout #mainLayout class="web-layout" [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '280px' : '100%'">
+    <td-navigation-drawer #drawer class="app-main-nav" flex sidenavTitle="AAPP" name="{{(user | async).firstName}} {{(user | async).lastName}}"
+        email="{{(user | async).email}}">
+        <div class="mat-typography" td-navigation-drawer-toolbar>
+            <div tdLayoutToggle layout layout-align="center center" class="main-nav-logo">
+                <img width="300" src="/assets/images/logo.svg" />
+            </div>
+            <div>
+                <mat-icon tdLayoutToggle class="close_drawer">arrow_back</mat-icon>
+            </div>
+            <div class="mat-body-2 user-name">{{(user | async).firstName}} {{(user | async).lastName}}</div>
+            <div class="mat-body-1 user-email" layout="row" layout-align="center start" (click)="drawer.toggleMenu()">
+                <span>{{(user | async).email}}</span>
+                <button mat-icon-button class="mat-icon-button-mini" *ngIf="drawer.isMenuAvailable">
+                    <mat-icon *ngIf="!drawer.menuToggled">arrow_drop_down</mat-icon>
+                    <mat-icon *ngIf="drawer.menuToggled">arrow_drop_up</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-nav-list [@menuFly]="menuState">
+            <a mat-list-item tdLayoutToggle routerLink="/">
+                <mat-icon>home</mat-icon>Home
+            </a>
+            <a *ngIf="!(user | async).isMember" mat-list-item tdLayoutToggle routerLink="/web/join-advert">
+                <mat-icon svgIcon="assets:join"></mat-icon>Join AAPP!
+            </a>
+            <a *ngIf="!(user | async).isAttendee && !(user | async).attendeePending" mat-list-item tdLayoutToggle
+                routerLink="/web/conf-advert">
+                <mat-icon>business</mat-icon>2022 Seminar
+            </a>
+            <a mat-list-item tdLayoutToggle routerLink="public/pay">
+                <mat-icon>payment</mat-icon>Pay Invoices
+            </a>
+            <a *ngIf="(user | async).isLoggedIn" mat-list-item (click)="drawer.toggleMenu()">
+                <mat-icon>account_box</mat-icon>My Info
+            </a>
+
+            <div *ngIf="(user | async).groups?.indexOf('regional-manager') > -1 && (user | async).isAdmin">
+                <h3 mat-list-item mat-subheader> Regional</h3>
+                <a mat-list-item tdLayoutToggle *ngFor="let regionalLink of regionalLinks" [routerLink]="regionalLink.route">
+                    <mat-icon>{{regionalLink.icon}}</mat-icon>{{regionalLink.title}}
+                </a>
+            </div>
+
+            <div *ngIf="(user | async).isAdmin">
+                <h3 mat-list-item mat-subheader> Administration</h3>
+                <a mat-list-item tdLayoutToggle *ngFor="let adminLink of adminLinks" [routerLink]="adminLink.route">
+                    <mat-icon>{{adminLink.icon}}</mat-icon>{{adminLink.title}}
+                </a>
+            </div>
+            <div *ngIf="(user | async).isEducator">
+                <h3 mat-list-item mat-subheader> School</h3>
+                <a mat-list-item tdLayoutToggle *ngFor="let educatorLink of educatorLinks" [routerLink]="educatorLink.route">
+                    <mat-icon>{{educatorLink.icon}}</mat-icon>{{educatorLink.title}}
+                </a>
+            </div>
+            <div *ngIf="(user | async).isAttendee || (user | async).isInstructor">
+                <h3 mat-list-item mat-subheader>Seminar</h3>
+                <a mat-list-item tdLayoutToggle *ngFor="let confLink of confLinks" [routerLink]="confLink.route">
+                    <mat-icon>{{confLink.icon}}</mat-icon>{{confLink.title}}
+                </a>
+                <a mat-list-item tdLayoutToggle routerLink="/web/conf/checkout" *ngIf="!(user | async).checkedOut && (user | async).isAttendee">
+                    <mat-icon>exit_to_app</mat-icon>Checkout / Blue Sheet
+                </a>
+            </div>
+            <div *ngIf="(user | async).isMember">
+                <h3 mat-list-item mat-subheader> Members</h3>
+                <a mat-list-item tdLayoutToggle *ngFor="let memberLink of memberLinks" [routerLink]="memberLink.route">
+                    <mat-icon>{{memberLink.icon}}</mat-icon>{{memberLink.title}}
+                </a>
+            </div>
+            <h3 mat-list-item mat-subheader> About AAPP</h3>
+            <a mat-list-item tdLayoutToggle *ngFor="let aboutLink of aboutLinks" [routerLink]="aboutLink.route">
+                <mat-icon>{{aboutLink.icon}}</mat-icon>{{aboutLink.title}}
+            </a>
+            <h3 mat-list-item mat-subheader> Resources</h3>
+            <a mat-list-item tdLayoutToggle *ngFor="let resourceLink of resourcesLinks" [routerLink]="resourceLink.route">
+                <mat-icon>{{resourceLink.icon}}</mat-icon>{{resourceLink.title}}
+            </a>
+            <div>
+
+                <h3 mat-list-item mat-subheader> Contact AAPP</h3>
+                <a href="mailto:nom@policepolygraph.org" mat-list-item>
+                    3223 Lake Ave, Unit 15c-168
+                    <br /> Wilmette, IL 60091-1069
+                </a>
+                <a mat-list-item href="tel:8476353980"> 847-635-3980</a>
+                <a mat-list-item href="mailto:nom@policepolygraph.org">nom@policepolygraph.org</a>
+
+            </div>
+            <div *ngIf="isStandalone">
+                <h3 mat-list-item mat-subheader>Mobile App</h3>
+                <a mat-list-item (click)="update()">Update/Reload</a>
+            </div>
+        </mat-nav-list>
+
+        <div td-navigation-drawer-menu *ngIf="(user | async).isLoggedIn">
+            <mat-nav-list>
+                <a mat-list-item tdLayoutToggle *ngFor="let userLink of userLinks" [routerLink]="userLink.route">
+                    <mat-icon>{{userLink.icon}}</mat-icon>{{userLink.title}}
+                </a>
+                <ng-container *ngIf="(user | async).isAttendee">
+                    <a mat-list-item tdLayoutToggle routerLink="user/conf-info">
+                        <mat-icon>info</mat-icon>My Seminar Info
+                    </a>
+                </ng-container>
+                <ng-container *ngIf="user | async as user">
+                    <a *ngIf="user.memberLevel == 'intern'" mat-list-item tdLayoutToggle routerLink="user/upgrade-membership">
+                        <mat-icon>arrow_upward</mat-icon>Upgrade Membership
+                    </a>
+                </ng-container>
+
+            </mat-nav-list>
+        </div>
+    </td-navigation-drawer>
+    <mat-toolbar class="main-toolbar" layout color="primary">
+        <div flex></div>
+        <span flex="nogrow" hide-xs class="remaining" *ngIf="(user | async).refresh"> Login Expires: {{expires((user |
+            async).refresh) | date:'MM/dd/yy HH:mm'}} hrs</span>
+        <div flex="initial" class="app-toolbar-items">
+            <div [ngSwitch]="(user | async).isLoggedIn">
+                <a *ngSwitchCase="false" [@shrinkExpand]="" #loginRef="loginDir" loginPopover>
+                    <mat-icon>lock_outline</mat-icon> Log In
+                </a>
+                <a *ngSwitchCase="true" [@shrinkExpand]="" (click)="logout()">
+                    <mat-icon>lock_open</mat-icon> Log Out
+                </a>
+            </div>
+        </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+
+    <button mat-mini-fab color="primary" class="menu-fab" td-menu-button tdLayoutToggle>
+        <mat-icon aria-label="Main Menu">menu</mat-icon>
+    </button>
+
+</td-layout>
+<app-alert></app-alert>

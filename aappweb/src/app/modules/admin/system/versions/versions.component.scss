@@ -1,0 +1,16 @@
+.history-card{
+    padding: 15px;
+}
+.history-table{
+    border: 1px gray solid;
+    width: 100%;
+    tr:nth-child(even) {background-color: #f2f2f2;}
+    th{
+        text-align: left;
+    }
+}
+
+.current-version{
+    text-align: center;
+    font-size: 1.2em;
+}

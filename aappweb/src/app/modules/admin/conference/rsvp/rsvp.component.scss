@@ -1,0 +1,18 @@
+.rsvp-card{
+    padding: 15px;
+}
+.rsvp-panel{
+    margin:10px;
+
+    text-align:center;
+    .rsvp-number{
+        font-size: calc(4vw + 20px);
+    }
+    .rsvp-event{
+        font-size: calc(1vw + 16px);
+    }
+}
+
+.instructions{
+    text-align: center;
+}

@@ -1,0 +1,20 @@
+<div class="base-layout">
+  <h1>Instructors</h1>
+  <div *ngFor="let instructor of instructors" layout layout-margin layout-xs="column" layout-align-xs="center center" class="instructor-box">
+  <div flex="nogrow">
+      <img class="speaker-picture" [src]="instructorImagesURL +'-thumbs/'+instructor?.picture" />
+  </div>
+  <div flex class="details-pane">
+    <div class="name">{{instructor.name}}</div>
+    <div class="title">{{instructor.title}}</div>
+    <div class="classes-teaching">
+    <div>Teaching {{instructor.totalClasses || 0}} {{instructor.totalClasses == 1 ? 'class' : 'classes'}}:</div>
+    <ol>
+      <li *ngFor="let className of instructor.classes">{{className}}</li>
+    </ol>
+    </div>
+    <div class="summary">{{instructor.summary}}</div>
+  </div>
+  </div>
+</div>
+

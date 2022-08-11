@@ -1,0 +1,40 @@
+.company{
+    padding:10px;
+    .rep{
+        margin:8px;
+        padding: 8px;
+        border: 1px solid lightgray;
+    }
+
+    .status{
+        color:green;
+        &.rejected{
+            color:red;
+        }
+    }
+
+    .status-details{
+        text-align:right;
+    }
+}
+
+.rejected-reason{
+    color:red;
+    font-size: .8em;
+    font-style: italic;
+    &::before{
+        content:"\"";
+    }
+    &::after{
+        content:"\"";
+    }
+}
+
+@media(max-width:'599px'){
+    .company{
+        .status-details{
+            text-align:center;
+            padding: .2em;
+        }
+    }
+}

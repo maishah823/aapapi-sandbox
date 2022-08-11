@@ -1,0 +1,137 @@
+@import '~fullpage.js/dist/jquery.fullpage.css';
+
+#overlay-menu{
+    display:flex;
+    justify-content: flex-end;
+    padding: 1.2em;
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    color:white;
+    font-size: 1.3em;
+    &.hide-nav{
+        display:none;
+    }
+    .overlay-button{
+        margin-left: 5px;
+        border: 1px solid white;
+        &.login-button{
+            background:rgba(255,255,255,.5);
+            color:rgb(0, 0, 80);
+            &.login-hidden{
+                display: none;
+            }
+        }
+    }
+}
+
+
+.history{
+    text-align: center;
+}
+
+//FULL PAGE
+
+#fp-nav{
+    ul > li > a > span{
+        background-color:white;
+       color:white;
+    }
+}
+
+.brand-text{
+    font-family: 'abeezee', 'robotoregular';
+    font-size: calc(2vw + 16px);
+    color: white;
+    margin-bottom: 1vh !important;
+}
+
+.home-page{
+
+    .front-button{
+        color:white;
+        font-size:calc(1vw + 16px);
+        border: 1px solid white;
+        border-radius: 8px;
+        padding: .5em;
+        margin: 10px;
+    }
+    .large-logo{
+        width:500px;
+        height:500px;
+    }
+
+
+    .first-tile{
+    
+        background: url(/assets/images/line_bg.jpg) black center center no-repeat;
+        background-size:cover;
+        
+    }
+
+    .mission{
+        .mission-inner{
+            padding:10%;
+        }
+        p{
+            font-size:calc(.8vw + 18px);
+        }
+        &::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+    }
+
+    .second-tile{
+        background: url(/assets/images/Arizona1.jpg) top left no-repeat;
+        background-size:cover;
+        //background:radial-gradient(at center,white,black);
+    }
+
+    .front-conf-details{
+        padding: 30px;
+        text-align:center;
+        background: rgba(0,0,0,.3);
+        h2,h3,h4,h5,button{
+            text-align:center;
+            margin: 5px;
+        }
+        h2{
+            font-size: calc(6vw + 16px);
+            color:white;
+            text-shadow: 4px 4px 4px rgba(0,0,0,.5);
+        }
+        h3{
+            font-size: calc(4vw + 16px);
+            color:white;
+            text-shadow: 4px 4px 4px rgba(0,0,0,.5);
+        }
+        h4{
+            font-size: calc(3vw + 16px);
+            color:white;
+            text-shadow: 4px 4px 4px rgba(0,0,0,.5);
+        }
+    }
+
+    .third-tile{
+        background: url(/assets/images/chair.jpg) center center no-repeat;
+        background-size:cover;
+       // background:radial-gradient(at center,white,red);
+    }
+
+    .scroll-down-instructions{
+        position:fixed;
+        left:50%;
+        bottom:0;
+        z-index: 100;
+        color:white;
+        font-size: 20px;
+        transform: translateX(-50%);
+        text-align:center;
+    }
+
+    
+
+}
+

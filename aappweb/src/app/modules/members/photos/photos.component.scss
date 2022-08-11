@@ -1,0 +1,60 @@
+.gallery{
+    background:white;
+    overflow-y:auto;
+}
+.add-image{
+    text-align:center;
+    margin:15px;
+    background: white;
+    border: 3px gray dashed;
+    border-radius: 15px;
+    padding: 5%;
+    font-size: 1.1em;
+    &.add-image-hover{
+        background:rgb(255, 240, 240);
+    }
+}
+
+.thumb{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+@media(max-width:'600px'){
+    .thumb{
+        width:50vw;
+        height:50vw;
+    }
+}
+
+.stand-out{
+    color:rgb(94, 0, 0);
+}
+
+.image-thumbnail{
+    cursor:pointer;
+    &:hover{
+        border: 8px rgb(56, 0, 0) solid;
+    }
+}
+
+.new-image{
+    display:block;
+    position: relative;
+}
+
+.new-item{
+    background: rgba(223, 223, 2, .6);
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    padding: 1em;
+    text-align: center;
+    color:white;
+}
+
+.white-background{
+    background:white;
+}

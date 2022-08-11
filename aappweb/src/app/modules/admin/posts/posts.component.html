@@ -1,0 +1,30 @@
+<!-- <div class="base-layout">
+  <h1>Manage Posts</h1>
+  <h3 class="centered-title">Public News, Conference, Members</h3>
+  <div layout>
+    <button mat-flat-button color="primary" flex routerLink="/web/admin/add-post" class="line-with-icon"><mat-icon>add</mat-icon> New Post </button>
+  </div>
+  <aapp-blog-detail [blogType]="post.type" *ngFor="let post of blogs" [post]="post"></aapp-blog-detail>
+  <div class="pagination">
+  <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+    (page)="pageEvent($event)">
+  </mat-paginator>
+</div>
+</div> -->
+
+<div class="news-bg">
+  <h1>Manage Posts</h1>
+  <div layout>
+    <button mat-flat-button color="primary" flex routerLink="/web/admin/edit-post" class="line-with-icon"><mat-icon>add</mat-icon> New Post </button>
+  </div>
+  <div layout="column" [@slideInFromBottom]="true" class="blogs section-animation-container">
+      <div class="section" layout="row" layout-xs="column" layout-wrap layout-align="center stretch" layout-align-xs="center center" layout-margin>
+      <aapp-blog-detail [blogType]="post.type" flex="initial" *ngFor="let post of blogs" [post]="post"></aapp-blog-detail>
+      </div>
+      <div class="pagination section">
+          <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+              (page)="pageEvent($event)">
+          </mat-paginator>
+      </div>
+  </div>
+</div>

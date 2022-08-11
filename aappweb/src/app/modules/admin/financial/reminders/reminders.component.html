@@ -1,0 +1,28 @@
+<mat-card class="reminder-panel">
+  <div layout layout-margin>
+  <h3>Dues Reminders</h3>
+  <div flex></div>
+  <button (click)="sendDuesReminders()" mat-flat-button>Send Now</button>
+  </div>
+
+</mat-card>
+
+<mat-card class="reminder-panel">
+  <div layout layout-margin>
+  <h3>Checkout Reminders</h3>
+  <div flex></div>
+  <button (click)="sendCheckoutReminders()" mat-flat-button>Send Now</button>
+  </div>
+
+</mat-card>
+
+<mat-card class="reminder-panel">
+  <div layout layout-margin>
+  <h3>Yearly Dues</h3>
+  <div flex></div>
+  <button *ngIf="!hideDuesButton" (click)="generateYearlyDues()" mat-flat-button>Generate Yearly Dues!</button>
+ 
+</div>
+<div>Caution: This will create a dues invoice every eligible member. Do not press this button more than once a year.</div>
+
+</mat-card>

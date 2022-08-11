@@ -1,0 +1,21 @@
+<ng-container *ngIf="valueType() == 'string'">
+  <div class="event-line-item">
+    <div class="event-line-label">
+      {{label}}
+    </div>
+    <div>
+    {{value}}
+    </div>
+  </div>
+</ng-container>
+
+  <ng-container *ngIf="valueType() == 'array'">
+    <div class="event-line-item">
+        <div class="event-line-label">
+            {{label}}
+          </div>
+      <div *ngFor="let item of value">
+        {{item.name}}
+      </div>
+    </div>
+  </ng-container>

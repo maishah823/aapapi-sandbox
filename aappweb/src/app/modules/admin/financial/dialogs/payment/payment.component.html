@@ -1,0 +1,34 @@
+<div class="payment-info">
+  <h1>Payee</h1>
+    <form [formGroup]="paymentForm" novalidate>
+      <div layout>
+        <mat-form-field flex class="payment-field">
+          <input matInput placeholder="Agency Name (if applicable)" formControlName="agency" />
+        </mat-form-field>
+      </div>
+      <div layout layout-xs="column">
+        <mat-form-field flex class="payment-field">
+          <input matInput formControlName="firstName" placeholder="First Name" required/>
+        </mat-form-field>
+        <mat-form-field flex class="payment-field">
+          <input matInput formControlName="lastName" placeholder="Last Name" required/>
+        </mat-form-field>
+      </div>
+      <aapp-address [formGroup]="address"></aapp-address>
+      <div layout>
+        <mat-form-field flex class="payment-field">
+          <input matInput placeholder="Email Address" formControlName="email" required/>
+        </mat-form-field>
+      </div>
+      <div layout>
+        <mat-form-field flex="nogrow" class="payment-field">
+          <input matInput placeholder="Check Number" formControlName="transaction" />
+        </mat-form-field>
+      </div>
+      <div class="payment-actions">
+        <div layout layout-align="end center">
+          <button mat-flat-button flex="initial" color="primary" (click)="submitPayment()" [disabled]="!paymentForm.valid">Mark as Paid</button>
+        </div>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,34 @@
+.admin-students{
+    padding: 15px;
+}
+.student-card{
+    padding: 10px;
+}
+
+.conversion{
+    color:rgb(177, 2, 2);
+    &.over-50{
+        color: green;
+    }
+}
+.student-name{
+    padding: 0;
+    margin:0;
+}
+
+.editable{
+    color: blue;
+    cursor: context-menu;
+    &:hover{color:rgb(105, 105, 167)}
+}
+
+.student-expired{
+    color:rgb(177, 2, 2);
+}
+.student-redeemed{
+    color:green;
+}
+
+.schools-heading{
+    margin:20px;
+}

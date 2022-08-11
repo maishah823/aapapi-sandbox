@@ -1,0 +1,25 @@
+.invoice-display{
+    white-space: normal;
+}
+
+.invoice-number{
+    margin: 0 15px;
+}
+.invoice-amount{
+    font-size: 1.5em;
+    color: rgb(31, 31, 158);
+}
+
+.invoice-paid{
+    font-size: 1.5em;
+    color: rgb(31, 31, 158);
+    &.unpaid{
+        color: rgb(167, 24, 24);
+    }
+}
+
+.has-space-after{
+    div{
+        margin-right: .5em;
+    }
+}

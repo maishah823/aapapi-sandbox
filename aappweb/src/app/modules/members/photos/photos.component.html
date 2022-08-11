@@ -1,0 +1,55 @@
+<div class="base-layout white-background">
+  <div class="gallery">
+    <h1>Member Photos</h1>
+    <div class="add-photo-container">
+      <form [formGroup]="filterForm" novalidate>
+        <div layout layout-align="end center" layout-margin>
+          <mat-form-field flex>
+            <mat-select placeholder="Show..." formControlName="album">
+              <mat-option value="">All</mat-option>
+              <mat-option value="members">Members</mat-option>
+              <mat-option value="2019conference">2019 Conference</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button flex="nogrow" mat-button hide-xs (click)="showDrop = !showDrop">
+            <mat-icon>attach_file</mat-icon>{{showDrop ? 'Hide Upload' : 'Upload Image(s)'}}</button>
+          <button hide-gt-xs flex="nogrow" (click)="openFilePicker()" mat-button>
+            <mat-icon>attach_file</mat-icon> Upload</button>
+        </div>
+      </form>
+      <div *ngIf="!uploadInProgress && showDrop" class="add-image" hide-xs fileDrop [ngClass]="{'add-image-hover': hover}" (error)="showError($event)"
+        (filesChanged)="filesChanged($event)" (fileOver)="fileOver($event)">
+        <span class="stand-out">Drag and drop image HERE</span> to add it to the gallery.
+        <br/>
+      </div>
+      <div class="add-image" *ngIf="uploadInProgress" layout layout-align="center center">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+
+    <input type="file" #fileInput [hidden]="true" (change)="filesChosen($event)" accept="image/*" />
+
+    <div class="newimages" *ngIf="newImages.length > 0">
+      <div layout layout-wrap layout-align="center center">
+        <div flex="nogrow" class="new-image" *ngFor="let newImage of newImages">
+          <img class="thumb" [src]="newImage.file" (click)="openLightbox(newImage.filename, newImage.caption, null,null)"
+          />
+          <div class="new-item">NEW ITEM</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="gallery">
+      <div layout layout-wrap layout-align="center center">
+        <img flex="nogrow" (click)="openLightbox(image.filename, image.caption, image.created_by, image.created_at)" class="image-thumbnail"
+          class="thumb" matTooltip="{{image.caption}} -- Uploaded by {{image.created_by?.fullname || 'Unknown'}} on {{image.created_at | date}}"
+          *ngFor="let image of images" src="{{memberGalleryURL}}-thumbs/{{image.filename}}" />
+      </div>
+    </div>
+    <div>
+      <mat-paginator class="members-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+        (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.school-stat-card{
+    margin: 10px;
+    padding:10px;
+}
+.search-card{
+    margin: 0 20px;
+}
+.conversion{
+    color:rgb(177, 2, 2);
+    &.over-50{
+        color: green;
+    }
+}
+
+.schools-heading{
+    padding:20px;
+}

@@ -1,0 +1,46 @@
+.check-in {
+  padding: 60px 15px;
+}
+.check-in-search {
+  margin-bottom: 20px;
+}
+
+.attendee-name {
+    font-size: 1.3em;
+    color: rgb(0, 0, 85);
+}
+
+.attendee-email {
+    color:rgb(0, 64, 94);
+    font-style: italic;
+}
+
+.guest-heading {
+    font-style:bold;
+}
+
+.guest-name {
+    color: purple;
+}
+
+.not-approved{
+    color:red;
+}
+
+.checked-in {
+  .attendee-name {
+      color:green;
+  }
+
+  .attendee-email {
+      color:gray;
+  }
+
+  .guest-heading {
+      color:gray;
+  }
+
+  .guest-name {
+      color:gray;
+  }
+}

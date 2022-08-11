@@ -1,0 +1,30 @@
+.times{
+    font-size: 20px;
+    color: darkblue;
+    min-width: 250px;
+}
+
+.line-schedule{
+    padding:10px;
+    background:white;
+    text-align:center;
+}
+
+.day-heading{
+    // border-bottom: 1px lightblue solid;
+    // padding-bottom: 10px;
+
+}
+
+.event-entry{
+    background: rgb(240, 249, 255);
+    overflow:hidden;
+}
+
+.event-add-container{
+    margin:8px;
+}
+
+.delete-button{
+    color:rgb(82, 0, 0);
+}

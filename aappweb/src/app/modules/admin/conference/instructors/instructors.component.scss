@@ -1,0 +1,17 @@
+.admin-heading{
+    text-align: center;
+}
+
+
+
+.instructor-panels{
+    margin:8px;
+}
+
+.reset-form{
+    font-size: .9em;
+    cursor: pointer;
+    &:hover{
+        color:red;
+    }
+}

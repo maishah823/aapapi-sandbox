@@ -1,0 +1,163 @@
+<div class="filters">
+  <form [formGroup]="searchForm" novalidate>
+    <div layout layout-xs="column" layout-margin layout-align="center center" layout-align-xs="stretch center">
+      <mat-form-field flex>
+        <input matInput formControlName="search" placeholder="Search Users" />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      <mat-form-field flex="nogrow" flex-xs>
+        <mat-select formControlName="type" placeholder="Permission Type">
+          <mat-option value="">All</mat-option>
+          <mat-option value="members">Members</mat-option>
+          <mat-option value="admins">Administrators</mat-option>
+          <mat-option value="educators">School Admins</mat-option>
+          <mat-option value="attendees">Conf Attendees</mat-option>
+          <mat-option value="instructors">Instructors</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox formControlName="showSuspended" flex="nogrow" flex-xs>
+        Show Suspended
+      </mat-checkbox>
+    </div>
+  </form>
+</div>
+<td-expansion-panel *ngFor="let user of users" class="user-panel">
+  <ng-template td-expansion-panel-label>
+    <mat-icon [ngClass]="{'suspended':!user.active}">person</mat-icon>
+    <span [ngClass]="{'suspended':!user.active}">{{user.lastName}}, {{user.firstName}} {{user.middleName}}</span>
+  </ng-template>
+  <ng-template td-expansion-panel-sublabel *ngIf="media.registerQuery('gt-sm') | async">
+    <span>{{user.email}}</span> <span *ngIf="user.memberNumber"> - Member # {{user.memberNumber}}</span>
+  </ng-template>
+  <td-expansion-summary *ngIf="user.address">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListAvatar>pin_drop</mat-icon>
+        <h3 matLine>Region {{user.region | roman}}</h3>
+        <p matLine>{{user.address.street1}}</p>
+        <p matLine *ngIf="user.address.street2">{{user.address.street2}}</p>
+        <p matLine>{{user.address.city}}, {{user.address.state}} {{user.address.zip}}</p>
+        <p matLine>{{user.address.country}}</p>
+      </mat-list-item>
+    </mat-list>
+  </td-expansion-summary>
+  <div class="user-full">
+    <div layout layout-xs="column" layout-margin>
+      <div class="left-col">
+
+        <h4>User Information</h4>
+        <div *ngIf="!user.active" class="suspended">SUSPENDED ACCOUNT</div>
+        <div><span class="editable" (click)="updateFirstName(user)"
+            matTooltip="Click to UPDATE.">{{user.firstName}}</span> <span class="editable" (click)="updateLastName(user)"
+            matTooltip="Click to UPDATE.">{{user.lastName}}</span></div>
+        <div class="editable" (click)="updateEmail(user)" matTooltip="Click to UPDATE.">{{user.email}}</div>
+        <br />
+        <div layout="column" *ngIf="user.address; else noaddress" class="editable" (click)="updateAddress(user)"
+          matTooltip="Click to UPDATE.">
+
+          <div>{{user.address.street1}}</div>
+          <div *ngIf="user.address.street2">{{user.address.street2}}</div>
+          <div>{{user.address.city}}, {{user.address.state}} {{user.address.zip}}</div>
+          <div>{{user.address.country}}</div>
+          <div>W: {{user.address.workPhone | phone}} C: {{user.address.cellPhone | phone}}</div>
+          <div>
+            <span *ngIf="user.address.homePhone">H: {{user.address.homePhone | phone}}</span>
+            <span *ngIf="user.address.homePhone">F: {{user.address.fax | phone}}</span>
+          </div>
+        </div>
+        <div class="certs">
+          <div>Cert #: <span class="editable" (click)="updateCertNumber(user)">{{user.certNumber || 'None'}}</span>
+          </div>
+          <div>Cert Exp: <span class="editable" (click)="updateCertExpiration(user)">{{user.certYear || 'N/A'}}</span>
+          </div>
+        </div>
+        <ng-template layout="column" #noaddress>
+          <span class="editable" (click)="updateAddress(user)">No address on file. Click to add.</span>
+        </ng-template>
+        <div class="temp-pass" *ngIf="user.passwordIsTemp">
+          User has not changed temp password.
+        </div>
+        <!-- <div class="user-actions">
+          <div>
+            <button mat-raised-button>
+              <mat-icon>list</mat-icon> View Invoices</button>
+          </div>
+        </div> -->
+      </div>
+      <div flex hide-xs></div>
+      <div class="right-col">
+        <div layout="column">
+          <h4>Permissions</h4>
+          <div *ngFor="let application of user.memberInfo">
+            <div *ngIf="!application.rejected && !application.finalApproved">Membership under review.</div>
+            <div *ngIf="!application.rejected && application.finalApproved">Membership approved.</div>
+            <div *ngIf="application.rejected">Membership rejected.</div>
+            <button mat-button color="primary" [routerLink]="['/web/admin/applications',application._id]">
+              <mat-icon>note</mat-icon> View Membership Application
+            </button>
+          </div>
+          <div *ngIf="user.isMember" class="line-with-icon">
+            <mat-icon>check</mat-icon> Member <span *ngIf="user.memberNumber"> (#{{user.memberNumber}})</span>
+          </div>
+          <div *ngIf="user.isMember">
+            <button mat-button (click)="changeLevel(user)">{{user.memberLevel | cap}} Member</button>
+          </div>
+
+          <div *ngIf="user.isAdmin" class="line-with-icon">
+            <mat-icon>check</mat-icon> Administrator
+          </div>
+          <div *ngIf="user.isAttendee" class="line-with-icon">
+            <mat-icon>check</mat-icon> Conf Attendee
+          </div>
+          <div *ngIf="hasGroup(user,'final-approval')" class="line-with-icon">
+            <mat-icon>check</mat-icon> Final Approvals
+          </div>
+          <div *ngIf="hasGroup(user,'financial')" class="line-with-icon">
+            <mat-icon>check</mat-icon> Financial
+          </div>
+        </div>
+        <div class="educator-section">
+          <mat-checkbox [(ngModel)]="user.isEducator" (change)="isEducatorChanged(user,$event.checked)">School
+            Administrator</mat-checkbox>
+          <div layout>
+            <mat-form-field flex *ngIf="user.isEducator">
+              <mat-select placeholder="Select School" (change)="schoolChanged(user._id,$event.value)"
+                [(ngModel)]="user.adminForSchool" [value]="user.adminForSchool || ''">
+                <mat-option [value]="school._id" *ngFor="let school of schools">{{school.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="regional-manager-section" *ngIf="user.isAdmin">
+          <mat-checkbox [disabled]="!hasGroup(currentUser | async, 'makeAdmins')"
+            (change)="regionalManagerChanged(user,$event.checked)" [checked]="hasGroup(user,'regional-manager')">
+            Regional Manager</mat-checkbox>
+        </div>
+        <div class="instructor-section">
+          <mat-checkbox (change)="instructorChanged(user,$event.checked)" [checked]="user.isInstructor">Instructor
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div layout="row" layout-xs="column" class="pad-sm">
+    <button mat-button (click)="resetPassword(user)" color="accent" class="text-upper">Reset Password</button>
+    <button mat-button (click)="toggleAdmin(user)" class="text-upper"
+      *ngIf="hasGroup(currentUser | async, 'makeAdmins')">{{user.isAdmin
+      ? 'Revoke ADMIN' : 'Make Admin'}}</button>
+    <!--todo:: need to confirm suspend or deactivate is same, -->
+    <button mat-button (click)="toggleSuspension(user)" class="text-upper">
+      {{user.active ? 'Suspend/Deactivate User' : 'Reinstate User'}}</button>
+    <button mat-button (click)="toggleDelinquentDues(user)" class="text-upper">
+      <mat-icon *ngIf="user.isDelinquentDues; else showCloseTemplate">done</mat-icon>
+      <ng-template #showCloseTemplate><mat-icon class="suspended">close</mat-icon></ng-template>
+      Delinquent Dues</button>
+    <button mat-button (click)="createInvoice(user)" class="text-upper">Create Invoice</button>
+  </div>
+</td-expansion-panel>
+<div class="users-pagination">
+  <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+    [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+  </mat-paginator>
+</div>

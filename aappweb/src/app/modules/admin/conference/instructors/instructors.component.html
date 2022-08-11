@@ -1,0 +1,69 @@
+<div layout="row" layout-xs="column">
+  <div flex flex-order-gt-xs="2" layout="row" layout-align="end center">
+    <button flex-align="end" mat-button (click)="showAddInstructor = !showAddInstructor">
+      <mat-icon>{{showAddInstructor ? 'remove' : 'add'}}</mat-icon>{{showAddInstructor ? 'Hide Add Instructor' : 'Add Instructor'}}</button>
+  </div>
+</div>
+
+<mat-card *ngIf="showAddInstructor">
+  <form [formGroup]="addInstructorForm" novalidate>
+    <div layout="column" layout-margin>
+      <h3>Add New Instructor</h3>
+      <div layout layout-margin>
+        <mat-form-field flex>
+          <input matInput type="email" formControlName="email" placeholder="Email" />
+        </mat-form-field>
+      </div>
+      <div layout="row" layout-xs="column" layout-margin layout-wrap>
+        <mat-form-field flex>
+          <input matInput formControlName="firstName" placeholder="First Name" />
+        </mat-form-field>
+        <mat-form-field flex>
+          <input matInput formControlName="lastName" placeholder="Last Name" />
+        </mat-form-field>
+
+      </div>
+      <div layout layout-align="end center" layout-margin>
+        <button mat-raised-button flex="nogrow" color="primary" (click)="addInstructor()" [disabled]="!addInstructorForm.valid"><mat-icon>add</mat-icon> Add</button>
+      </div>
+    </div>
+
+  </form>
+</mat-card>
+<h2 class="admin-heading">Instructors</h2>
+<mat-card>
+  <form [formGroup]="form" novalidate>
+    <div layout layout-align="end start" layout-margin>
+      <mat-form-field flex="50" flex-xs="100">
+        <input matInput formControlName="search" [autocomplete]="false" />
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-icon class="reset-form" *ngIf="form.get('search').value" matSuffix (click)="resetSearch()">close</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-card>
+<div class="instructor-panels">
+  <mat-accordion>
+    <mat-expansion-panel class="instructor-panel" *ngFor="let instructor of instructors">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="instructor-name">{{instructor.lastName}}, {{instructor.firstName}}</span>
+        </mat-panel-title>
+        <mat-panel-description hide-xs>
+          {{instructor.email}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <aapp-instructor [instructorInfo]="instructor.instructorInfo" [topics]="topics" [admin]="true"></aapp-instructor>
+      </ng-template>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>
+<mat-card>
+  <div class="pagination-card">
+    <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[20, 50, 100, 200]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</mat-card>

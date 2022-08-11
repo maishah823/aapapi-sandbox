@@ -1,0 +1,43 @@
+<div class="admin-layout-container">
+    <td-layout-manage-list [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+            [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '300px' : '100%'">
+            <mat-toolbar td-sidenav-content color="accent">
+                <h5 class="schools-toolbar-title">Admin</h5>
+            </mat-toolbar>
+            <div td-sidenav-content>
+               <mat-nav-list [tdLayoutManageListClose]="!media.query('gt-sm')">
+                  <mat-list-item routerLink="school-admin" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>business</mat-icon> 
+                    <a mat-line >Schools</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="administrators" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>verified_user</mat-icon> 
+                    <a mat-line >Administrators</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="students" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>view_list</mat-icon> 
+                      <a mat-line >Students</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                  <mat-list-item routerLink="stats" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>show_chart</mat-icon> 
+                      <a mat-line >School Stats</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+               </mat-nav-list>     
+            </div>
+            <mat-toolbar color="accent">
+                <div layout="row" layout-align="start center" flex>
+                    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+                            <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <mat-icon>business</mat-icon> 
+                    <h5 class="schools-toolbar-title">Schools</h5>
+                    <span flex></span>
+            </div>  
+            </mat-toolbar>
+            <router-outlet></router-outlet>
+    </td-layout-manage-list>
+</div>

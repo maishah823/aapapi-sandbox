@@ -1,0 +1,66 @@
+<form [formGroup]="form" novalidate>
+  <div *ngIf="admin">
+    <h4 class="instructor-section-heading">Topics</h4>
+    <div layout layout-wrap>
+      <mat-form-field flex class="chip-list">
+        <mat-chip-list #chipList>
+          <mat-chip color="primary" *ngFor="let topic of instructorInfo.topics" [selectable]="false" [removable]="topic.name != 'General'"
+            (remove)="remove(topic)">
+            {{topic.name}}
+            <mat-icon *ngIf="topic.name != 'General'" matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input #topicInput formControlName="chip" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="seperatorKeyCodes"
+            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" autoActiveFirstOption="true">
+          <mat-option *ngFor="let t of filteredTopics | async" [value]="t">
+            {{ t.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <!--INFO-->
+  <div layout layout-xs="column">
+    <div flex>
+      <h4 class="instructor-section-heading">Title</h4>
+      <p>
+        <span class="editable" matTooltip="Click to edit." (click)="editTitle()">{{instructorInfo.title || 'Add Title...'}}</span>
+      </p>
+      <h4 class="instructor-section-heading">Education</h4>
+      <p>
+        <span class="editable" matTooltip="Click to edit." (click)="editEducation()">{{instructorInfo.education || 'Add Education...'}}</span>
+      </p>
+      <h4 class="instructor-section-heading">Research</h4>
+      <p>
+        <span class="editable" matTooltip="Click to edit." (click)="editResearch()">{{instructorInfo.research || 'Add Research...'}}</span>
+      </p>
+      <h4 class="instructor-section-heading">Career Summary</h4>
+      <p>
+        <span class="editable" matTooltip="Click to edit." (click)="editSummary()">{{instructorInfo.summary || 'Add Summary...'}}</span>
+      </p>
+    </div>
+    <div flex="nogrow" class="instructor-image">
+      <img *ngIf="instructorInfo?.picture" [src]="instructorImagesURL +'-thumbs/'+instructorInfo?.picture" fileDrop (error)="showError($event)" (filesChanged)="filesChanged($event)"
+      />
+      <div *ngIf="!uploadInProgress" class="add-image" hide-xs fileDrop [ngClass]="{'add-image-hover': hover}" (error)="showError($event)" (filesChanged)="filesChanged($event)"
+        (fileOver)="fileOver($event)">
+        Drag new profile image here.<br/>
+        JPG Format<br/>
+        4x6 Portrait<br/>
+        (Image will be cropped to size)
+      </div>
+      <div class="add-image" *ngIf="uploadInProgress" layout layout-align="center center">
+          <mat-spinner></mat-spinner>
+      </div>
+      
+      <button hide-gt-xs (click)="openFilePicker()" mat-button>
+        <mat-icon>attach_file</mat-icon> Upload Image </button>
+      <input type="file" #fileInput [hidden]="true" (change)="filesChosen($event)" />
+    </div>
+  </div>
+</form>
+<div *ngIf="!admin">
+  <span class="required-message"> ** Title, Summary, and a picture are required in order for this information to be displayed to the public. Instructors
+    participating in a seminar are required to complete this information.</span>
+</div>

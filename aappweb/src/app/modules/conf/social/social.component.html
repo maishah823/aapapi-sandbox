@@ -1,0 +1,28 @@
+<div class="social-container">
+        <td-layout-manage-list [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+                [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '400px' : '100%'">
+                <mat-toolbar td-sidenav-content color="accent" class="chat-toolbar">
+                        <h5>Status: {{isConnected ? 'Online' : 'Offline'}}</h5>
+                </mat-toolbar>
+                <div td-sidenav-content>
+                        <chat-list [meta]="meta$ | async" [stats]="stats$ | async" [online]="onlineUsers$ | async" (selected)="selectGroup($event)"></chat-list>
+                </div>
+                <mat-toolbar color="accent" class="chat-toolbar">
+                        <div layout="row" layout-align="start center" flex>
+                                <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+                                        <mat-icon>arrow_back</mat-icon>
+                                </button>
+                                <h5>{{title}}</h5>
+                                <span flex></span>
+                                <button mat-icon-button>
+                                        <mat-icon>settings</mat-icon>
+                                </button>
+                        </div>
+                </mat-toolbar>
+                <div class="room-content">
+
+                     <chat-conv [userId]="userId$ | async" [room]="selectedRoom" [messages]="(conversations$ | async)[selectedRoom]" (sent)="sent($event)"
+                                (more)="getMore()"></chat-conv>
+                </div>
+        </td-layout-manage-list>
+</div>

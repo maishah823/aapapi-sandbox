@@ -1,0 +1,23 @@
+<div class="base-layout">
+  <h1>Forget your password?</h1>
+  <div *ngIf="!complete; else done">
+    <form [formGroup]="form" novalidate>
+      <div layout="column" layout-margin>
+        <div class="forgot-inst">Enter your email address to receive a reset link by email.</div>
+        <div flex layout layout-margin layout-align="center center">
+          <mat-form-field flex="50" flex-xs="100">
+            <input matInput formControlName="email" placeholder="Email" />
+          </mat-form-field>
+        </div>
+        <div flex layout layout-align="end end" layout-margin flex-align>
+          <button mat-button (click)="submit()" [disabled]="!form.valid" flex="nogrow">Send Reset Email</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template #done>
+    <div class="forgot-inst">
+      <span>A link has been sent to your email. Please click on the link within the next 24 hours to reset your password.</span>
+    </div>
+  </ng-template>
+</div>

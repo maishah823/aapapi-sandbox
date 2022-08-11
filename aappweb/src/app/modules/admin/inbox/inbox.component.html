@@ -1,0 +1,23 @@
+<div class="member-apps">
+    <h2 class="centered-title">Regional Pending Applications</h2>
+    <h3 class="centered-title">(Region {{user.region}})</h3>
+
+    <mat-card class="pending-apps" *ngIf="pending && pending.length > 0; else noresults">
+        <div layout="row" layout-wrap layout-xs="column" layout-align="center center" layout-margin *ngFor="let item of pending" class="app-row">
+          <div flex>{{item.user?.lastName}}, {{item.user?.firstName}}</div>
+          <div flex>{{item.user?.address?.city}}, {{item.user?.address?.state}}</div>
+          <div flex>INV# {{item.invoiceRef?.invoiceNumber}}</div>
+          <div flex>{{item.invoiceRef?.paid ? 'PAID' : 'UNPAID'}}</div>
+          <div flex><button mat-button color="primary" [routerLink]="['/web/admin/applications',item._id]">View Application</button></div>
+        </div>
+    </mat-card>
+    <ng-template #noresults>
+      <mat-card>
+        <div layout layout-margin layout-align="center center">
+          <div flex="nogrow"><mat-icon>check</mat-icon></div>
+          <div flex="nogrow">There are no pending applications.</div>
+        </div>
+      </mat-card>
+    </ng-template>
+  
+  </div>

@@ -1,0 +1,24 @@
+<div class="conf-registration">
+<h2>AAPP Seminar Registration</h2>
+<div layout layout-align="space-between" *ngIf="answered" [@fade]>
+  <button mat-stroked-button flex routerLink="/web/public/attend/individual" routerLinkActive="active">Individual</button>
+  <button mat-stroked-button flex routerLink="/web/public/attend/agency" routerLinkActive="active">Agency</button>
+  <button mat-stroked-button flex routerLink="/web/public/attend/vendor" routerLinkActive="active">Vendor</button>
+</div>
+<div class="questions" layout layout-align="center center" *ngIf="!answered" [@fade]>
+    <mat-selection-list flex="nogrow" (selectionChange)="selectionChange($event)">
+        <mat-list-option checkboxPosition='before' [value]="'individual'" class="question">
+          I would like to register only MYSELF for the upcoming AAPP Seminar.
+        </mat-list-option>
+        <mat-list-option checkboxPosition='before' [value]="'agency'" class="question">
+            I am representing an AGENCY and would like to register multiple individuals at once.
+          </mat-list-option>
+          <mat-list-option checkboxPosition='before' [value]="'vendor'" class="question">
+              I would like to register as a VENDOR.
+            </mat-list-option>
+      </mat-selection-list>
+</div>
+
+<router-outlet [@fade]></router-outlet>
+
+</div>

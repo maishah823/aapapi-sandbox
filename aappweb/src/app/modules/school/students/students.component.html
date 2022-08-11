@@ -1,0 +1,51 @@
+<div class="educator-students">
+  <div layout="row" layout-align="end center" class="add-student-button">
+    <button mat-button (click)="addStudent()"><mat-icon>add</mat-icon> Add Student</button>
+  </div>
+  <div class="educator-students-stats">
+    <h2>Students</h2>
+    <div layout="row" layout-wrap layout-xs="column" class="student-stats-container">
+      <div flex>Total: {{stats.total}}</div>
+      <div flex>Active: {{stats.active}}</div>
+      <div flex>Expired: {{stats.expired}}</div>
+      <div flex>Redeemed: {{stats.redeemed}}</div>
+      <div flex class="conversion" [ngClass]="{'over-50':stats.percentage >= 0.5}">Converted: {{stats.percentage | perc}}</div>
+    </div>
+  </div>
+
+
+  <div>
+    <div class="search-card">
+      <form [formGroup]="searchForm" novalidate>
+        <div layout="row" layout-align="end center">
+          <div flex="50" flex-xs="100">
+            <mat-form-field style="width:100%">
+              <input matInput #searchInput formControlName="search" />
+              <mat-icon matPrefix>search</mat-icon>
+              <button type="button" *ngIf="searchInput.value" (click)="clearSearch()" mat-icon-button matSuffix>
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+    <mat-card *ngFor="let student of students" class="student-card">
+      <h3>{{student.name}}</h3>
+      <div layout="row" layout-wrap layout-xs="column" layout-margin>
+        <div flex [ngClass]="{'editable':!student.redeemed && !student.isExpired}" (click)="updateEmail(student)">{{student.email}}</div>
+        <div flex [ngClass]="{'editable':!student.redeemed && !student.isExpired}" (click)="updateGraduationDate(student)">Graduation: {{student.graduationDate | date}}</div>
+        <div flex="nogrow" flex-align="end" style="min-width:100px;">
+          <span class="student-redeemed" *ngIf="student.redeemed">REDEEMED</span>
+          <span class="student-expired" *ngIf="!student.redeemed && student.isExpired">EXPIRED</span>
+        </div>
+      </div>
+    </mat-card>
+    <div class="pagination-card">
+      <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+        (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+
+  </div>
+</div>

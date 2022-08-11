@@ -1,0 +1,29 @@
+.person-container{
+
+}
+.board-image{
+    display:block;
+    width: 150px;
+}
+.board-desc-container{
+    width:200px;
+}
+
+.board-name{
+    margin:0;padding:0;
+}
+
+@media(max-width:600px){
+    .board-desc-container{
+        width:100%;
+        text-align: center;
+    }
+}
+
+.region-states{
+    font-size: .7em;
+}
+
+.center-name{
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+.user-profile{
+    margin: 40px 10px 10px 10px;
+}
+
+.user-profile-card{
+    h2{
+        background: rgb(9, 9, 112);
+        color:white;
+        padding: 10px;
+        text-align:center;
+    }
+    .user-profile-content{
+        padding:10px;
+    }
+}
+
+.instructor-card{
+    padding:15px;
+}
+
+.editable{
+    color: blue;
+    cursor: pointer;
+    &:hover{color:rgb(105, 105, 167)}
+}
+

@@ -1,0 +1,54 @@
+<mat-card>
+  <div layout="row" layout-xs="column">
+    <div flex flex-order-gt-xs="2" layout="row" layout-align="end center">
+      <button flex-align="end" mat-button (click)="showAdd = !showAdd">
+        <mat-icon>{{showAdd ? 'remove' : 'add'}}</mat-icon>{{showAdd ? 'Hide Add Admin' : 'Add Admin'}}</button>
+    </div>
+    <h2 *ngIf="!showAdd" flex flex-order-gt-xs="1" class="schools-heading">Manage School Admins</h2>
+  </div>
+  <mat-card class="add-admin-card" *ngIf="showAdd">
+    <h3>Add School Admin</h3>
+    <form [formGroup]="addForm" novalidate (ngSubmit)="addAdmin()">
+      <div layout="column">
+        <div layout="row" layout-xs="column" layout-margin>
+          <mat-form-field flex>
+            <input matInput formControlName="firstName" placeholder="First Name" />
+          </mat-form-field>
+          <mat-form-field flex>
+            <input matInput formControlName="lastName" placeholder="Last Name" />
+          </mat-form-field>
+        </div>
+        <div layout="row" layout-xs="column" layout-margin>
+          <mat-form-field flex>
+            <input matInput formControlName="email" placeholder="Email" />
+          </mat-form-field>
+        </div>
+        <div layout="row" layout-xs="column" layout-margin>
+          <mat-form-field flex-gt-xs="50" layout-margin>
+            <mat-select formControlName="school" placeholder="School">
+              <mat-option *ngFor="let school of schools" [value]="school._id">{{school.name}}, {{school.address.city}}, {{school.address.state}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div flex layout="row" layout-align="end end" layout-margin>
+          <button flex="nogrow" type="button" mat-raised-button (click)="addForm.reset()">Clear</button>
+          <button flex="nogrow" [disabled]="!addForm.valid" type="submit" mat-raised-button color="primary">Add Admin</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <div *ngFor="let admin of admins">
+    <div layout="row" layout-xs="column" layout-margin layout-wrap>
+      <div flex>{{admin.fullname}}</div>
+      <div flex>{{admin.email}}</div>
+      <div flex>{{admin.adminForSchool?.name}}</div>
+      <div flex>{{admin.adminForSchool?.address.city}}, {{admin.adminForSchool?.address.state}}</div>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <div class="pagination-card">
+    <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</mat-card>

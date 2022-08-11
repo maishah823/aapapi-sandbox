@@ -1,0 +1,23 @@
+<div class="base-layout">
+  <div class="logs-container">
+    <h3>Admin Activity Log</h3>
+    <form [formGroup]="form" novalidate>
+      <mat-form-field>
+        <mat-select formControlName="category" placeholder="Category">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <ul class="log-list">
+      <li *ngFor="let record of logs"><span class="log-date">{{record.created_at | date:'MM/dd/yyyy HH:mm'}}</span>: {{record.logMessage}}</li> 
+    </ul>
+
+    <div class="pagination-card">
+      <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[20, 50, 100, 200]"
+        (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

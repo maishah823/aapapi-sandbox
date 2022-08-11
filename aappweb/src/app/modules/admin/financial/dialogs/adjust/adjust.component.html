@@ -1,0 +1,28 @@
+<div class="payment-info">
+    <h1>Adjust Invoice #{{data.invoiceNumber}}</h1>
+      <form [formGroup]="form" novalidate>
+        <div layout>
+          <mat-form-field flex>
+          <mat-select formControlName="type" placeholder="Type">
+            <mat-option value="reduction">Reduction</mat-option>
+            <mat-option value="addition">Addition</mat-option>
+          </mat-select>
+          </mat-form-field>
+        </div>
+        <div layout>
+          <mat-form-field flex class="payment-field">
+            <input type="number" matInput placeholder="Amount" formControlName="amount" />
+          </mat-form-field>
+        </div>
+        <div layout>
+            <mat-form-field flex class="payment-field">
+              <input matInput placeholder="Note" formControlName="lineNote" />
+            </mat-form-field>
+          </div>
+        <div class="actions">
+          <div layout layout-align="end center">
+            <button mat-flat-button flex="initial" color="primary" (click)="submit()" [disabled]="!form.valid">Make Adjustment</button>
+          </div>
+        </div>
+      </form>
+    </div>

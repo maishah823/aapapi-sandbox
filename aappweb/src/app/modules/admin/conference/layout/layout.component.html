@@ -1,0 +1,95 @@
+<div class="admin-layout-container">
+    <td-layout-manage-list [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+            [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '300px' : '100%'">
+            <mat-toolbar td-sidenav-content color="accent">
+                <h5 class="conference-toolbar-title">Admin</h5>
+            </mat-toolbar>
+            <div td-sidenav-content>
+               <mat-nav-list [tdLayoutManageListClose]="!media.query('gt-sm')">
+                  <mat-list-item routerLink="overview" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>dashboard</mat-icon> 
+                    <a mat-line >Overview</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="scheduling" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>schedule</mat-icon> 
+                    <a mat-line >Classroom</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                    <mat-list-item routerLink="events" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>event</mat-icon> 
+                    <a mat-line >Events</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="rsvp" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>bookmark</mat-icon> 
+                    <a mat-line >Attendee RSVPs</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="guestlist" routerLinkActive="selected">
+                    <mat-icon mat-list-icon>list</mat-icon> 
+                  <a mat-line >Guest Lists</a>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                  <mat-list-item routerLink="attendees" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>playlist_add_check</mat-icon> 
+                      <a mat-line >Attendees</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item routerLink="sms" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>smartphone</mat-icon> 
+                      <a mat-line >SMS Blast</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item routerLink="vendors" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>store</mat-icon> 
+                      <a mat-line >Vendors</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item routerLink="coupons" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>money_off</mat-icon> 
+                      <a mat-line >Coupons</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                  <mat-list-item routerLink="instructors" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>settings_input_antenna</mat-icon> 
+                      <a mat-line >Instructors</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                     <mat-list-item routerLink="topics" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>book</mat-icon> 
+                      <a mat-line >Topics</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item routerLink="hourslogs" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>hourglass_full</mat-icon> 
+                    <a mat-line >Hours Logs</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                    <mat-list-item routerLink="ratings" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>show_chart</mat-icon> 
+                      <a mat-line >Ratings</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <ng-container *ngIf="isDeveloper | async">
+                    <mat-list-item routerLink="developer" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>settings</mat-icon> 
+                      <a mat-line >Dev Tools</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    </ng-container>
+               </mat-nav-list>     
+            </div>
+            <mat-toolbar color="accent">
+                <div layout="row" layout-align="start center" flex>
+                    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+                            <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <mat-icon>event_seat</mat-icon> 
+                    <h5 class="conference-toolbar-title">Seminar</h5>
+                    <span flex></span>
+            </div>  
+            </mat-toolbar>
+            <router-outlet></router-outlet>
+    </td-layout-manage-list>
+</div>

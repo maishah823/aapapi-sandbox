@@ -1,0 +1,19 @@
+.jump-to-state{
+    cursor: pointer;
+    &:hover{
+        color:blue;
+    }
+}
+
+.school-listing-record{
+    margin:15px;
+}
+
+.links{
+    text-align: center;
+}
+
+.school-name{
+    font-size:1.08em;
+    color: rgb(0, 0, 73);
+}

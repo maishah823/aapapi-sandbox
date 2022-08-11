@@ -1,0 +1,74 @@
+<div *ngIf="form">
+  <div layout="column" *ngIf="conference; else noconf" layout-align="stretch stretch">
+    <div flex>
+      <div class="add-event-container">
+        <h2 class="add-event-heading">{{prepopulate._id?'Edit':'Add'}} Event for {{conference.city}}, {{conference.state}}
+          <span *ngIf="prepopulate._id">
+            <br/>({{form.get('name').value}})</span>
+        </h2>
+        <div layout="column">
+          <form [formGroup]="form" novalidate>
+            <div layout="row" layout-xs="column" layout-margin layout-wrap>
+              <div flex class="timepicker">
+                <h3>Start Date and Time</h3>
+                <div>
+                  <aap-ngx-mat-datetime-picker [eventFormGroup]="form"  [datePickerControl]="'startDateTime'"></aap-ngx-mat-datetime-picker>
+
+                </div>
+              </div>
+              <div flex class="timepicker">
+                <h3>End Date and Time</h3>
+                <div>
+                  <aap-ngx-mat-datetime-picker [eventFormGroup]="form" [datePickerControl]="'endDateTime'"></aap-ngx-mat-datetime-picker>
+
+                </div>
+              </div>
+            </div>
+            <div layout="row" layout-xs="column" layout-margin>
+              <mat-form-field flex>
+                <input matInput placeholder="Event Name" formControlName="name" required autocomplete="off" />
+              </mat-form-field>
+              <mat-form-field flex="20" flex-xs="100">
+                <input matInput placeholder="Cost" formControlName="cost" required autocomplete="off" />
+                <span class="cost-suffix" matSuffix>{{form.get('cost').value | currency}}</span>
+              </mat-form-field>
+            </div>
+            <div layout="column" layout-margin>
+              <mat-form-field flex>
+                <input matInput placeholder="Location" formControlName="room" required autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div layout layout-margin>
+              <mat-form-field flex>
+                <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="15"
+                  required></textarea>
+              </mat-form-field>
+            </div>
+            <div layout layout-margin>
+                <mat-checkbox formControlName="credit">Give credit hours for this event.</mat-checkbox>
+              </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <div flex="nogrow">
+      <div class="add-event-actions">
+        <div layout layout-margin layout-align="end center">
+          <div flex="nogrow">
+            <button mat-button (click)="cancel()">Cancel</button>
+          </div>
+          <div flex="nogrow">
+            <button mat-raised-button color="primary" [disabled]="!form.valid || submitting" (click)="save()">SAVE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noconf>
+    <h2>Seminar Error</h2>
+    <p>The system could not locate the upcoming seminar. Please contact technical support at
+      <a href="mailto:support@harcomtech.com">support@harcomtech.com</a>
+    </p>
+  </ng-template>
+</div>

@@ -1,0 +1,23 @@
+.invoices{
+    margin: 10px;
+}
+
+.invoice-search{
+    background:white;
+}
+
+.invoices-pagination{
+    margin-top: 10px;
+}
+
+.invoice-header{
+    font-size: 1.1em;
+    color:blue;
+    &:hover{
+        color:red;
+    }
+}
+
+.reset-button{
+    cursor:pointer;
+}

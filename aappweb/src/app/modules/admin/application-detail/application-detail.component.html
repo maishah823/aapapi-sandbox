@@ -1,0 +1,199 @@
+<div class="application-detail">
+  <mat-card class="status-buttons">
+    <div layout layout-align="end center" layout-margin-gt-xs layout-xs="column">
+      <div flex="nogrow">
+        <h3>Application Status</h3>
+      </div>
+      <div flex></div>
+      <div flex="nogrow">
+        <span class="application-status" [ngClass]="{'approved':applicationStatus == 'APPROVED'}">{{applicationStatus}}</span>
+      </div>
+      <div flex="nogrow" *ngIf="showButtons">
+        <button mat-raised-button color="primary" (click)="approve()">Approve</button>
+        <button mat-raised-button color="warn" (click)="deny()">Deny</button>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card *ngIf="application">
+    <div layout="row" layout-xs="column">
+      <div flex="nogrow">
+        <h3 class="application-detail-heading">Membership Application</h3>
+        <h3 class="application-detail-subheading">({{application.memberClass | cap}})</h3>
+      </div>
+      <div flex-hide-xs flex></div>
+      <div flex="noggrow" class="application-detail-subheading">
+        <h3 *ngIf="application.user" class="region-box"> Region {{application.user.region | roman}} <span *ngIf="application.user.memberNumber">, Mbr# {{application.user.memberNumber}}</span></h3>
+      </div>
+    </div>
+    <div layout layout-wrap layout-xs="column" layout-margin>
+      <div flex="nogrow" class="applicant-section application-section" *ngIf="application.user">
+        <h4 class="section-heading">Applicant Information</h4>
+        <div layout layout-wrap layout-xs="column">
+          <div flex class="space-right">{{application.user.firstName}} {{application.user.lastName}}</div>
+          <div flex class="space-right">{{application.user.email}}</div>
+        </div>
+        <div layout="column">
+          <div flex>{{application.user.address.street1}}</div>
+          <div flex>{{application.user.address.street2}}</div>
+        </div>
+        <div layout layout-wrap>
+          <div flex="nogrow" class="space-right">{{application.user.address.city}},</div>
+          <div flex="nogrow" class="space-right">{{application.user.address.state}}</div>
+          <div flex="nogrow" class="space-right">{{application.user.address.zip}}</div>
+        </div>
+        <div flex="nogrow" class="space-right">{{application.user.address.country}}</div>
+        <div layout layout-wrap layout-xs="column">
+          <div flex="nogrow" class="space-right">W: {{application.user.address.workPhone | phone}}</div>
+          <div flex="nogrow" class="space-right">C: {{application.user.address.cellPhone | phone}}</div>
+        </div>
+        <div layout layout-wrap layout-xs="column">
+          <div flex="nogrow" class="space-right">H: {{application.user.address.homePhone | phone}}</div>
+          <div flex="nogrow" class="space-right">F: {{application.user.address.fax | phone}}</div>
+        </div>
+        <div flex>{{application.citizen ? 'US Citizen' : 'Non-Citizen'}}</div>
+      </div>
+      <div flex="nogrow" class="license-section application-section">
+        <h4 class="section-heading">License Information</h4>
+        <div layout layout-wrap layout-xs="column">
+          <div flex="nogrow" class="space-right">Licensed: {{application.isLicensed ? 'YES' : 'NO'}}</div>
+          <div flex="nogrow" *ngIf="application.licenseNumber">Lic#: {{application.licenseNumber}}</div>
+        </div>
+        <div flex *ngIf="application.licenseList" class="text-wrap">Other Licenses: {{application.licenseList}}</div>
+      </div>
+      <div flex="nogrow" class="training-section application-section">
+        <h4 class="section-heading">Training Information</h4>
+        <div *ngIf="application.school; else schoolInfo">
+          <h4 class="application-non-heading">VERIFIED SCHOOL</h4>
+          <div>{{application.school.name}}</div>
+          <div *ngIf="application.school.address">
+            <div>{{application.school.address.city}}, {{application.school.address.state}} {{application.school.address.zip}}</div>
+            <div>{{application.school.address.country}}</div>
+          </div>
+          <div>
+            Graduation: {{application.graduationDate | date:'MM/dd/yyyy'}}
+          </div>
+        </div>
+       
+        <ng-template #schoolInfo>
+          <h4 class="application-non-heading">UNVERIFIED SCHOOL</h4>
+          <div>{{application.schoolName}}</div>
+          <div layout layout-wrap layout-xs="column">
+            <div flex class="space-right">Director: {{application.schoolDirector || 'None'}}</div>
+            <div flex>Supervisor: {{application.internSup || 'None'}}</div>
+          </div>
+          <div flex>{{application.schoolStreet}}</div>
+          <div layout layout-wrap>
+            <div flex="nogrow" class="space-right">{{application.schoolCity}},</div>
+            <div flex="nogrow" class="space-right">{{application.schoolState}}</div>
+            <div flex="nogrow" class="space-right">{{application.schoolZip}}</div>
+          </div>
+          <div flex>{{application.schoolPhone | phone}}</div>
+          <div flex>Graduated: {{application.graduationDate | date:'MM/dd/yyyy'}}</div>
+        </ng-template>
+
+      </div>
+      <div flex="nogrow" class="employment-section application-section">
+        <h4 class="section-heading">Employment</h4>
+        <div flex>Status: {{application.employmentStatus | cap}}</div>
+        <div flex class="agency">{{application.employmentAgency}}</div>
+        <div *ngIf="application.employmentAddress">
+          <div layout="column">
+            <div flex>{{application.employmentAddress.street1}}</div>
+            <div flex>{{application.employmentAddress.street2}}</div>
+          </div>
+          <div layout layout-wrap>
+            <div flex="nogrow" class="space-right">{{application.employmentAddress.city}},</div>
+            <div flex="nogrow" class="space-right">{{application.employmentAddress.state}}</div>
+            <div flex="nogrow" class="space-right">{{application.employmentAddress.zip}}</div>
+          </div>
+          <div flex>{{application.employmentAddress.workPhone | phone}}</div>
+        </div>
+        <div flex *ngIf="application.hireDate">Hired on: {{application.hireDate | date:'MM/dd/yyyy'}}</div>
+        <div flex *ngIf="application.seperationType">{{application.seperationType}} on {{application.seperationDate |
+          date:'MM/dd/yyyy'}}</div>
+        <div flex *ngIf="application.supervisorName">Sup: {{application.supervisorName}} {{application.supervisorPhone
+          | phone}}</div>
+          <div flex *ngIf="application.supervisorEmail">Contact: <a href="mailto:{{application.supervisorEmail}}">{{application.supervisorEmail}}</a></div>
+      </div>
+      <div flex="nogrow" class="disclosures-section application-section">
+        <h4 class="section-heading">Disclosures</h4>
+        <div flex="nogrow" class="space-right">Convicted: {{application.convicted ? 'YES' : 'NO'}}</div>
+        <div flex="nogrow" class="space-right">Discharged from Gov: {{application.dischargeGov ? 'YES' : 'NO'}}</div>
+        <div flex="nogrow" class="space-right">Discharged from Org: {{application.dischargedOrg ? 'YES' : 'NO'}}</div>
+      </div>
+      <div flex="nogrow" class="references-section application-section">
+        <h4 class="section-heading">References</h4>
+        <div *ngIf="application.ref1" class="reference">
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref1.name}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref1.email}}</div>
+          </div>
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref1.email}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref1.phone | phone}}</div>
+          </div>
+        </div>
+        <div *ngIf="application.ref2" class="reference">
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref2.name}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref2.email}}</div>
+          </div>
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref2.email}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref2.phone | phone}}</div>
+          </div>
+        </div>
+        <div *ngIf="application.ref3" class="reference">
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref3.name}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref3.email}}</div>
+          </div>
+          <div layout layout-wrap layout-xs="column">
+            <div flex="nogrow" class="space-right">{{application.ref3.email}}</div>
+            <div flex="nogrow" class="space-right">{{application.ref3.phone | phone}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div layout="column" layout-margin>
+      <div flex class="application-section" style="max-width:100%">
+        <h4 class="section-heading">Experience</h4>
+        <div>Years experience: {{application.yearsExperience}}</div>
+        <div>Exams conducted: {{application.examsConducted}}</div>
+        <h5>Techniques Used</h5>
+        <div class="text-wrap">{{application.techniques}}</div>
+        <h5>Past Organizations</h5>
+        <div class="text-wrap">{{application.otherOrgs}}</div>
+        <div *ngIf="application.beenDenied">
+          <h5>Denials</h5>
+          <div class="text-wrap"> This applicant has been denied entry into a polygraph organization for the following
+            reason: {{application.denialReason}}</div>
+        </div>
+
+      </div>
+    </div>
+    <div layout layout-margin layout-align="end end">
+      <button mat-button (click)="downloadApp()"><mat-icon>get_app</mat-icon> PDF Application</button>
+    </div>
+    <div class="application-invoice" *ngIf="application.invoiceRef">
+      <aapp-invoice-display [invoice]="application.invoiceRef"></aapp-invoice-display>
+    </div>
+  </mat-card>
+  <mat-card class="status-history">
+    <div *ngIf="application.regionApproved">
+      Regional approval provided by {{application.regionApprovedBy?.fullname}} on {{application.regionApprovedOn |
+      date:'short'}}
+    </div>
+    <div *ngIf="application.finalApproved">
+      Final approval provided by {{application.finalApprovedBy?.fullname}} on {{application.finalApprovedOn |
+      date:'short'}}
+    </div>
+    <div *ngIf="application.rejected">
+      Application rejected by {{application.rejectedBy?.fullname}} on {{application.rejectedOn | date:'short'}}
+      <div>
+        Reason: <span class="rejection-reason">{{application.rejectedReason}}</span>
+      </div>
+    </div>
+  </mat-card>
+</div>

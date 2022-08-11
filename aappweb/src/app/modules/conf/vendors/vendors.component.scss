@@ -1,0 +1,21 @@
+.vendors-card{
+    padding:15px;
+}
+.vendors-subtitle{
+    text-align:center;
+}
+
+ul.vendor-list{
+    list-style: none;
+    text-indent: 0;
+    margin:0;
+    padding:0;
+    li{
+        text-align: center;
+        margin:0;
+        padding:18px;
+        color: rgb(0, 0, 114);
+        font-size: calc((50vw / 50) + 16px);
+        font-weight:bold;
+    }
+}

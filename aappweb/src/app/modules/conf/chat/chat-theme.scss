@@ -1,0 +1,21 @@
+@import '@angular/material/theming';
+
+@mixin chat-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    .chat-icon-online.mat-icon{
+        color:mat-color($warn,200);
+        
+    }
+    .chat-icon-user.mat-icon{
+        color:#ddd;
+    }
+    .chat-icon-online-user.mat-icon{
+        color:mat-color($primary,300);
+    }
+
+    
+  
+}

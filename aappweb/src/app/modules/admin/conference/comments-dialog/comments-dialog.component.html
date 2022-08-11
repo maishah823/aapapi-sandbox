@@ -1,0 +1,18 @@
+
+<h2 mat-dialog-title color="primary">{{comments._id}}</h2>
+<h5 class="subtitle">{{comments.total}} {{comments.total == 1 ? 'Comment' : 'Comments'}}</h5>
+<mat-dialog-content>
+  <ol>
+    <li *ngFor="let comment of comments.comments">
+      <span class="name">{{comment.user}}</span>: <span class="comment">{{comment.comment}}</span>
+    </li>
+  </ol>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <div layout="row" layout-align="end end" layout-margin>
+    <div flex></div>
+    <div flex="nogrow">
+      <button (click)="close()" mat-button>Done</button>
+    </div>
+  </div>
+</div>

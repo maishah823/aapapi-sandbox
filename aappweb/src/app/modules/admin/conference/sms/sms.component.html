@@ -1,0 +1,14 @@
+<form [formGroup]="form" novalidate>
+  <div layout layout-margin layout-align="center center">
+    <div flex layout="column" class="sms-container">
+      <h1 flex>Text Blast</h1>
+      <h3 flex>All Seminar Attendees</h3>
+      <mat-form-field flex>
+        <textarea matInput formControlName="message" rows="8"></textarea>
+      </mat-form-field>
+      <div class="actions">
+        <button [disabled]="!form.valid" (click)="send()" mat-flat-button>SEND</button>
+      </div>
+    </div>
+  </div>
+</form>

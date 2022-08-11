@@ -1,0 +1,28 @@
+.post-edit{
+    margin: 60px auto;
+    max-width: 960px;
+    overflow:hidden;
+    .post-details{
+        background:white;
+    }
+    .cover-image{
+        width: 200px;
+        height: 200px;
+        &:hover{
+            border:2px red solid;
+        }
+        &.add-image-hover{
+            border:2px red solid;
+        }
+    }
+    .uploading{
+        position:relative;
+    }
+    .spinner{
+        position:absolute;
+        width:200px;
+        height:200px;
+        left:10px;
+        top:10px;
+    }
+}

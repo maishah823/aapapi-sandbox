@@ -1,0 +1,28 @@
+<div class="base-layout certifications">
+  <div class="cert-heading">
+    <h1>Certification</h1>
+    <h3>
+      Certified Forensic Law Enforcement Polygraph Examiner (CFLEPE)
+    </h3>
+  </div>
+  <p>
+    If you would like an application for review and to apply for designation as a Certified Forensic Law Enforcement Polygraph
+    Examiner (CFLEPE), you may download the <a href="/assets/downloads/AAPP_Certification_App.pdf" target="_blank">application form here</a>.</p><p> The American Association of
+    Police Polygraphists (AAPP)
+    records reflect that the following members of AAPP have maintained required training. To verify status
+    please contact AAPP Secretary/Certification Chair Bob Heard aappsecretary@gmail.com.
+  </p>
+ 
+  <table class="cert-table">
+    <tr>
+      <th>Name</th>
+      <th>Certificate#</th>
+      <th>Expires</th>
+    </tr>
+    <tr *ngFor="let person of certlist">
+      <td>{{person.fullname}}</td>
+      <td>{{person.certNumber}}</td>
+      <td>{{person.certYear}}</td>
+    </tr>
+  </table>
+</div>

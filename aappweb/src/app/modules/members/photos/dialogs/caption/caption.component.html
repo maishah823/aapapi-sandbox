@@ -1,0 +1,19 @@
+<div>
+  <form [formGroup]="form">
+    <div layout="column">
+      <mat-form-field flex>
+        <mat-select formControlName="album" placeholder="Album">
+          <mat-option value="members">Members</mat-option>
+          <mat-option value="2019conference">2019 Conference</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>File: {{data.file}}</p>
+    <mat-form-field flex>
+        <textarea matInput formControlName="caption" matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="6" placeholder="Caption Text... " ></textarea>
+    </mat-form-field>
+    </div>
+    <div layout layout-align="end end">
+      <button mat-flat-button [disabled]="!form.valid" (click)="submit()">Upload</button>
+    </div>
+  </form>
+</div>

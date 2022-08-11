@@ -1,0 +1,346 @@
+@import './app/theme';
+@import '~css-star-rating/scss/star-rating';
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+//FONTS
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url('fonts/roboto-regular-webfont.eot');
+  src: url('fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('fonts/roboto-regular-webfont.woff2') format('woff2'),
+  url('fonts/roboto-regular-webfont.woff') format('woff'),
+  url('fonts/roboto-regular-webfont.ttf') format('truetype'),
+  url('fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'abeezee';
+  src: url('fonts/ABeeZee-Regular.ttf') format('truetype');
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'abeezee', 'robotoregular' !important;
+
+}
+
+h1, h2 {
+  padding-bottom: 10px;
+  background: url(/assets/images/swoosh2_bg.png);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  text-align: center;
+  //background-size: cover;
+}
+
+.heading-no-graphic {
+  background-image: none;
+}
+
+.base-layout {
+  height: calc(100% - 24px);
+  padding-top: 24px;
+}
+
+.actions-right {
+  text-align: right;
+}
+
+.mat-complete {
+  .td-circle {
+    background-color: green;
+  }
+}
+
+.td-step-content {
+  overflow: hidden !important;
+}
+
+.mat-progress-bar {
+  height: 8px !important;
+}
+
+.line-with-icon mat-icon {
+  font-size: 1rem;
+  width: inherit;
+  height: 1.2rem;
+  vertical-align: middle;
+}
+
+.section-animation-container {
+  margin-top: 20px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mat-form-field-required-marker {
+  font-size: 1.3em;
+  color: red;
+  font-weight: bold;
+}
+
+.mark-required::after {
+  content: ' *';
+  color: red;
+  font-weight: bold;
+}
+
+.mat-form-field.mark-field-required {
+  label::after {
+    content: ' *';
+    color: red;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+}
+
+.mat-card.card-padded {
+  padding: 15px;
+}
+
+.wdr-credits {
+  display: none;
+}
+
+.img-with-margins {
+  margin: 15px;
+}
+
+@media(max-width: 600px) {
+  .cdk-overlay-container {
+    .add-schedule-dialog {
+      .mat-dialog-container {
+        padding: 4px;
+      }
+    }
+  }
+}
+
+.td-step-header {
+  .td-complete {
+    .mat-icon {
+      color: #1f1867;
+    }
+  }
+
+  .td-circle.mat-inactive {
+    background: #e22f18;
+  }
+}
+
+.td-step-header.mat-disabled {
+  .td-complete {
+    .mat-icon {
+      color: gray;
+    }
+  }
+
+  .td-circle.mat-inactive {
+    background: gray;
+  }
+}
+
+.top-links {
+  padding-top: 40px;
+  padding-bottom: 10px;
+  background: rgb(65, 64, 64);
+  text-align: center;
+  color: white;
+  background: linear-gradient(to bottom, rgb(139, 139, 139) 0%, rgb(70, 70, 70) 80%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  a, a:link, a:visited {
+    padding: 0 5px;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+
+    &:hover {
+      color: rgb(255, 104, 104);
+    }
+  }
+}
+
+@media(max-width: 599px) {
+  #overlay-menu {
+
+    .overlay-button.mat-button {
+      font-size: 16px;
+      padding: 6px;
+      line-height: 16px;
+      min-width: 10px;
+
+    }
+  }
+
+  .top-links {
+    a, a:link, a:visited {
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
+
+//GLOBAL ANIMATIONS
+
+.spin {
+  animation: spin 1s linear infinite;
+
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.fp-controlArrow {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.pulse {
+  animation: pulse 1.5s ease-in-out alternate-reverse infinite;
+
+}
+
+.large-pulse {
+  animation: largepulse 1s ease-in-out alternate-reverse infinite;
+}
+
+@-moz-keyframes pulse {
+  from {
+    -moz-transform: scale(1);
+  }
+  to {
+    -moz-transform: scale(1.1);
+  }
+}
+
+@-webkit-keyframes pulse {
+  from {
+    -webkit-transform: scale(1);
+  }
+  to {
+    -webkit-transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@-moz-keyframes largepulse {
+  from {
+    -moz-transform: scale(1);
+  }
+  to {
+    -moz-transform: scale(1.4);
+  }
+}
+
+@-webkit-keyframes largepulse {
+  from {
+    -webkit-transform: scale(1);
+  }
+  to {
+    -webkit-transform: scale(1.4);
+  }
+}
+
+@keyframes largepulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.4);
+  }
+}
+
+
+@media screen and (device-aspect-ratio: 2/3) {
+  select, textarea, input[type="text"], input[type="password"],
+  input[type="datetime"], input[type="datetime-local"],
+  input[type="date"], input[type="month"], input[type="time"],
+  input[type="week"], input[type="number"], input[type="email"],
+  input[type="url"] {
+    font-size: 16px;
+  }
+}
+
+/* iPhone 5, 5C, 5S, iPod Touch 5g */
+@media screen and (device-aspect-ratio: 40/71) {
+  select, textarea, input[type="text"], input[type="password"],
+  input[type="datetime"], input[type="datetime-local"],
+  input[type="date"], input[type="month"], input[type="time"],
+  input[type="week"], input[type="number"], input[type="email"],
+  input[type="url"] {
+    font-size: 16px;
+  }
+}
+
+/* iPhone 6, iPhone 6s, iPhone 7 portrait/landscape */
+@media screen and (device-aspect-ratio: 375/667) {
+  select, textarea, input[type="text"], input[type="password"],
+  input[type="datetime"], input[type="datetime-local"],
+  input[type="date"], input[type="month"], input[type="time"],
+  input[type="week"], input[type="number"], input[type="email"],
+  input[type="url"] {
+    font-size: 16px;
+  }
+}
+
+/* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus portrait/landscape */
+@media screen and (device-aspect-ratio: 9/16) {
+  select, textarea, input[type="text"], input[type="password"],
+  input[type="datetime"], input[type="datetime-local"],
+  input[type="date"], input[type="month"], input[type="time"],
+  input[type="week"], input[type="number"], input[type="email"],
+  input[type="url"] {
+    font-size: 16px;
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+  [flex] {
+    flex-basis: auto;
+  }
+}

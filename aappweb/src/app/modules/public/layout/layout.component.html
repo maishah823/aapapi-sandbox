@@ -1,0 +1,31 @@
+<div class="base-layout public-layout">
+    <div layout="column" layout-align="start stretch" layout-gt-xs="row" layout-align-xs="center center" layout-margin>
+        <div flex-gt-xs="nogrow" flex="none" flex-order="2" flex-order-gt-xs="1" class="aapp-sidebar" *ngIf="showAd">
+            <div class="ad-container">
+                <img style="display:block" src="/assets/images/sponsors.svg" class="sponsor-heading" />
+                <img style="display:block; width:120px" src="/assets/ads/lafayette.png" />
+            </div>
+
+            <div class="office-contact-info">
+
+                <h3>AAPP National Office</h3>
+                3223 Lake Ave
+                <br/> Unit 15c-168
+                <br/> Wilmette, IL 60091-1069
+                <br/> 847-635-3980
+                <br/>
+                <a class="email-link" href="mailto:nom@policepolygraph.org">nom@policepolygraph.org</a>
+            </div>
+
+            <div class="version">
+                    &copy; AAPP 2018<br/>
+                v{{v.major}}.{{v.minor}}.{{v.build}}<br/>
+                <button (click)="openDevInfo()" class="dev-icon" mat-icon-button><mat-icon>help</mat-icon></button>
+            </div>
+        </div>
+
+        <div flex-gt-xs flex="none" flex-order="1" flex-order-gt-xs="2" style="position:relative">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

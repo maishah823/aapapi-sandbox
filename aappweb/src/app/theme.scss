@@ -1,0 +1,125 @@
+@import '@angular/material/theming';
+@import '~@covalent/core/theming/all-theme';
+@import './modules/web/layout/layout-component-theme';
+@import './main/home/home.component-theme';
+@import './modules/conf/chat/chat-theme';
+@import './modules/public/join/join.theme';
+@import './modules/web/conf-advert/conf-advert.theme';
+@import './modules/web/join-advert/join-advert.theme';
+
+$typography: mat-typography-config(
+  $font-family: 'robotoregular, monospace',
+  $headline: mat-typography-level(32px, 48px, 700)
+);
+
+@include mat-core($typography); 
+
+$md-aappcolorsprimary: (
+    50 : #e4e3ed,
+    100 : #bcbad1,
+    200 : #8f8cb3,
+    300 : #625d95,
+    400 : #413b7e,
+    500 : #1f1867,
+    600 : #1b155f,
+    700 : #171154,
+    800 : #120e4a,
+    900 : #0a0839,
+    A100 : #7571ff,
+    A200 : #433eff,
+    A400 : #120bff,
+    A700 : #0700f1,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-aappcolorswarn: (
+    50 : #fce6e3,
+    100 : #f6c1ba,
+    200 : #f1978c,
+    300 : #eb6d5d,
+    400 : #e64e3b,
+    500 : #e22f18,
+    600 : #df2a15,
+    700 : #da2311,
+    800 : #d61d0e,
+    900 : #cf1208,
+    A100 : #fff8f8,
+    A200 : #ffc7c5,
+    A400 : #ff9592,
+    A700 : #ff7d79,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$primary: mat-palette($md-aappcolorsprimary);
+$accent:  mat-palette($md-aappcolorsprimary, 700);
+$warn:    mat-palette($md-aappcolorswarn);
+
+
+$theme: mat-light-theme($primary,$accent,$warn);
+
+
+@include angular-material-theme($theme);
+
+@include covalent-theme($theme, $typography);
+
+//Component themes
+@include layout-component-theme($theme);
+@include home-component-theme($theme);
+@include chat-theme($theme);
+@include join-component-theme($theme);
+@include conf-advert-theme($theme);
+@include join-advert-theme($theme);
+
+html,body{
+    color: mat-color($primary);
+}
+
+.td-step-header .td-circle{
+    &.mat-inactive{
+        background-color: mat-color($primary);
+    }    
+}
+.td-step-header .td-circle{
+    &.mat-active{
+        animation-duration: 1s;
+        animation-name: pulse;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }    
+}
+
+.mat-disabled > .td-circle{
+    &.mat-inactive{
+        background-color: lightgray;
+    }    
+}

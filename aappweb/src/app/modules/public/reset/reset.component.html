@@ -1,0 +1,31 @@
+<div class="base-layout">
+  
+  <h1>Reset your password.</h1>
+  <div *ngIf="!complete;else done">
+  <form [formGroup]="form" novalidate>
+    <div layout="column">
+      <div flex layout layout-margin>
+        <mat-form-field flex>
+          <input matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+      </div>
+      <div flex layout layout-margin layout-xs="column">
+        <mat-form-field flex>
+          <input type="password" matInput placeholder="Password" formControlName="passA" />
+        </mat-form-field>
+        <mat-form-field flex>
+          <input type="password" matInput placeholder="Renter Password" formControlName="passB" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="error-instructions" *ngIf="passA.invalid">Your password must be at least 8 characters long. Please be sure to enter at least one CAPITAL letter, one LOWERCASE letter, one NUMBER and one SYMBOL.</div>
+  <div class="error-instructions" *ngIf="passA.value != passB.value">Passwords do not match.</div>
+    <div layout layout-align="end end" layout-margin>
+      <button mat-flat-button flex="nogrow" [disabled]="!form.valid || !matching" (click)="submit()">Reset</button>
+    </div>
+  </form>
+  </div>
+  <ng-template #done>
+    <span class="reset-complete">Password has been reset. You may login.</span>
+  </ng-template>
+</div>

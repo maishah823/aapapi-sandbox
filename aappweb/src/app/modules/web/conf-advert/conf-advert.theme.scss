@@ -1,0 +1,18 @@
+@import '@angular/material/theming';
+
+@mixin conf-advert-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+        .speakers-heading{
+            background: mat-color($primary);
+        }
+        .event-location{
+            color:mat-color($primary);
+        }
+
+
+    
+  
+}

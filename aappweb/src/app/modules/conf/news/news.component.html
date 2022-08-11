@@ -1,0 +1,18 @@
+<div class="top-links">
+        <a routerLink="/web/conf/custom-schedule">My Schedule</a> |
+        <a routerLink="/web/conf/schedule">Master Schedule</a> |
+        <a routerLink="/web/conf/info">Info</a>
+    </div>
+<div class="news-bg">
+  <h1>Seminar News</h1>
+  <div layout="column" [@slideInFromBottom]="true" class="blogs section-animation-container">
+      <div class="section" layout="row" layout-xs="column" layout-wrap layout-align="center stretch" layout-align-xs="center center" layout-margin>
+      <aapp-blog-detail blogType="conf" flex="initial" *ngFor="let post of blogs" [post]="post"></aapp-blog-detail>
+      </div>
+      <div class="pagination section">
+          <mat-paginator class="paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+              (page)="pageEvent($event)">
+          </mat-paginator>
+      </div>
+  </div>
+</div>

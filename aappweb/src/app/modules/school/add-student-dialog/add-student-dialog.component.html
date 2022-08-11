@@ -1,0 +1,33 @@
+<h4 mat-dialog-title color="primary">Add Student</h4>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="change()" novalidate>
+    <div layout="column">
+      <div flex layout="row" layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="firstName" placeholder="First Name" />
+        </mat-form-field>
+        <mat-form-field flex>
+          <input matInput formControlName="lastName" placeholder="Last Name" />
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="email" placeholder="Email Address" />
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-wrap layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput autocomplete="false" [matDatepicker]="picker" placeholder="Graduation Date" formControlName="graduationDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <div flex layout="row" layout-align="end end" layout-margin>
+    <button type="button" mat-dialog-close mat-button>Cancel</button>
+    <button color="accent" mat-button (click)="change()" [disabled]="!form.valid">ADD STUDENT</button>
+  </div>
+</div>

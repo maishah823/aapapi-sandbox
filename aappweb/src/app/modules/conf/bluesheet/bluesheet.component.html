@@ -1,0 +1,113 @@
+<div class="base-layout">
+  <mat-card class="checkout-card">
+    <h1>Checkout / Bluesheet</h1>
+    <h3 class="checkout-subtitle">Log Credit Hours and Generate Certificate.</h3>
+    <h3 class="checkout-subtitle">{{user.firstName}} {{user.lastName}}</h3>
+    <div layout="column" layout-align="center center" *ngIf="fetching">
+      <div flex="nogrow">
+        <mat-spinner [diameter]="100"></mat-spinner>
+      </div>
+      <div flex="nogrow">Fetching courses...</div>
+    </div>
+    <form [formGroup]="form" novalidate>
+      <div *ngFor="let control of coursesControls" [formGroup]="control" class="course-row">
+        <div layout layout-xs="column" layout-margin layout-align="center center">
+          <div flex class="class-details">
+            <h3>{{control.get('name').value}}</h3>
+            <h5><span class="date">{{control.get('date').value}}</span></h5>
+            <h5>Type: {{control.get('type').value | cap}}</h5>
+            <h5>{{control.get('duration').value}} hours.</h5>
+            <p><span *ngFor="let instructor of control.get('instructors').value"> {{instructor}} </span></p>
+
+          </div>
+          <div flex="nogrow">
+            <mat-form-field class="hours-input">
+              <input type="number" matInput formControlName="hoursAttended" placeholder="Hours Attended" />
+            </mat-form-field>
+            <div *ngIf="control.get('hoursAttended').errors?.max" class="incomplete">Exceeded
+              {{control.get('hoursAttended').errors.max.max}}</div>
+          </div>
+        </div>
+        <div flex *ngIf="control.get('hoursAttended').value > 0">
+          <p class="mark-required centered">You are required to rate this class before submitting:</p>
+          <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'" formControlName="score">
+          </star-rating-control>
+        </div>
+        <div layout *ngIf="control.get('hoursAttended').value > 0" layout-margin>
+          <mat-form-field flex>
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="20"
+              formControlName="comment" placeholder="Optional Comment"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="general-survey">
+        <h2>Please rate the following:</h2>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <div flex>Organization of both content and class times:</div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'"
+                formControlName="organization">
+              </star-rating-control>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <div flex>Relevance of topics to future examinations and investigations:</div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'" formControlName="relevance">
+              </star-rating-control>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <div flex>Effectiveness of topics in addressing issues in the field of polygraph:</div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'" formControlName="issues">
+              </star-rating-control>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <div flex>Accomodations and services offered by the hotel:</div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'" formControlName="hotel">
+              </star-rating-control>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <div flex>Seminar location:</div>
+            <div flex="nogrow">
+              <star-rating-control [numOfStars]="10" [size]="'medium'" [starType]="'svg'" formControlName="location">
+              </star-rating-control>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div layout layout-xs="column" class="survey-question">
+            <mat-form-field flex>
+              <textarea matInput matTextareaAutosize matAutosizeMinRows="5" matAutosizeMaxRows="20"
+                formControlName="comments"
+                placeholder="Are there any topics you would like us to consider for next year?"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+    </form>
+    <div layout layout-align="end end" layout-align-xs="center center" layout-xs="column" layout-margin>
+      <div flex *ngIf="form.valid">By submitting this form, you are certifying that you have attended <span
+          class="hours">{{calculateTotal()}}</span> classroom hours.</div>
+      <div class="incomplete" flex *ngIf="!form.valid">You must complete all ratings for the general survey and any
+        classes you attended.</div>
+      <button flex="nogrow" mat-button [disabled]="inProgress" (click)="clearAll()">Clear All</button>
+      <mat-spinner [diameter]="50" *ngIf="inProgress"></mat-spinner>
+      <button flex="nogrow" mat-flat-button [disabled]="!form.valid || inProgress" (click)="submit()">Checkout
+        Now</button>
+    </div>
+  </mat-card>
+</div>

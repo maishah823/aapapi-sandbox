@@ -1,0 +1,34 @@
+<div class="top-links">
+    <a routerLink="/web/conf/news">News</a> |
+    <a routerLink="/web/conf/custom-schedule">My Schedule</a> |
+    <a routerLink="/web/conf/info">Info</a>
+</div>
+<div class="conf-line-schedule">
+    <h2>Seminar Schedule</h2>
+    <div style="font-size:1.2em" *ngIf="!devices.isMobile()"><button mat-button (click)="downloadPdf()">
+            <mat-icon>print</mat-icon> Download PDF Schedule
+        </button></div>
+
+    <div *ngFor="let day of events">
+        <mat-divider></mat-divider>
+        <h3 class="day-heading">{{day._id.displayDate}}</h3>
+        <mat-divider></mat-divider>
+        <div *ngFor="let event of day.events | eventLineSort" [ngClass]="{'event-entry':event.isClass}"
+            (click)="gotToDetail(event)">
+            <div layout layout-xs="column" layout-margin layout-align="center center">
+                <div flex="nogrow" class="times">
+                    <span> {{event.displayStartTime}} - {{event.displayEndTime}}</span>
+                </div>
+                <div flex class="details">
+                    <div layout layout-xs="column" layout-margin layout-align="center center" layout-wrap>
+                        <app-event-line class="event-name" flex [value]="event.name" label="Event"></app-event-line>
+                        <app-event-line flex [value]="event.room" label="Room"></app-event-line>
+                        <app-event-line flex [value]="event.instructors" label="Speaker(s)"></app-event-line>
+                        <app-event-line flex [value]="event.topics" label="Topic(s)"></app-event-line>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

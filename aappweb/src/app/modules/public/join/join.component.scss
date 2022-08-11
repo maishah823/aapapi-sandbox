@@ -1,0 +1,124 @@
+.join-card{
+    padding:10px;
+}
+
+.discount-heading{
+    color:rgb(42, 42, 190);
+}
+.join-instructions{
+    text-align:center;
+}
+
+.email-available{
+    color:green;
+}
+
+.email-button{
+    margin: 4px 0 4px 8px;
+}
+
+.join-error{
+    margin-top:10px;
+    padding:5px 0;
+}
+
+.join-error-text{
+    color: red;
+    font-style:italic;
+    font-size: 0.9em;
+}
+
+.email-display{
+    color:gray;
+    padding: 6px 0;
+}
+
+.join-field{
+    margin:10px 0;
+}
+
+@media (min-width:601px){
+    .join-field{
+        margin:10px 5px;
+    }
+    .join-error{
+        padding: 5px;
+    }
+
+    .email-display{
+        text-align:right;
+    }
+}
+
+.member-class-list{
+    font-size:.8em;
+    color:rgb(70, 70, 70);
+}
+.open-step-link-container{
+    height: 50px;
+}
+.open-step-link{
+    display: inline-flex;
+    margin-top:15px;
+    padding:15px;
+    color:rgb(13, 13, 112);
+    cursor: pointer;
+    &:hover{
+        color:rgb(67, 107, 167);
+    }
+}
+
+.questions{
+    margin-top:10px;
+    overflow:hidden;
+}
+
+.join-number{
+    margin-left:1em;
+    width: 4em;
+}
+.employment-desc{
+    font-size:.9em;
+    font-style: italic;
+}
+
+.join-progress-bar{
+    position:fixed;
+    bottom:0;
+    right:0;
+    left:0;
+    padding: 10px;
+    -webkit-box-shadow: 0px -2px 4px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow:    0px -2px 4px rgba(50, 50, 50, 0.4);
+    box-shadow:         0px -2px 4px rgba(50, 50, 50, 0.4);
+    background:white;
+}
+
+.join-progress-bar-buffer{
+    height: 35px;
+}
+.progress-label{
+    padding-bottom:2px;
+    font-size: .7em;
+}
+
+.affiliate-warning{
+    color:red;
+}
+
+.payment-type-selection{
+    margin: 15px;
+}
+
+.agreement-text{
+    font-size: .9em;
+    font-style: italic;
+}
+
+.join-actions{
+    padding: 20px 15px 30px 0;
+}
+
+.disclosure-selection{
+    padding-bottom: 30px;
+}

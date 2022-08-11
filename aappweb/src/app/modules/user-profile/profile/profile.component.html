@@ -1,0 +1,74 @@
+<div class="user-profile">
+  <mat-card *ngIf="user; else noinfo" class="user-profile-card">
+    <h2>{{user.fullname}}</h2>
+    <div class="user-profile-content">
+      <div layout layout-xs="column" layout-margin>
+        <div flex="nogrow" class="left-col">
+          <ng-container *ngIf="user.memberNumber">
+            <h3>Member Number</h3>
+            <div>#{{user.memberNumber}}</div>
+          </ng-container>
+          <h3>Email</h3>
+          <div class="editable" (click)="updateEmail()" matTooltip="Click to UPDATE.">{{user.email}}</div>
+          <h3>Address</h3>
+          <div *ngIf="user.address; else noaddress" class="editable" (click)="updateAddress()" matTooltip="Click to UPDATE.">
+            <div>
+              <span style="font-weight:800">Region {{user.region | roman}}</span>
+            </div>
+            <div>{{user.address.street1}}</div>
+            <div *ngIf="user.address.street2">{{user.address.street2}}</div>
+            <div>{{user.address.city}}, {{user.address.state}} {{user.address.zip}}</div>
+            <div>{{user.address.country}}</div>
+            <div>W: {{user.address.workPhone | phone}}</div>
+            <div>C: {{user.address.cellPhone | phone}}</div>
+            <div *ngIf="user.address.homePhone">H: {{user.address.homePhone | phone}}</div>
+            <div *ngIf="user.address.fax">F: {{user.address.fax | phone}}</div>
+          </div>
+          <ng-template #noaddress>
+            <span class="editable" (click)="updateAddress()">No address on file. Click to add.</span>
+          </ng-template>
+        </div>
+        <div flex layout="column" layout-align="start end" class="right-col" layout-margin>
+          <h3>Permissions</h3>
+          <div *ngIf="user.isMember" class="line-with-icon">
+            <mat-icon>check</mat-icon> Member <span *ngIf="user.memberNumber">(#{{user.memberNumber}})</span></div>
+          <div *ngIf="user.isAdmin" class="line-with-icon">
+            <mat-icon>check</mat-icon> Administrator</div>
+          <div *ngIf="user.isAttendee" class="line-with-icon">
+            <mat-icon>check</mat-icon> Conf Attendee</div>
+          <div *ngIf="user.isEducator" class="line-with-icon">
+            <mat-icon>check</mat-icon> School Admin</div>
+            <div *ngIf="hasGroup(user,'final-approval')" class="line-with-icon">
+                <mat-icon>check</mat-icon> Final Approvals</div>
+                <div *ngIf="hasGroup(user,'financial')" class="line-with-icon">
+                    <mat-icon>check</mat-icon> Financial</div>
+          <h3>Account</h3>
+          <div flex>
+            <button mat-raised-button color="warning" (click)="resetPassword()">Change Password</button>
+          </div>
+          <div flex *ngIf="user.memberInfo">
+            <div *ngFor="let info of user.memberInfo" class="text-right">
+              <div *ngIf="info.memberClass">{{info.memberClass | cap}} Member</div>
+              <div *ngIf="info.finalApprovedOn">Member Since: {{info.finalApprovedOn | date:'MM/dd/yyyy'}}</div>
+              <div *ngIf="info.memberClass == 'intern'">
+                <button mat-raised-button>Upgrade to ACTIVE Membership</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <ng-template #noinfo>
+    <mat-card class="user-profile-card">
+      <h2>User Profile</h2>
+      <div class="user-profile-content">
+        Retrieving user data ...
+      </div>
+    </mat-card>
+  </ng-template>
+  <mat-card class="instructor-card" *ngIf="user && user.isInstructor && user.instructorInfo">
+    <h2>Instructor Info</h2>
+    <aapp-instructor [instructorInfo]="user.instructorInfo"></aapp-instructor>
+  </mat-card>
+</div>

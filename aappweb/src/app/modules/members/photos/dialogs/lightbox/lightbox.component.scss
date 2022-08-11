@@ -1,0 +1,26 @@
+.lightbox{
+    position: relative;
+    width:100%;
+    height:100%;
+    background-color:black;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:contain;
+}
+
+.caption{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    background: rgba(0,0,0,.5);
+    padding: 1em;
+    text-align:center;
+    color:white;
+
+}
+
+.meta{
+    font-style:italic;
+    font-size:.8em;
+}

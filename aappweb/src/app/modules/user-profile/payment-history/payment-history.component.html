@@ -1,0 +1,14 @@
+<div class="payment-history">
+  <mat-card>
+    <h2 class="payment-history-title">My Payment History</h2>
+    <div class="invoice" *ngFor="let invoice of invoices">
+      <aapp-invoice-display [invoice]="invoice"></aapp-invoice-display>
+      <div *ngIf="!invoice.paid" layout layout-xs="column" layout-margin layout-align="end end">
+        <button flex="nogrow" mat-flat-button [routerLink]="['/web/public/pay',invoice.invoiceNumber]">Pay Invoice</button>
+      </div>
+    </div>
+    <div *ngIf="invoices.length < 1" class="no-history">
+      There is no history associated with your account.
+    </div>
+  </mat-card>
+</div>

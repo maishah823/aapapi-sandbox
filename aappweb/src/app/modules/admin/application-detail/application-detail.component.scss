@@ -1,0 +1,92 @@
+.application-detail{
+    margin-top: 40px;
+    white-space: nowrap;
+    .text-wrap{
+        white-space: pre-wrap;
+    }
+}
+
+.application-status{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.application-section{
+    border-left: 4px red solid;
+    padding-left: 10px;
+    align-self: flex-start;
+    margin-bottom: 20px;
+    margin-right: 15px;
+    max-width:600px;
+}
+
+.section-heading{
+    color: #1f1867;
+    margin-top: 0;
+    padding-top:0;
+}
+.application-non-heading{
+    margin:0;
+    padding:0;
+}
+
+.application-detail-heading{
+    padding: 15px 15px 0 25px;
+    margin:0;
+}
+.application-detail-subheading{
+    padding: 0 15px 0 25px;
+    margin:0;
+}
+.application-invoice{
+    margin: 15px 0;
+    padding: 15px 0;
+    border-top: 1px gray solid;
+    border-bottom: 1px gray solid;
+}
+
+.space-right{
+    padding-right: .5em;
+}
+
+.reference{
+    margin-bottom: 10px;
+}
+
+.region-box{
+    border: 1px blue solid;
+    text-align:center;
+}
+
+.status-buttons{
+    padding: 10px;
+    overflow:hidden;
+    h3{
+        margin: 5px 0;
+    }
+}
+
+.status-history{
+    padding: 10px;
+}
+
+.approved{
+    color: white;
+    background:green;
+    padding:.5em;
+    border-radius: .3em;
+}
+
+.rejection-reason{
+    color: red;
+    &::before{
+        content:"\"";
+    }
+    &::after{
+        content:"\"";
+    }
+}
+
+.agency{
+    font-style: italic;
+}

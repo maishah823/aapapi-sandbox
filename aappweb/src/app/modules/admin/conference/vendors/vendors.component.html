@@ -1,0 +1,50 @@
+<div class="base-layout">
+  <mat-card *ngFor="let company of vendors" class="company">
+    <h2>{{company._id}} ({{company.total || 0}})</h2>
+    <div *ngFor="let rep of company.reps" class="rep">
+      <div layout layout-xs="column">
+        <div flex>
+          <div>{{rep.firstName}} {{rep.lastName}}</div>
+          <div>
+            <a [href]="'mailto:'+rep.email">{{rep.email}}</a>
+          </div>
+          <div>{{rep.address.street1}}</div>
+          <div *ngIf="rep.address.street2">{{rep.address.street2}}</div>
+          <div>{{rep.address.city}}, {{rep.address.state}} {{rep.address.zip}}</div>
+          <div>{{rep.address.country}}</div>
+          <div>W: {{rep.address.workPhone | phone}}</div>
+          <div>C: {{rep.address.cellPhone | phone}}</div>
+          <div *ngIf="rep.address.homePhone">H: {{rep.address.homePhone | phone}}</div>
+          <div *ngIf="rep.address.fax">F: {{rep.address.fax | phone}}</div>
+        </div>
+        <div flex class="actions">
+          <div layout="column" layout-align="end end" layout-align-xs="center center">
+            <div flex="nogrow" *ngIf="!rep.finalApproved && !rep.rejected; else display">
+              <h5 class="status-details">Pending Approval</h5>
+              <button mat-flat-button (click)="approve(rep)">Approve</button>
+              <button mat-flat-button color="warn" (click)="reject(rep)">Reject</button>
+            </div>
+            <ng-template #display>
+              <div flex="nogrow" class="status-details">
+                <h5 class="status" [ngClass]="{'rejected':rep.rejected}">{{rep.finalApproved ? 'Approved' : 'Rejected'}}</h5>
+                <div *ngIf="rep.finalApproved">
+                  <div>{{rep.finalApprovedOn | date}} <span *ngIf="rep.finalApprovedByName"> by {{rep.finalApprovedByName}}</span></div>
+                  
+                </div>
+                <div *ngIf="rep.rejected">
+                  <div>{{rep.rejectedOn | date}}
+                    <span *ngIf="rep.rejectedByName"> by {{rep.rejectedByName}}</span>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="status-details rejected-reason" *ngIf="rep.rejectedReason">
+          {{rep.rejectedReason}}
+        </div>
+    </div>
+    
+  </mat-card>
+</div>

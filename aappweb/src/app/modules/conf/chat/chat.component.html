@@ -1,0 +1,23 @@
+<div class="chat-container" >
+    <div class="chat-conv" #conv (scroll)="scrolled($event)">
+           <div #messagesRef class="chat-message" *ngFor="let message of messages" [ngClass]="{'own':message.sentBy == userId}">
+            <div class="bubble-container">
+                <div class="name">{{message.senderName}}</div>
+                <div class="bubble">{{message.message}}</div>
+                <div class="time">{{message.date | date:'MM/dd/yyyy HH:mm'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-form" *ngIf="messages">
+        <form [formGroup]="form" novalidate>
+            <div class="enter-text-message">
+                    <input type="text" formControlName="message" />
+                    <button (click)="sendMessage()">Send</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+<!-- [scrollTop]="scrollLock ? conv.scrollHeight - currentOffset : conv.scrollHeight" -->

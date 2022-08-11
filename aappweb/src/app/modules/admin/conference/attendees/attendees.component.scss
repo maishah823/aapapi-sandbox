@@ -1,0 +1,43 @@
+.invoice{
+    margin: 15px 0;
+    border: 1px gray solid;
+    background: rgb(228, 228, 228);
+    padding: 15px 0;
+}
+
+.actions{
+    padding: 15px 0;
+}
+
+.order-description{
+    color:rgb(134, 1, 1);
+    padding-bottom: 10px;
+}
+
+.needs-approval{
+    display:inline-block;
+    color:red;
+    margin-left: 10px;
+}
+
+.approved{
+    color:green;
+}
+
+.checked-in{
+    color:rgb(0, 0, 107);
+    font-weight:bold;
+}
+
+.guest-row{
+    padding: 0 10px;
+    &.aapp-even{
+        background:rgb(233, 233, 253);
+    }
+}
+
+.refund-button{
+    background-color: rgb(148, 0, 0);
+    color: white;
+    margin: 8px;
+}

@@ -1,0 +1,46 @@
+<div class="check-in">
+  <h1>Seminar Check-In</h1>
+  <mat-card class="check-in-search">
+    <form [formGroup]="searchForm" novalidate>
+      <div layout layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="search" placeholder="Search Attendees" autocomplete="off" />
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card *ngFor="let attendee of attendees" [ngClass]="{'checked-in':attendee.attendeeInfo.checkedIn}">
+    <div layout layout-margin layout-align="start center" layout-xs="column" style="overflow:hidden;">
+      <div class="info" flex="nogrow">
+        <div class="attendee-name">{{attendee.fullname}}</div>
+        <div class="attendee-email">{{attendee.email}}</div>
+        <div *ngIf="attendee.attendeeInfo.guests">
+          <div *ngIf="attendee.attendeeInfo.guests.length > 0">
+            <div class="guest-heading">Guests</div>
+            <div class="guest-name" *ngFor="let guest of attendee.attendeeInfo.guests">
+              {{guest.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div flex></div>
+      <div class="not-approved" *ngIf="!attendee.attendeeInfo.finalApproved" flex="nogrow">
+        Attendee Not Approved
+      </div>
+      <div class="status" *ngIf="attendee.attendeeInfo.invoiceRef" flex="nogrow">
+        {{attendee.attendeeInfo.invoiceRef.paid? 'PAID': 'UNPAID'}}
+      </div>
+      <div class="action" flex="nogrow">
+        <button mat-flat-button [disabled]="attendee.attendeeInfo.checkedIn || !attendee.attendeeInfo.finalApproved" (click)="checkIn(attendee)">Check In</button>
+      </div>
+    </div>
+  </mat-card>
+
+
+  <div class="attendees-pagination">
+    <mat-paginator class="attendees-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+      [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>

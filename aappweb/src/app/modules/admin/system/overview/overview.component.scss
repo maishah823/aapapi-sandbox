@@ -1,0 +1,26 @@
+.stats-panel{
+    padding: 15px;
+    background: white;
+    margin: 15px;
+    
+}
+
+.stats-number{
+    text-align:center;
+    font-size: 50px;
+}
+
+.stats-label{
+    text-align:center;
+}
+
+.outstanding{
+    color: darkred;
+}
+
+.stats-row{
+    margin-bottom:4px;
+    padding-bottom:4px;
+    padding-top: 5px;
+    border-bottom: 1px gray solid;
+}

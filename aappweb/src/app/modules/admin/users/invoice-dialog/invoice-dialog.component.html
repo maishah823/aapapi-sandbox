@@ -1,0 +1,36 @@
+<h4 mat-dialog-title color="primary">Generate Invoice for {{data.name}}</h4>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div layout="column">
+
+      <div flex layout="row" layout-xs="column" layout-margin>
+        <div flex="nogrow">Select Type</div>
+        <mat-select formControlName="type" placeholder="Invoice Type" flex="nogrow">
+          <mat-option value='membership'>Membership / Dues</mat-option>
+          <mat-option value='conference'>Conference Attendance</mat-option>
+          <mat-option value='guest'>Guest (not guest registration).</mat-option>
+        </mat-select>
+      </div>
+      <div flex layout="row" layout-xs="column" layout-margin>
+        <mat-form-field flex="nogrow">
+          <input type="number" matInput formControlName="amount" placeholder="Amount" />
+          <span matPrefix>$</span>
+        </mat-form-field>
+      </div>
+      <div flex layout="row" layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <textarea matInput formControlName="description" placeholder="Memo / Description"></textarea>
+        </mat-form-field>
+      </div>
+      <div flex class="invoice-disclaimer">
+        Only use this to create an new arbitrary invoice. This WILL NOT register someone for the seminar or otherwise be attached to a membership or guest registration process. To INCREASE AN EXISTING UPAID invoice, contact tech support. 
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <div layout="row" layout-align="end end" layout-margin>
+    <button flex="nogrow" type="button" (click)="close()" mat-button>Cancel</button>
+    <button flex="nogrow" color="accent" mat-button (click)="submit()" [disabled]="!form.valid">GENERATE</button>
+  </div>
+</div>

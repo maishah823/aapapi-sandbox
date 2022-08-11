@@ -1,0 +1,152 @@
+<div class="conf-info" *ngIf="attendeeInfo">
+  <h2>You are registered for the {{attendeeInfo.conference.year}} seminar in {{attendeeInfo.conference.city}},
+    {{attendeeInfo.conference.state}}</h2>
+  <div class="actions" *ngIf="attendeeInfo">
+    <div class="order-description">Type: {{attendeeInfo.orderDescription}}</div>
+    <div *ngIf="attendeeInfo.rate">Rate: {{attendeeInfo.rate | currency}} </div>
+    <div *ngIf="attendeeInfo.checkedIn">
+      <span class="checked-in">CHECKED IN </span> <span *ngIf="attendeeInfo.checkedInBy"> by
+        {{attendeeInfo.checkedInBy.fullname}}</span>
+    </div>
+  </div>
+  <ng-container *ngIf="attendeeInfo.guests?.length > 0">
+    <h4>Guests</h4>
+    <div layout *ngFor="let guest of attendeeInfo.guests; let even = even; let odd = odd;" class="guest-row"
+      [ngClass]="{'aapp-odd':odd,'aapp-even':even}">
+      <div flex="nogrow" class="guest-name">{{guest.name}}</div>
+      <div flex></div>
+      <div flex="nogrow" hide-xs><span *ngFor="let event of guest.events; let last = last;">{{event.name}}{{last?'':',
+          '}} {{guest.all ? 'ALL EVENTS' : ''}}</span></div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="attendeeInfo.events?.length > 0">
+    <h4>RSVP</h4>
+    <div class="event-row">
+      <span *ngFor="let event of attendeeInfo.events; let last = last;">{{event.name}}{{last?'':', '}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="attendeeInfo.invoiceRef">
+    <div class="invoice">
+      <aapp-invoice-display [invoice]="attendeeInfo.invoiceRef"></aapp-invoice-display>
+    </div>
+  </ng-container>
+  <h4>Metadata</h4>
+  <div layout layout-wrap layout-margin>
+    <div flex>Registration: {{attendeeInfo.created_at | date}}</div>
+  </div>
+  <div layout layout-wrap layout-margin *ngIf="attendeeInfo?.finalApproved">
+    <div flex>
+      Approved On : {{attendeeInfo.finalApprovedOn | date}}
+    </div>
+    <div flex>
+      Approved By : {{attendeeInfo.finalApprovedBy?.fullname || 'Unknown'}}
+    </div>
+  </div>
+  <div layout layout-wrap layout-margin *ngIf="attendeeInfo?.rejected">
+    <div flex>
+      Rejected On : {{attendeeInfo.rejectedOn | date}}
+    </div>
+    <div flex>
+      Rejected By : {{attendeeInfo.rejectedBy?.fullname || 'Unknown'}}
+    </div>
+  </div>
+  <div layout layout-margin *ngIf="attendeeInfo?.rejectedReason">
+    <p flex> REASON: {{attendeeInfo.rejectedReason}}</p>
+  </div>
+  <div class="add-guests-container">
+    <div class="add-guests-inner">
+    <h1>Add Guests</h1>
+    <form [formGroup]="form" novalidate>
+      <div class="section">
+        <h3 class="section-heading">Guests <mat-icon class="section-done" *ngIf="guests.valid">check_circle</mat-icon>
+        </h3>
+        <div formArrayName="guests" *ngFor="let guest of guestControls; let i = index;" class="guest-container">
+          <button mat-icon-button class="delete-button" (click)="deleteGuest(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error>
+            <div *ngIf="guestControls[i].hasError('noevents')">You must select at least one event for this guest.</div>
+            <div *ngIf="guest.get('name').hasError('required')">You must enter the guest's name to continue.</div>
+          </mat-error>
+          <div layout layout-margin layout-align="center center" [formGroupName]="i">
+            <mat-form-field flex>
+              <input matInput formControlName="name" placeholder="Guest's Name" />
+              <span matPrefix> {{i + 1}}. </span>
+            </mat-form-field>
+
+          </div>
+          <div *ngIf="guestControls[i].get('all').value != true" layout layout-margin [formGroupName]="i">
+            <mat-form-field flex>
+              <mat-select formControlName="events" placeholder="Select Specific Events" multiple>
+                <mat-option *ngFor="let event of events" [value]="event._id">
+                  <span>{{event.name}} - {{event.cost | currency}}</span>,
+                  <span matLine>{{event.displayDate}} {{event.displayStartTime}}</span>
+                </mat-option>
+              </mat-select>
+
+            </mat-form-field>
+
+
+
+          </div>
+
+          <div layout layout-align="center center" [formGroupName]="i">
+            <mat-checkbox flex="nogrow" formControlName="all">All Events</mat-checkbox>
+          </div>
+
+        </div>
+        <div layout layout-margin *ngIf="guestControls.length > 0">
+          <div flex>Cost: {{calculateGuestCost() | currency}}</div>
+        </div>
+        <button mat-raised-button (click)="addGuest()"
+          *ngIf="guestControls.length == 0 || guestControls[guestControls.length - 1]?.valid">
+          <mat-icon>add</mat-icon> {{guestControls?.length == 0 ? 'Add a Guest' : 'Add Another Guest'}}
+        </button>
+      </div>
+
+      <div class="section">
+        <h3 class="section-heading">Pricing Summary</h3>
+        <div layout="column" layout-align="center center" layout-margin>
+          <div class="subtotals" flex="nogrow">
+            <div *ngIf="guestTotal > 0">Guests: {{guestTotal | currency}}</div>
+          </div>
+          <div class="total">
+            {{guestTotal | currency}}
+          </div>
+        </div>
+      </div>
+      <!-- Payment -->
+      <div class="section" formGroupName="paymentGroup">
+        <h3 class="section-heading">Payment <mat-icon class="section-done" *ngIf="paymentGroup.valid">
+            check_circle</mat-icon>
+        </h3>
+        <div class="credit-card-info">
+          <div layout layout-wrap>
+            <mat-form-field flex class="payment-field">
+              <input matInput placeholder="Credit Card Number" formControlName="cc" required />
+            </mat-form-field>
+          </div>
+          <div layout layout-wrap>
+            <mat-form-field flex="33" flex-xs="50" class="payment-field">
+              <input matInput placeholder="Exp Month" formControlName="expMonth" required />
+            </mat-form-field>
+            <mat-form-field flex="33" flex-xs="50" class="payment-field">
+              <input matInput placeholder="Exp Year" formControlName="expYear" required />
+            </mat-form-field>
+            <mat-form-field flex="33" flex-xs="50" class="payment-field">
+              <input matInput placeholder="CVV" formControlName="cvv" required />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="attend-actions">
+          <div layout layout-align="center center" layout-margin>
+              <aapp-loading-button flex="initial" color="primary" [loading]="inProgress" (activated)="submit()" [disabled]="!form.valid || inProgress">Complete Order ({{guestTotal | currency}})</aapp-loading-button>
+          </div>
+          <div class="form-error" *ngIf="!form.valid">Check the form for errors. Be sure to correctly fill in all required information.</div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+.awards-p{
+    text-align: center;
+    ul{
+        list-style: none;
+    }
+}
+
+.award-list{
+    margin: 1em;
+    max-width: 350px;
+}
+
+@media(max-width:600px){
+    .award-list{
+        max-width: 100%;
+        width:100%;
+        text-align: center;
+        ul{
+            list-style: none;
+            margin-left:0;
+            padding-left:0;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@import '@angular/material/theming';
+
+@mixin home-component-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    .front-header{
+        .front-header-links{
+            color: mat-color($primary);
+        }
+    }
+    .main-image{
+        .mat-raised-button{
+            color: mat-color($primary);
+        }
+    }
+
+    
+  
+}

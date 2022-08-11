@@ -1,0 +1,118 @@
+<div class="conf-advert">
+  <div class="conference-start">
+    <div class="conference-header">
+      <img class="conf-logo" src="/assets/images/logo_white.svg" />
+      <h1 class="heading-no-graphic">2022 AAPP Seminar</h1>
+      <h2 class="heading-no-graphic">Phoenix, AZ</h2>
+      <h3>June 6 - 10, 2022</h3>
+      <button mat-button class="sign-up-button" routerLink="/web/public/attend">SIGN UP NOW</button>
+    </div>
+
+  </div>
+  <div layout layout-align="center center">
+    <mat-icon style="font-size:10vw" flex="nogrow">keyboard_arrow_down</mat-icon>
+  </div>
+  <div class="conference-blurb">
+    <p>Join the AAPP June 6 - 10, 2022 in Phoenix, AZ for our 45th Annual Training Seminar. </p>
+    <p> AAPP members are accustomed to the highest level of training in all aspects of modern polygraph techniques to be
+      given at our seminars. The Phoenix seminar will meet that expectation and more! The venue is the beautiful Arizona Grand Resort and Spa, and the course content is simply superb.</p>
+    <p>The AAPP continues to hold down its seminar price to just $320 per member. This seminar fee has not risen in
+      years, all while the week of training and activity continues to rise to the highest levels. In short, this is not
+      a seminar to miss. Register today! </p>
+    <h3>Featured Instruction</h3>
+    <ul>
+      <li *ngFor="let course of advertData.titles">{{course}}</li>
+    </ul>
+    <p class="download-p"><button mat-button class="download-button" (click)="downloadPdf()">
+        <mat-icon>print</mat-icon> Download PDF Schedule
+      </button></p>
+    <p>AAPP Annual Seminars offer the most up to date training available in Interview and Interrogation, Validated
+      Techniques, Test Data Analysis, Countermeasures, Polygraph Research, Legal Updates, Ethics, Administration, Case
+      Summaries and more. </p>
+  </div>
+  <div class="conf-image-1"></div>
+
+  <div class="conference-blurb">
+    <h3>
+      Accomodations
+    </h3>
+    <div class="hotel-room"></div>
+    <p>Arizona Grand Resort & Spa puts you in the midst of one of Phoenix, Arizona’s most naturally beautiful places, ideally situated on the doorstep of 17,000 acres of South Mountain Preserve, the largest municipal park in the world and the most visited hiking destination in the state.</p>
+      <p>Conveniently located less than 10 minutes from Sky Harbor International Airport, Arizona Grand is easily accessible via I-10 and US-60, offering quick connections to numerous other major freeways.</p>
+      <p>The luxurious Arizona resort is nestled in a private southwestern desert oasis and offers a one-of-a-kind setting at the base of naturally beautiful South Mountain Preserve. Awarded the Gold Key Award by Meetings & Conventions magazine, Arizona Grand Resort & Spa is the singular Phoenix property that can provide guests with world-class service, spacious all-suite accommodations, state-of-the-art meeting facilities and world-class catering cuisine. Guests can take advantage of our luxury rooms or on site-amenities including our golf course, spa and dining options.  Sophisticated rooms and 1- and 2-bedroom suites feature 42-inch flat-screen TVs, wet bars, free Wi-Fi, and private balconies or patios.</p>
+      <p>Perks include an 18-hole golf course, a spa, a fitness center with multiple classes, and 6 dining venues ranging from a casual cafe to a casita-style Mexican restaurant. There is also a 7-acre water park, exclusively for guests, with a wave pool, water slides and private cabanas</p>
+      <br/>
+    
+      <div class="book-hotel">
+        <h5>Arizona Grand Resort and Spa</h5>
+        <div class="rate">$96/night (Gov Rate)</div>
+        <p>You can book your room <b>now</b> by clicking <a href="https://reservations.arizonagrandresort.com/110245?groupID=3289790#/guestsandrooms"
+            target="_blank">here</a>. </p>
+      </div>
+  
+
+  </div>
+  <ng-container *ngIf="advertData.instructors?.length > 0">
+    <h2 class="heading-no-graphic speakers-heading">2022 Speakers</h2>
+    <div class="speakers-section">
+      <div layout layout-wrap layout-align="center center" layout-margin layout-xs="column">
+
+        <div *ngFor="let instructor of advertData.instructors" flex="nogrow">
+          <div class="picture-frame">
+            <img class="speaker-picture" [src]="instructorImagesURL +'-thumbs/'+instructor.instructorInfo.picture" />
+            <div class="picture-caption">
+              <h4>{{instructor.fullname}}</h4>
+              <h4>{{instructor.instructorInfo?.title}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="conference-blurb">
+    <p>Featured instructors are the finest in their fields who offer contemporary and innovative information to assist
+      polygraph examiners in their day to day operations. Vendors are also present to provide software/hardware support,
+      provide software updates and showcase the latest technology. </p>
+    <div class="button-container">
+      <button mat-button class="sign-up-button-large" routerLink="/web/public/attend">SIGN UP NOW</button>
+    </div>
+
+  </div>
+  <div *ngIf="advertData.events && advertData.events.length > 0">
+    <h2 class="heading-no-graphic speakers-heading">2022 Events</h2>
+    <div class="events-section">
+      <div layout layout-wrap layout-align="start center" layout-margin layout-xs="column">
+        <div *ngFor="let event of advertData.events" flex="30" flex-xs="100" class="extra-event-container">
+          <div>{{event.name}}</div>
+          <div class="event-location">{{event.displayDate}} {{event.displayStartTime}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2 class="heading-no-graphic speakers-heading">Prices</h2>
+  <div class="prices-section">
+    <div layout layout-margin layout-xs="column">
+      <!-- <div flex>
+        <h5>Early-Bird Rates</h5>
+        <h5 class="price-subheading">(more than 30 days before)</h5>
+        Member- {{advertData.conference.memberEarlyPrice | currency}}
+        <br /> Non-member- {{advertData.conference.nonMemberEarlyPrice | currency}}
+      </div> -->
+      <div flex>
+        <h5>Standard Rates</h5>
+        <!-- <h5 class="price-subheading">(less than 30 days before)</h5> -->
+        Member- {{advertData.conference.memberPrice | currency}}
+        <br /> Non-member- {{advertData.conference.nonMemberPrice | currency}}
+      </div>
+
+      <div flex>
+        <h5>Vendors</h5>
+        Call us for details.
+      </div>
+    </div>
+
+  </div>
+  <div class="button-container">
+    <button mat-button class="sign-up-button-large" routerLink="/web/public/attend">SIGN UP NOW</button>
+  </div>
+</div>

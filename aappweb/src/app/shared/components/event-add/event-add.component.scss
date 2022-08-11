@@ -1,0 +1,45 @@
+
+@media(max-width:'600px'){
+    .timepicker{
+        font-size: 0.8em;
+    }
+
+    .add-event-heading{
+        font-size:16px;
+        font-style:bold;
+        text-align: center;
+    }
+}
+
+.add-event-container{
+    height: 100%;
+    overflow-y:auto;
+}
+
+.section-heading{
+    color:darkblue;
+    margin: 10px;
+    border-bottom:1px gray solid;
+    text-align: center;
+    h3{padding-bottom:0; margin-bottom:0;}
+    h5{padding-top:0;margin-top:0;}
+}
+
+.edit-instructors{
+    color:red;
+}
+
+.instructors-empty{
+    color:red;
+    font-size: 1.1em;
+    padding: 10px 20%;
+    text-align:center;
+}
+
+.cost-suffix{
+    margin-left: 4px;
+    padding: 4px;
+    border: 1px gray solid;
+    background: lightgray;
+    color: rgb(53, 53, 53);
+}

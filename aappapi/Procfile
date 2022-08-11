@@ -1,0 +1,3 @@
+web: node app
+worker: node worker/worker
+clock: node clock/clock.js

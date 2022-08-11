@@ -1,0 +1,55 @@
+<div class="base-layout">
+
+  <mat-card>
+    <h1 style="padding-top:15px;">{{title}}</h1>
+    <form [formGroup]="form" novalidate>
+      <div layout layout-margin layout-align="center center">
+        <mat-form-field flex="50" flex-xs="100">
+          <mat-select placeholder="Select Group" formControlName="group">
+            <mat-option *ngFor="let option of groups" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div layout layout-margin layout-align="center center" *ngIf="form.get('group').value == 'state'">
+        <mat-form-field flex="50" flex-xs="100">
+          <input matInput placeholder="State" formControlName="state" [matAutocomplete]="auto" />
+        </mat-form-field>
+      </div>
+      <div layout layout-margin layout-align="center center">
+        <mat-form-field flex="75" flex-xs="100">
+          <textarea class="message-box" matInput matTextareaAutosize matAutosizeMinRows="10" matAutosizeMaxRows="30"
+            formControlName="message" placeholder="Message..."></textarea>
+        </mat-form-field>
+      </div>
+      <div layout layout-margin layout-align="end end">
+        <div flex="nogrow">
+          <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="send()">Send Email</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card>
+    <form [formGroup]="smsForm" novalidate>
+      <div layout layout-margin layout-align="center center">
+        <div flex="75" flex-xs="100" layout="column" class="sms-container">
+          <h1 flex>Text All Admins</h1>
+          <mat-form-field flex>
+            <textarea  class="message-box" matInput formControlName="message" rows="8"></textarea>
+          </mat-form-field>
+          <div layout layout-margin layout-align="end end">
+          <div flex="nogrow" class="actions">
+            <button [disabled]="!smsForm.valid" (click)="sendSMS()" mat-flat-button>Send Text</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+      {{ state }}
+    </mat-option>
+  </mat-autocomplete>
+</div>

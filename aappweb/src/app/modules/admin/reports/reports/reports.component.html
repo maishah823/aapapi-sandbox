@@ -1,0 +1,27 @@
+<div class="base-layout reports">
+  <h1>Data Export</h1>
+  <h4>Choose spreadsheet to download...</h4>
+  <div class="report-downloads" layout="row" layout-align="center center" layout-wrap layout-margin>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('confreg')" [disabled]="inProgress">Seminar Registrations</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('guests')" [disabled]="inProgress">Seminar Guests</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('vendors')" [disabled]="inProgress">Vendors</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('members')" [disabled]="inProgress">Members</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('invoices')" [disabled]="inProgress">Invoices</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('schools')" [disabled]="inProgress">Schools</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('newstudents')" [disabled]="inProgress">Students</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('applicants')" [disabled]="inProgress">Applicants</button></div>
+    <div flex class="button-container"><button mat-flat-button (click)="getData('conditionalapplications')" [disabled]="inProgress">Conditional Members</button></div>
+  </div>
+  <div class="report-log">
+      <h3>History</h3>
+      <ul class="log-list">
+          <li *ngFor="let record of logs"><span class="log-date">{{record.created_at | date:'MM/dd/yyyy HH:mm'}}</span>: {{record.user.fullname}} downloaded {{record.type}}</li> 
+        </ul>
+    
+        <div class="pagination-card">
+          <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[20, 50, 100, 200]"
+            (page)="pageEvent($event)">
+          </mat-paginator>
+        </div>
+      </div>
+</div>

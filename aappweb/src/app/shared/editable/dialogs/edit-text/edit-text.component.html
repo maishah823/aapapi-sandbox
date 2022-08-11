@@ -1,0 +1,15 @@
+<h4 mat-dialog-title color="primary">{{data.title}}</h4>
+<div mat-dialog-content>
+  <p> {{data.message}}</p>
+  <form [formGroup]="form" (ngSubmit)="change()" novalidate>
+    <div layout="column">
+      <mat-form-field flex>
+          <textarea matInput formControlName="text" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="10"></textarea>
+        </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <button mat-dialog-close mat-button>Cancel</button>
+  <button color="accent" mat-button (click)="change()" [disabled]="!form.valid">CHANGE</button>
+</div>

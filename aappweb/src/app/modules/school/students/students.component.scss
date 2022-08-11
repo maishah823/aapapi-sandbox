@@ -1,0 +1,52 @@
+.educator-students{
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color:white;
+    padding: 15px;
+    overflow-y:auto;
+}
+
+.educator-students-stats{
+    padding-top:20px;
+}
+
+.student-stats-container{
+    padding:10px;
+    border:1px gray dotted;
+    margin:10px;
+}
+
+.search-card{
+    margin: 0 20px;
+}
+
+.student-card{
+    padding: 10px;
+}
+
+.conversion{
+    color:rgb(177, 2, 2);
+    &.over-50{
+        color: green;
+    }
+}
+
+.editable{
+    color: blue;
+    cursor: context-menu;
+    &:hover{color:rgb(105, 105, 167)}
+}
+
+.student-expired{
+    color:rgb(177, 2, 2);
+}
+.student-redeemed{
+    color:green;
+}
+
+.add-student-button{
+    padding: 15px 0 0 0;
+}

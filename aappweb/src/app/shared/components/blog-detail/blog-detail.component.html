@@ -1,0 +1,12 @@
+<div class="blog-item" layout="column" [routerLink]="preview ? null : ['/web/public/post/',post._id]" [queryParams]="{t:blogType}"
+  [ngClass]="{'preview':preview}">
+  <img style="display:block;" class="blog-image" [src]="imageUrl +'-thumbs/'+post.coverImg" (error)="imageError($event)" />
+  <h2 class="blog-title">{{post.title}}</h2>
+  <div class="blog-paragraph" flex="grow">
+    <p>{{post.summary}}</p>
+  </div>
+  <div layout="row" layout-align="end end">
+    <button *ngIf="!preview" flex mat-button [routerLink]="['/web/public/post/',post._id]" [queryParams]="{t:blogType}">Read
+      More</button>
+  </div>
+</div>

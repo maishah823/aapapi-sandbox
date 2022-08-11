@@ -1,0 +1,161 @@
+<ng-container *ngIf="conferenceIsCurrent; else confEnded">
+    <div [@slideInFromBottom]="true" class="section-animation-container">
+            <div class="attend-notice">Use this form only if you are representing an agency and wish to register <span class="red">MULTIPLE PEOPLE</span> under the <span class="red">same invoice.</span></div>
+        <form [formGroup]="form" connectForm="agency" novalidate>
+
+            <div class="section" formGroupName="infoGroup">
+                <h3 class="section-heading">Agency Representative
+                    <mat-icon class="section-done" *ngIf="infoGroup.valid">check_circle</mat-icon>
+                </h3>
+                <div layout layout-xs="column" layout-margin>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="firstName" placeholder="First Name" required/>
+                    </mat-form-field>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="lastName" placeholder="Last Name" required/>
+                    </mat-form-field>
+                </div>
+                <div layout layout-xs="column" layout-margin>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="agency" placeholder="Agency" required/>
+                    </mat-form-field>
+
+                </div>
+                <aapp-address [formGroup]="infoAddressGroup"></aapp-address>
+                <div layout layout-xs="column" layout-margin>
+                    <mat-form-field flex class="join-field">
+                        <input matInput formControlName="email" placeholder="Email" required/>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-heading">Participants
+                    <mat-icon class="section-done" *ngIf="participants.valid">check_circle</mat-icon>
+                </h3>
+                <div formArrayName="participants" *ngFor="let participant of participantControls; let i = index;" class="participant-container">
+                    <button type="button" mat-icon-button class="delete-button" (click)="deleteParticipant(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <div layout layout-xs="column" layout-align="center center">
+                        <div flex="nogrow">
+                            <span flex="nogrow" class="participant-number">{{i + 1}}</span>
+                        </div>
+                        <div flex>
+                            <div layout layout-margin layout-align="center center" layout-xs="column" [formGroupName]="i">
+
+                                <mat-form-field flex>
+                                    <input matInput formControlName="firstName" placeholder="First Name" />
+                                </mat-form-field>
+                                <mat-form-field flex>
+                                    <input matInput formControlName="lastName" placeholder="Last Name" />
+                                </mat-form-field>
+                            </div>
+                            <div layout layout-margin layout-align="center center" [formGroupName]="i" layout-xs="column">
+                                <mat-form-field flex>
+                                    <input matInput formControlName="email" placeholder="Email" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div flex="nogrow">
+                            <div class="participant-cost">
+                                {{participant.get('cost').value | currency}}
+                                <br/>
+                                <span *ngIf="participant.get('rateDesc').value">{{participant.get('rateDesc').value}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <button mat-raised-button (click)="addParticipant()" *ngIf="participantControls.length == 0 || participantControls[participantControls.length - 1]?.valid">
+                    <mat-icon>add</mat-icon> {{participantControls?.length == 0 ? 'Add a Participant' : 'Add Another Participant'}}</button>
+            </div>
+
+            <div class="section" *ngIf="calculateTotal(); let calculated">
+                <h3 class="section-heading">Pricing Summary</h3>
+                <div layout="column" layout-align="center center" layout-margin>
+                <div class="subtotals">
+                    {{calculated.numberOfReg}} Participants: {{calculated.total | currency}}
+                    <span *ngIf="discount">
+                        <br/>Discount: -{{discount | currency}}</span>
+                </div>
+                </div>
+                <div class="total">
+                    {{calculated.total - (discount || 0) | currency}}
+                </div>
+                <div class="coupons">
+                    Coupon Code:
+                    <input *ngIf="!memberOverride" class="coupon-entry" [ngClass]="{'good-code':discount}" formControlName="coupon"
+                    />
+                    <span *ngIf="memberOverride" style="color:green;"> Member rate for all attendees.</span>
+                </div>
+            </div>
+            <!-- Payment -->
+            <div class="section" formGroupName="paymentGroup">
+                <h3 class="section-heading">Payment / Invoice
+                    <mat-icon class="section-done" *ngIf="paymentGroup.valid">check_circle</mat-icon>
+                </h3>
+                <div class="payment-field">
+                    <h3>Would you like to pay now with a credit card or be sent an invoice?</h3>
+                </div>
+                <div class="payment-field payment-type-selection">
+                    <mat-radio-group formControlName="paymentType">
+                        <mat-radio-button value="credit">Credit Card</mat-radio-button>
+                        <mat-radio-button value="invoice">Invoice</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div *ngIf="paymentType.value == 'credit'" class="credit-card-info">
+                    <div layout layout-wrap>
+                        <mat-form-field flex class="payment-field">
+                            <input matInput placeholder="Credit Card Number" formControlName="cc" />
+                        </mat-form-field>
+                    </div>
+                    <div layout layout-wrap>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="Exp Month" formControlName="expMonth" required/>
+                        </mat-form-field>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="Exp Year" formControlName="expYear" required/>
+                        </mat-form-field>
+                        <mat-form-field flex="33" flex-xs="50" class="payment-field">
+                            <input matInput placeholder="CVV" formControlName="cvv" required/>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="section">
+                <h3 class="section-heading">Finalize</h3>
+                <div class="join-field agreement-text">
+                    By clicking the "Submit Application" button below, I attest that:
+                    <br/> I certify that I am authorized by my agency to enroll the above listed individuals in this event and
+                    that the above listed individuals are eligible to attend.
+                    <br/> I understand that each participant will be vetted and that the application for enrollment in this event
+                    may be denied by AAPP management for any reason. I understand that I am entitled to a full refund for
+                    the cost of the denied individual's enrollment fee.
+
+                </div>
+                <div class="dates-times">
+                    Complete signup for the AAPP seminar in {{conference.city}}, {{conference.state}}; starting on {{ conference.startDateTime
+                    | date:'E MM/dd/yyyy, hh:mm a':conference.utcOffset}} and ending {{ conference.endDateTime | date:'E
+                    MM/dd/yyyy, hh:mm a':conference.utcOffset}} ...
+                </div>
+
+                <div class="attend-actions">
+                    <div layout layout-align="center center" layout-margin>
+                        <aapp-loading-button flex="initial" color="primary" [loading]="inProgress" (click)="submit()" [disabled]="!form.valid || participantControls?.length < 1">Complete Order ({{calculateTotal().total | currency}})</aapp-loading-button>
+                    </div>
+                    <div class="form-error"  *ngIf="!form.valid">Check the form for errors. Be sure to correctly fill in all required information.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-container>
+
+<ng-template #confEnded>
+    <div class="reg-ended">Sorry, the registration for this seminar has ended. Check back in a few weeks for next year's seminar.</div>
+</ng-template>

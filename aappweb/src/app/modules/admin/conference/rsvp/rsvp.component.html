@@ -1,0 +1,16 @@
+<div class="base-layout">
+  <mat-card class="rsvp-card">
+    <h1>Event RSVP</h1>
+    <p class="instructions">Including attendees and paid guests.</p>
+    <div layout layout-margin layout-wrap layout-xs="column" layout-align="center center">
+      <div flex="40" flex-xs="100" *ngFor="let item of rsvps" class="rsvp-panel">
+        <div class="rsvp-number">
+          {{item.total}}
+        </div>
+        <div class="rsvp-event">
+          {{item._id}}
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

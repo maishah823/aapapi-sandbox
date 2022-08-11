@@ -1,0 +1,47 @@
+.user-panel{
+    margin-bottom: 10px;
+    overflow:hidden;
+    h4{color:rgb(26, 26, 189)}
+}
+
+.user-full{
+    margin:10px;
+}
+
+.educator-section{
+    margin-top:10px;
+    padding-top:10px;
+    border-top: 1px gray solid;
+}
+
+.user-actions{
+    button{
+        margin-top: 5px;
+    }
+}
+
+.filters{
+    background:white;
+    margin-bottom: 10px;
+}
+
+.suspended{
+    color:red;
+}
+
+.temp-pass{
+    color:red;
+    font-size:.8em;
+    font-style: italic;
+}
+
+.editable{
+    color: black;
+    cursor: pointer;
+    &:hover{color:rgb(105, 105, 167)}
+}
+
+.certs{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}

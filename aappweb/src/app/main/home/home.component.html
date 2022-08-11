@@ -1,0 +1,72 @@
+<div class="home-page" [mnFullpage]="options">
+    <div class="section welcome-section fp-section fp-table">
+        <div class="fp-tableCell first-tile">
+            <div layout="column" layout-align="start center" layout-margin>
+                <div layout="row" layout-align="start center">
+                    <img style="width:75vh;" src="/assets/images/logo_white.svg" />
+                </div>
+                <div style="width: 80vw" layout layout-align="center center" layout-wrap layout-margin>
+                    <div flex="nogrow" class="brand-text">Ethics.</div>
+                    <div flex="nogrow" class="brand-text">Integrity.</div>
+                    <div flex="nogrow" class="brand-text">Honor.</div>
+                    <div flex="nogrow" class="brand-text">Training.</div>
+                </div>
+            </div>
+            <div class="scroll-down-instructions">
+                <div>
+                    Scroll Down
+                </div>
+                <div>
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section fp-auto-height mission">
+        <div class="mission-inner">
+            <h2>The American Association of Police Polygraphists</h2>
+            <p>The American Association of Police Polygraphists is dedicated to bringing together Law Enforcement professionals
+                from throughout the country to advance the latest training and technology in the field. The AAPP is built
+                on the exchange of ideas between its members who represent local, state, tribal, and federal law enforcement
+                agencies. The AAPP strives for the highest standards and ethics among its members, while advancing a simple
+                agenda; to bring the best training available on a consistent basis to polygraph examiners.</p>
+            <p class="history">Download our "AAPP History" publication (PDF): <a href="/assets/downloads/history1.pdf">Part 1 | </a><a href="/assets/downloads/history2.pdf">Part 2</a></p>
+            <p>Being a member of the AAPP brings unparalleled opportunities to receive the best training along with so many
+                different examiners from our nation’s law enforcement community. All AAPP members are bound individually
+                and collectively to the standards, objectives, and principals of practice of the American Association of
+                Police Polygraphists, and existing law(s). The AAPP is family. The AAPP is Law Enforcement. The AAPP is polygraph.</p>
+        </div>
+    </div>
+    <div class="section welcome-section fp-section fp-table">
+        <div class="fp-tableCell second-tile">
+            <div layout layout-align="center end" style="height: 100%">
+                <div flex class="front-conf-details">
+                    <h2>2023 AAPP Seminar</h2>
+                    <h3>May 22- 2023, through Friday,<br> May 26, 2023</h3>
+
+                    <h4>Kansas City Marriott Downtown <br>
+                      200 West 12th Street <br>
+                      Kansas City, MO 64105 <br>
+                      Tel: (816) 421-6800
+                    </h4>
+                    <button routerLink="/web/conf-advert" mat-button class="front-button">Register Now!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section welcome-section fp-section fp-table">
+        <div class="fp-tableCell third-tile">
+            <div layout layout-align="center end" style="height: 100%">
+                <div flex class="front-conf-details">
+                    <h2>AAPP Membership</h2>
+                    <h4>Become a Part of the #1 Polygraph Organization in the United States of America</h4>
+                    <button routerLink="/web/join-advert" mat-button class="front-button">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="overlay-menu" [ngClass]="{'hide-nav':hideNav}">
+    <button routerLink="/web" mat-button class="overlay-button">Explore</button>
+    <button [ngClass]="{'login-hidden':hideLogin}" [routerLink]="['/web']" [queryParams]="{login:'true'}" mat-button class="overlay-button login-button">Login</button>
+</div>

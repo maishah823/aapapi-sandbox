@@ -1,0 +1,24 @@
+<mat-card class="coupons-container">
+  <h1>Seminar Coupons</h1>
+  <div layout layout-align="end end" layout-margin>
+    <button mat-button (click)="addCoupon()" color="primary"><mat-icon>add</mat-icon>Add Coupon</button>
+  </div>
+  <table class="coupons-table">
+    <thead>
+      <th>Code</th>
+      <th hide-xs>Type</th>
+      <th>Discount</th>
+      <th hide-xs>Single Use</th>
+      <th hide-xs>Expiration</th>
+      <th hide-xs># of Uses</th>
+    </thead>
+    <tr *ngFor="let coupon of coupons">
+      <td>{{coupon.code}}</td>
+      <td hide-xs>{{coupon.type | cap}}</td>
+      <td>{{coupon.discount | currency}}</td>
+      <td hide-xs>{{coupon.singleUse ? 'YES' : 'NO'}}</td>
+      <td hide-xs>{{coupon.expiration | date:'MM/dd/yyyy'}}</td>
+      <td hide-xs>{{coupon.uses}}</td>
+    </tr>
+  </table>
+</mat-card>

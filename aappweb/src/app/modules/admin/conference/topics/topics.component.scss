@@ -1,0 +1,17 @@
+.admin-heading{
+    text-align:center;
+}
+.topic-item{
+    margin:5px;
+    padding:5px;
+    box-sizing: border-box;
+    border: 1px gray dotted;
+    border-radius: 3px;
+    text-align:center;
+    min-width:200px;
+    flex-grow:0;
+}
+
+.add-topic{
+    padding:10px;
+}

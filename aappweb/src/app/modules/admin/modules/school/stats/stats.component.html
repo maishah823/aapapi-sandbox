@@ -1,0 +1,33 @@
+<mat-card>
+  <h2 class="schools-heading">School Stats</h2>
+  <div class="search-card">
+    <form [formGroup]="searchForm" novalidate>
+      <div layout="row" layout-align="end center">
+        <div flex="50" flex-xs="100">
+          <mat-form-field style="width:100%">
+            <input matInput #searchInput formControlName="search" />
+            <mat-icon matPrefix>search</mat-icon>
+            <button *ngIf="searchInput.value" (click)="clearSearch()" mat-icon-button matSuffix><mat-icon>close</mat-icon></button>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <mat-card *ngFor="let stat of stats" class="school-stat-card">
+    <h3>{{stat.name}}</h3>
+    <h5>Student Referrals</h5>
+    <div layout="row" layout-wrap layout-xs="column">
+      <div flex>Total: {{stat.total}}</div>
+      <div flex>Active: {{stat.active}}</div>
+      <div flex>Expired: {{stat.expired}}</div>
+      <div flex>Redeemed: {{stat.redeemed}}</div>
+      <div flex class="conversion" [ngClass]="{'over-50':stat.percentage >= 0.5}">Converted: {{stat.percentage | perc}}</div>
+    </div>
+  </mat-card>
+  <div class="pagination-card">
+    <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+
+</mat-card>

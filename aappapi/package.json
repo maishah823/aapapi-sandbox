@@ -1,0 +1,61 @@
+{
+  "name": "aappapi",
+  "version": "1.0.0",
+  "description": "AAPP REST",
+  "main": "./app",
+  "scripts": {
+    "start": "heroku local",
+    "test": "mocha --reporter spec",
+    "heroku-postbuild": "migrate-mongo up"
+  },
+  "engines": {
+    "node": "9.2.0"
+  },
+  "author": "Greg Harkins",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "aws-sdk": "^2.238.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "body-parser-xml": "^1.1.0",
+    "bufferutil": "^3.0.3",
+    "cron": "^1.3.0",
+    "debug": "^3.1.0",
+    "excel4node": "^1.6.0",
+    "express": "^4.16.2",
+    "express-caja-sanitizer": "^1.0.1",
+    "express-rate-limit": "^2.11.0",
+    "fill-pdf": "^1.1.0",
+    "generate-password": "^1.4.0",
+    "guid": "0.0.12",
+    "json2xls": "^0.1.2",
+    "jsonwebtoken": "^8.1.1",
+    "migrate-mongo": "^9.0.0",
+    "moment-timezone": "^0.5.16",
+    "mongoose": "^5.0.6",
+    "mongoose-paginate": "^5.0.3",
+    "morgan": "^1.9.0",
+    "multer": "^1.4.1",
+    "multer-s3": "^2.9.0",
+    "node-quickbooks": "^2.0.39",
+    "path": "^0.12.7",
+    "pdfkit": "^0.8.3",
+    "plivo": "^4.0.7",
+    "q": "^1.5.1",
+    "redis": "^2.8.0",
+    "redis-lua-loader": "^1.1.1",
+    "request": "^2.85.0",
+    "rsmq": "^0.8.3",
+    "rsmq-worker": "^0.5.2",
+    "serve-static": "^1.13.1",
+    "socket.io": "^2.0.4",
+    "stripe": "^5.8.0",
+    "utf-8-validate": "^4.0.0",
+    "validator": "^9.4.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.1"
+  }
+}

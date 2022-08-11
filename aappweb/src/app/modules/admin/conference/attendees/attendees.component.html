@@ -1,0 +1,106 @@
+<h2>Seminar Attendees</h2>
+<form [formGroup]="searchForm" novalidate>
+  <div layout layout-xs="column" layout-margin>
+    <mat-form-field flex>
+      <input matInput formControlName="search" placeholder="Search Attendees" autocomplete="off" />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</form>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let user of attendees">
+    <mat-expansion-panel-header>
+      {{user.lastName}}, {{user.firstName}} - <span hide-xs class="email-display"> {{user.email}} </span>
+      <span *ngIf="user.attendeeInfo">
+        <span *ngIf="!user.attendeeInfo.checkedIn">
+          <span *ngIf="user.attendeeInfo.finalApproved" class="approved"> - Approved </span>
+          <span *ngIf="user.attendeeInfo.rejected"> - Rejected</span>
+          <span *ngIf="!user.attendeeInfo.rejected && !user.attendeeInfo.finalApproved" class="needs-approval pulse"> - NEEDS
+            APPROVAL</span>
+        </span>
+        <span *ngIf="user.attendeeInfo.checkedIn" class="line-with-icon checked-in"> - <mat-icon>check</mat-icon>CHECKED
+          IN</span>
+      </span>
+    </mat-expansion-panel-header>
+    <div class="description">
+      <div>This attendee {{user.isMember ? 'IS also' : 'is NOT'}} a member.</div>
+    </div>
+    <div class="actions" *ngIf="user.attendeeInfo">
+      <div class="order-description">{{user.attendeeInfo.orderDescription}}</div>
+      <div *ngIf="user.attendeeInfo.rate">Rate: {{user.attendeeInfo.rate | currency}} </div>
+      <div *ngIf="user.attendeeInfo.finalApproved && !user.attendeeInfo.checkedIn">
+        <button mat-flat-button color="primary" (click)="checkIn(user)">CHECK IN</button>
+      </div>
+      <div *ngIf="user.attendeeInfo.checkedIn">
+        <span class="checked-in">CHECKED IN </span> <span *ngIf="user.attendeeInfo.checkedInBy"> by {{user.attendeeInfo.checkedInBy.fullname}}</span>
+      </div>
+      <div class="approve-reject" *ngIf="!user.attendeeInfo.finalApproved && !user.attendeeInfo.rejected">
+        <button mat-flat-button color="primary" (click)="approve(user)">LINK TO MEMBER / APPROVE</button>
+        <button mat-flat-button color="warn" (click)="reject(user)">REJECT</button>
+      </div>
+    </div>
+    <ng-container *ngIf="user.address">
+      <h4>Address</h4>
+      <p>{{user.address.street1}}
+        <br/> {{user.address.city}}, {{user.address.state}} {{user.address.zipcode}}
+        <br/> {{user.address.cellPhone | phone}} {{user.address.workPhone | phone}}
+        <br/> <a [href]="'mailto:'+user.email">{{user.email}}</a>
+      </p>
+    </ng-container>
+    <ng-container *ngIf="user.attendeeInfo.guests?.length > 0">
+      <h4>Guests</h4>
+      <div layout *ngFor="let guest of user.attendeeInfo.guests; let even = even; let odd = odd;" class="guest-row" [ngClass]="{'aapp-odd':odd,'aapp-even':even}">
+        <div flex="nogrow" class="guest-name">{{guest.name}}</div>
+        <div flex></div>
+        <div flex="nogrow" hide-xs><span *ngFor="let event of guest.events; let last = last;">{{event.name}}{{last?'':',
+            '}} {{guest.all ? 'ALL EVENTS' : ''}}</span></div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="user.attendeeInfo.events?.length > 0">
+      <h4>RSVP</h4>
+      <div class="event-row">
+        <span *ngFor="let event of user.attendeeInfo.events; let last = last;">{{event.name}}{{last?'':', '}}</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="user.attendeeInfo.invoiceRef">
+      <div class="invoice">
+        <aapp-invoice-display [invoice]="user.attendeeInfo.invoiceRef"></aapp-invoice-display>
+        <div><button (click)="refund(user._id)" mat-flat-button class="refund-button">REFUND/REMOVE ATTENDEE</button></div>
+      </div>
+    </ng-container>
+    <h4>Metadata</h4>
+    <div layout layout-wrap layout-margin>
+      <div flex>Registration: {{user.attendeeInfo.created_at | date}}</div>
+    </div>
+    <div layout layout-wrap layout-margin *ngIf="user.attendeeInfo?.finalApproved">
+      <div flex>
+        Approved On : {{user.attendeeInfo.finalApprovedOn | date}}
+      </div>
+      <div flex>
+        Approved By : {{user.attendeeInfo.finalApprovedBy?.fullname || 'Unknown'}}
+      </div>
+    </div>
+    <div layout layout-wrap layout-margin *ngIf="user.attendeeInfo?.rejected">
+      <div flex>
+        Rejected On : {{user.attendeeInfo.rejectedOn | date}}
+      </div>
+      <div flex>
+        Rejected By : {{user.attendeeInfo.rejectedBy?.fullname || 'Unknown'}}
+      </div>
+    </div>
+    <div layout layout-margin *ngIf="user.attendeeInfo?.rejectedReason">
+      <p flex> REASON: {{user.attendeeInfo.rejectedReason}}</p>
+    </div>
+    <div>Reg ID: {{user.attendeeInfo._id}}</div>
+
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<div class="attendees-pagination">
+  <mat-paginator class="attendees-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+    (page)="pageEvent($event)">
+  </mat-paginator>
+</div>

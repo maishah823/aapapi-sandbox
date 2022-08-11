@@ -1,0 +1,23 @@
+<div class="base-layout">
+  <mat-card class="history-card">
+  <h1>Version History</h1>
+  <div class="current-version">
+    Current Version: v{{version.major}}.{{version.minor}}.{{version.build}}
+  </div>
+  <table class="history-table">
+    <tr>
+    <th>Version</th>
+    <th>Description</th>
+    </tr>
+    <tr *ngFor="let item of history">
+      <td>{{item.version}}</td>
+      <td>{{item.description}}</td>
+    </tr>
+  </table>
+</mat-card>
+<div class="pagination-card">
+    <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[20, 50, 100, 200]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>

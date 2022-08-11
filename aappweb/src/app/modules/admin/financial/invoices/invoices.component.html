@@ -1,0 +1,48 @@
+<div class="invoices">
+  <div class="invoice-search">
+    <form [formGroup]="searchForm" novalidate>
+      <div layout layout-xs="column" layout-margin>
+        <mat-form-field flex>
+          <input matInput formControlName="search" placeholder="Search Invoice #" autocomplete="off" />
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-icon class="reset-button" matSuffix (click)="resetSearch()" *ngIf="searchTerm.value">close</mat-icon>
+        </mat-form-field>
+        <mat-form-field flex="nogrow">
+          <mat-select placeholder="Filter" formControlName="filter" [disabled]="searchTerm.value != ''">
+              <mat-option value="all">All</mat-option>
+            <mat-option value="unpaid">Unpaid</mat-option>
+            <mat-option value="paid">Paid</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let invoice of invoices">
+      <mat-expansion-panel-header>
+        <span class="invoice-header"> {{invoice.invoiceNumber}} - {{invoice.amount | currency}} - {{invoice.paid ?
+          'PAID' : 'UNPAID'}}</span>
+      </mat-expansion-panel-header>
+      <aapp-invoice-display [invoice]="invoice"></aapp-invoice-display>
+      <div *ngIf="allowActions || developerMode">
+          <mat-divider></mat-divider>
+        <div class="actions" layout layout-wrap layout-margin *ngIf="allowActions">
+          <button flex="nogrow" mat-flat-button color="primary" *ngIf="!invoice.paid" flex="nogrow" (click)="markAsPaid(invoice)">Mark
+            as Paid</button>
+          <button flex="nogrow" mat-flat-button color="primary" *ngIf="invoice.amount > 0" flex="nogrow"
+            (click)="adjustInvoice(invoice)">Adjust Invoice</button>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+  <div class="invoices-pagination">
+    <mat-paginator class="invoices-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+      [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+
+</div>

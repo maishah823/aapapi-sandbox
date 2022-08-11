@@ -1,0 +1,26 @@
+<form [formGroup]="form" novalidate>
+  <div layout="column">
+    <h2>Add Coupon</h2>
+    <mat-form-field flex>
+      <mat-select placeholder="Coupon Type" formControlName="type">
+        <mat-option value="indv">Individual Discount</mat-option>
+        <mat-option value="agency">Agency Discount</mat-option>
+        <mat-option value="member-rate">Agency Member Rate Override</mat-option>
+        <mat-option value="vendor">Vendor Donation Waiver Amount</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field flex>
+      <input matInput placeholder="Coupon Code" formControlName="code" />
+    </mat-form-field>
+    <mat-form-field flex *ngIf="form.get('type').value != 'member-rate'">
+      <input matInput placeholder="Discount Amount" formControlName="discount" />
+      <span matPrefix style="padding-right:1em;">$ </span>
+    </mat-form-field>
+    <mat-checkbox formControlName="singleUse">
+      Single Use Code
+    </mat-checkbox>
+    <div class="make-coupon-button" flex>
+      <button [disabled]="!form.valid" flex mat-flat-button (click)="makeCode()">Make Code</button>
+    </div>
+  </div>
+</form>

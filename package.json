@@ -1,0 +1,19 @@
+{
+  "name": "aappbackup",
+  "version": "1.0.0",
+  "description": "Back up of typescript source files for AAPPWeb and AAPPAPI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamie-jones/aapp.git"
+  },
+  "author": "Jamie Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamie-jones/aapp/issues"
+  },
+  "homepage": "https://github.com/jamie-jones/aapp#readme"
+}

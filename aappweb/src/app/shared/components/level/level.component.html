@@ -1,0 +1,23 @@
+<h2 mat-dialog-title color="primary">Change Level for {{data.name}}</h2>
+<div mat-dialog-content>
+  <p>Manually change the member's membership level.</p>
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div layout="column">
+      <mat-form-field flex>
+          <mat-select placeholder="Level" formControlName="level">
+            <mat-option value="active">Member</mat-option>
+            <!-- <mat-option value="intern">Intern</mat-option> -->
+            <mat-option value="affiliate">Affiliate</mat-option>
+            <mat-option value="foreign">Foreign</mat-option>
+            <mat-option value="life">Life</mat-option>
+            <mat-option value="honorary">Honorary</mat-option>
+            <mat-option value="retired">Retired</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions-right">
+  <button mat-dialog-close mat-button>Cancel</button>
+  <button color="accent" mat-button (click)="save()" [disabled]="!form.valid">CHANGE</button>
+</div>

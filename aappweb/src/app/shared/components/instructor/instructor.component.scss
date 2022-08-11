@@ -1,0 +1,136 @@
+.instructor-section-heading{
+    color: darkred;
+}
+
+.instructor-panel{
+    margin:3px 0;
+}
+.instructor-name{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.instructor-image{
+    margin: 15px 10px;
+   img{
+       width:200px;
+   }
+}
+
+.editable{
+    color: blue;
+    cursor: pointer;
+    &:hover{color:rgb(105, 105, 167)}
+}
+
+.required-message{
+    font-size: .8em;
+    color:red;
+    padding: 10px;
+    font-style: italic;
+}
+
+.add-image{
+    padding:15px;
+    font-size:.7em;
+    border: 1px gray dashed;
+    text-align:center;
+    color: blue;
+}
+
+.add-image-hover{
+    background: lightgreen;
+    color:white;
+    border: 2px green dashed;
+}
+
+
+
+
+
+
+
+
+
+.gap{
+    width: 3px;
+    border-radius: 1.5px;
+    margin: 0 10px;
+    background: darkgray;
+}
+
+.file-item{
+    padding: 10px;
+    border: 1px gray solid;
+    margin: 10px;
+    overflow:hidden;
+}
+
+.file-image{
+    display:block;
+    width:100px;
+    height:100px;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+.file-drop-zone{
+    margin: 15px;
+    border-radius: 10px;
+    border: 1px gray dashed;
+    text-align: center;
+    padding: 25px;
+}
+
+.file-drop-zone-hover{
+    background: gray;
+}
+
+.error-message{
+    .mat-simple-snackbar{
+        color: red;
+    }
+}
+
+.valign-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.uploaded-files-container{
+    margin-top: 15px;
+    border: 1px gray dotted;
+    border-radius: 6px;
+    padding: 15px;
+
+    .file-container{
+        border-radius: 6px;
+        overflow:hidden;
+    }
+}
+
+.small-spinner{
+    width:50px;
+    height:50px;
+}
+
+.check{
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    color:green;
+    text-align: center;
+    vertical-align: center;
+}
+
+.action-container{
+    padding: 15px;
+    text-align: center;
+}
+@media(min-width: 600px){
+    .action-container{
+        padding: 15px;
+        text-align: right;
+    }
+}

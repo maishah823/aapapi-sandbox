@@ -1,0 +1,562 @@
+<div class="join-card">
+  <div class="join-instructions">
+    <h2>Apply for an AAPP Membership!</h2>
+    <h4>Complete these ten (10) simple steps to apply for a membership today.</h4>
+    <h4 *ngIf="hasSchoolDiscount.value" class="discount-heading">STUDENT DISCOUNT APPLIED</h4>
+  </div>
+  <form [formGroup]="joinForm" connectForm="join" novalidate>
+    <div class="base-layout">
+      <td-steps mode="vertical">
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step label="Please provide your email address." [active]="!locked.value" formGroupName="emailGroup" [state]="locked.value ? 'complete':'none'">
+          <div layout *ngIf="found.value && !token.value">
+            <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="center center" layout-wrap>
+              <span class="join-error-text">You already have a login. Please authenticate to continue...</span>
+            </div>
+          </div>
+          <div layout>
+            <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" *ngIf="!checked.value">
+              <input matInput placeholder="Email Address" formControlName="email" />
+              <button type="button" mat-icon-button matSuffix (click)="resetEmail()" *ngIf="checked.value">
+                <mat-icon>close</mat-icon>
+              </button>
+              <button type="button" mat-icon-button matSuffix (click)="help('Your email will be your login username. If you already have login credentials, please enter the email you already use.')"
+                *ngIf="!checked.value">
+                <mat-icon>help_outline</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div layout *ngIf="checked.value">
+            <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0">
+              <input matInput formControlName="lockedInEmail" [placeholder]="email.value" />
+              <button type="button" mat-icon-button matSuffix (click)="resetEmail()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <ng-container *ngIf="!checked.value">
+            <div layout>
+              <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="end center" layout-wrap>
+                <button flex="nogrow" [disabled]="!email.valid" (click)="checkEmail()" matSuffix mat-raised-button color="primary">Check Email</button>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!found.value && checked.value && !locked.value">
+            <div layout>
+              <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="end center" layout-wrap>
+                <div flex class="email-available">
+                  <div layout>
+                    <mat-icon>check</mat-icon>
+                    <div>Available.</div>
+                  </div>
+                </div>
+                <button class="email-button" (click)="resetEmail()" flex="nowgrow" mat-raised-button flex="nogrow">Reset</button>
+                <button class="email-button" (click)="useEmail()" flex="nowgrow" mat-raised-button color="primary" flex="nogrow">Use Email</button>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="found.value && !token.value">
+            <div layout>
+              <mat-form-field flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0">
+                <input matInput type="password" placeholder="Password" #password/>
+              </mat-form-field>
+            </div>
+            <div layout>
+              <div flex="70" flex-xs="100" flex-offset="15" flex-offset-xs="0" layout layout-align="end center">
+                <button [disabled]="authenticating" (click)="login(password.value)" flex="nowgrow" mat-raised-button color="primary" flex="nogrow">Autenticate</button>
+              </div>
+            </div>
+          </ng-container>
+        </td-step>
+        <!--- +++++++++ STEP +++++++++++++++ -->
+        <td-step label="Tell us about yourself." [disabled]="!locked.value" formGroupName="infoGroup" [active]="locked.value" [state]="determineState('infoGroup')">
+          <div layout layout-xs="column">
+            <mat-form-field flex class="join-field">
+              <input matInput formControlName="firstName" placeholder="First Name" required/>
+            </mat-form-field>
+            <mat-form-field flex class="join-field">
+              <input matInput formControlName="lastName" placeholder="Last Name" required/>
+            </mat-form-field>
+          </div>
+          <aapp-address [formGroup]="infoAddressGroup"></aapp-address>
+          <div flex class="email-display join-field">
+            Email: {{email.value}}
+          </div>
+          <div layout="column" layout-gt-xs="row" class="questions">
+            <mat-checkbox formControlName="citizen">I am a United States citizen.</mat-checkbox>
+          </div>
+          <div layout="column" layout-gt-xs="row" class="questions" *ngIf="licenseRequired.value">
+            <mat-checkbox formControlName="isLicensed">I am licensed to conduct polygraph examinations in {{state.value}}.</mat-checkbox>
+          </div>
+          <div layout="column" *ngIf="isLicensed.value">
+            <mat-form-field flex="50" flex-xs="100" class="join-field">
+              <input matInput formControlName="licenseNumber" placeholder="License Number (Required)" />
+            </mat-form-field>
+            <mat-form-field flex class="join-field">
+              <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="6" formControlName="licenseList" placeholder="List all polygraph licenses you have held."></textarea>
+            </mat-form-field>
+          </div>
+
+
+          <div class="join-error join-error-text" *ngIf="infoGroup.invalid; else step3Link">Please properly complete all required fields to unlock step 3.</div>
+          <ng-template #step3Link>
+            <div class="open-step-link-container">
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="classStep.active = true">Move to step 3</a>
+              </div>
+            </div>
+          </ng-template>
+
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+              {{ state }}
+            </mat-option>
+          </mat-autocomplete>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #classStep label="Select the class of membership." [disabled]="(!locked.value || !infoGroup.valid)" formGroupName="classGroup"
+          [state]="determineState('classGroup')">
+          <div *ngIf="classStep.active">
+            <mat-radio-group formControlName="memberClass">
+              <div *ngIf="citizen.value">
+                <mat-radio-button value="active">MEMBER</mat-radio-button>
+                <ul class="member-class-list">
+                  <li>Must be a law enforcement polygraphist as defined in Article III.</li>
+                  <li>Must have demonstrated proficiency in the administration of polygraph examinations.</li>
+                  <li>To maintain membership it is necessary to attend within every two-calendar-year period at least
+                    one recognized polygraph seminar. Seminars qualifying are those conducted by the AAPP, an AAPP-recognized
+                    polygraph school, or a formally organized national, regional or state polygraph organization.</li>
+                  <li>Members shall have the right to vote if the member's dues for that year are paid prior to the Annual
+                    Meeting.
+                  </li>
+                  <li>Members may hold any AAPP office.</li>
+                  <li>Members may serve on any AAPP committee.</li>
+                  <li>$125 annual membership fee. $25 one-time processing fee (non-refundable).</li>
+                </ul>
+              </div>
+              <div>
+                <mat-radio-button value="affiliate">AFFILIATE</mat-radio-button>
+                <ul class="member-class-list">
+                  <li *ngIf="international.value" class="affiliate-warning">International polygraph examiners are only eligible for the AFFILIATE membership.</li>
+                  <li>Any person demonstrating a genuine interest in the polygraph profession shall be eligible for affiliate
+                    membership. Such interest may be demonstrated by being involved in the manufacture or sale of polygraph
+                    instruments, research of polygraph instruments or techniques or other functions acceptable to the Board
+                    of Directors. Further, any current employee, salaried or contract, of any agency equivalent to an American
+                    Law Enforcement organization in countries friendly to or allied with the United States may also be eligible
+                    for Affiliate membership. The prospective foreign member's responsibilities must include the administration
+                    of polygraph examinations for the employer; has met licensing/certification requirements mandated in
+                    the place of residence/practice; and is a graduate of an AAPP recognized polygraph school.</li>
+                  <li>The procedure for membership acceptance shall be the same as for United States members.</li>
+                  <li>Affiliate members are not eligible to vote or hold any elected office.</li>
+                  <li>Affiliate members shall have the right to participate in other activities of the AAPP, and may serve on
+                    any committee, but not as Chair.</li>
+                    <li>$150 annual membership fee. $25 one-time processing fee (non-refundable).</li>
+                </ul>
+              </div>
+              <!-- <div *ngIf="citizen.value">
+                <mat-radio-button value="intern">INTERN</mat-radio-button>
+                <ul class="member-class-list">
+                  <li>A Law Enforcement Polygraphists as defined in Article III, who has completed the classroom portion of an
+                    AAPP recognized school but has not completed an internship. No sooner than six months after successful
+                    completion of an AAPP recognized polygraph school and successful completion of a minimum of 50 polygraph
+                    exams, an Intern member may apply for Active membership by sending a letter to the AAPP Vice President.
+                    The letter must be signed by a supervisor or Polygraph School Director and confirm the applicant has
+                    successfully completed the required 50 exams and the six month requirement.</li>
+                  <li>The procedure for membership acceptance shall be the same as for Active members.</li>
+                  <li>Intern members are not eligible to vote or hold any elected office.</li>
+                  <li>Intern members do not have a voice at the Annual Meeting.</li>
+                  <li>Intern members shall have the right to participate in all other activities of the AAPP, but not serve on
+                    any committee.</li>
+                    <li>$125 annual membership fee. $25 one-time processing fee (non-refundable).</li>
+                </ul>
+              </div> -->
+            </mat-radio-group>
+            <div class="join-error join-error-text" *ngIf="!classGroup.valid; else step4Link">Please select a membership class to unlock step 4.</div>
+            <ng-template #step4Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="trainingStep.active = true">Move to step 4</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #trainingStep label="Polygraph Training" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid" formGroupName="trainingGroup"
+          [state]="determineState('trainingGroup')" [matTooltip]="trainingStep.disabled ? 'DISABLED' : 'NOT DISABLED'">
+          <div *ngIf="trainingStep.active">
+            <h4>{{hasSchoolDiscount? 'You have been pre-qualified through:' : 'Which polygraph school did you graduate from?'}}</h4>
+            <div layout layout-xs="column">
+              <mat-form-field flex class="join-field mark-field-required" *ngIf="!hasSchoolDiscount.value">
+                <mat-select formControlName="school" placeholder="Select Polygraph School">
+                  <mat-option value="other">My school is not listed.</mat-option>
+                  <mat-option *ngFor="let school of schools" [value]="school._id">{{school.name}}, {{school.address?.city}}, {{school.address?.state}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field flex class="join-field mark-field-required" *ngIf="!hasSchoolDiscount.value">
+                <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="Graduation Date" readonly 
+                  formControlName="graduationDate" autocomplete="false">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div *ngIf="selectedSchool">
+              {{selectedSchool.name}}
+              <br/> {{selectedSchool.address.street}}
+              <br/> {{selectedSchool.address.city}}, {{selectedSchool.address.state}} {{selectedSchool.address.zip}}
+            </div>
+            <div *ngIf="school.value == 'other'">
+              <div layout layout-xs="column">
+                <mat-form-field flex class="mark-field-required">
+                  <input matInput formControlName="schoolName" placeholder="Name of School" />
+                </mat-form-field>
+              </div>
+              <div layout="column" layout-gt-sm="row">
+                <mat-form-field flex class="join-field mark-field-required">
+                  <input matInput formControlName="schoolStreet" placeholder="Street Address" />
+                </mat-form-field>
+              </div>
+              <div layout="column" layout-gt-xs="row">
+                <mat-form-field flex class="join-field mark-field-required">
+                  <input matInput formControlName="schoolCity" placeholder="City" />
+                </mat-form-field>
+                <mat-form-field flex="initial" class="join-field mark-field-required">
+                  <input matInput formControlName="schoolState" placeholder="State (Abbrev)" [matAutocomplete]="auto" />
+                </mat-form-field>
+                <mat-form-field flex="initial" class="join-field mark-field-required">
+                  <input matInput formControlName="schoolZip" placeholder="Zipcode" />
+                </mat-form-field>
+              </div>
+              <div layout="column" layout-gt-sm="row">
+                <mat-form-field flex="50" flex-xs="100" class="join-field mark-field-required">
+                  <input matInput formControlName="schoolPhone" placeholder="Phone" />
+                </mat-form-field>
+              </div>
+              <div layout="column" layout-gt-sm="row">
+                <mat-form-field flex class="join-field mark-field-required">
+                  <input matInput formControlName="schoolDirector" placeholder="School Director" />
+                </mat-form-field>
+                <mat-form-field flex class="join-field mark-field-required">
+                  <input matInput formControlName="internSup" placeholder="Intern Supervisor" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!trainingGroup.valid; else step5Link">Please select a school to unlock step 5.</div>
+            <ng-template #step5Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="experienceStep.active = true">Move to step 5</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #experienceStep label="Polygraph Experience" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid"
+          formGroupName="experienceGroup" [state]="determineState('experienceGroup')">
+          <div class="experienceStep.active">
+            <div layout layout-align="center center">
+              <div flex class="join-primary join-field mark-required">How many years experience do you have?</div>
+              <div flex>
+                <mat-form-field class="join-number">
+                  <input matInput type="number" formControlName="yearsExperience" required/>
+                </mat-form-field>
+              </div>
+            </div>
+            <div layout layout-align="center center">
+              <div flex class="join-primary join-field mark-required">Number of law enforcement exams conducted?</div>
+              <div flex>
+                <mat-form-field class="join-number">
+                  <input matInput type="number" formControlName="examsConducted" required/>
+                </mat-form-field>
+              </div>
+            </div>
+            <div layout="column">
+              <div class="join-field join-primary">List all equipment and techniques you are currently using.</div>
+              <mat-form-field flex class="join-field">
+                <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="6" formControlName="techniques" placeholder="Techniques..."></textarea>
+              </mat-form-field>
+            </div>
+            <div layout="column">
+              <div class="join-primary join-field">List any current or past polygraph organization in which you are (were) a member or to which you previously applied.</div>
+              <mat-form-field flex class="join-field">
+                <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="6" formControlName="otherOrgs" placeholder="Other Orgs..."></textarea>
+              </mat-form-field>
+            </div>
+            <div layout layout-align="center center">
+              <div flex class="join-primary join-field">Have you ever been denied membership to a polygraph association?</div>
+              <div flex>
+                <mat-checkbox formControlName="beenDenied">Yes, I have.</mat-checkbox>
+              </div>
+            </div>
+            <div layout="column" *ngIf="beenDenied.value">
+              <div class="join-primary join-field">Explain the circumstances of the denial.</div>
+              <mat-form-field flex class="join-field">
+                <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="20" formControlName="denialExplaination"
+                  placeholder="Circumstances..."></textarea>
+              </mat-form-field>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!experienceGroup.valid; else step6Link">Please complete questions to unlock step 6.</div>
+            <ng-template #step6Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="employmentStep.active = true">Move to step 6</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- ++++++ STEP ++++++++++ -->
+        <td-step #employmentStep label="Employment History" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid || !experienceGroup.valid"
+          formGroupName="employmentGroup" [state]="determineState('employmentGroup')">
+          <div *ngIf="employmentStep.active">
+            <div flex class="join-primary join-field mark-required">Choose your employment status.</div>
+            <mat-radio-group formControlName="employmentStatus" class="join-field" required>
+              <div>
+                <mat-radio-button value="current">Current Full-Time.</mat-radio-button>
+                <p class="employment-desc">Currently employed in a full-time / salaried position with a Law Enforcement or Government agency.</p>
+              </div>
+              <div>
+                <mat-radio-button value="former">Former Full-Time.</mat-radio-button>
+                <p class="employment-desc">Formerly employed in a full-time / salaried position with a Law Enforcement or Government agency.</p>
+              </div>
+              <div>
+                <mat-radio-button value="services">Other</mat-radio-button>
+                <p class="employment-desc">Currently or formerly performed polygraph examinations for a Law Enforcement or Government agency.</p>
+              </div>
+            </mat-radio-group>
+            <div layout layout-xs="column">
+              <mat-form-field flex class="join-field">
+                <input matInput placeholder="Agency Name" formControlName="agencyName" required/>
+              </mat-form-field>
+            </div>
+            <aapp-address [formGroup]="employmentAddress"></aapp-address>
+            <div layout layout-xs="column">
+              <mat-form-field flex class="join-field mark-field-required">
+                <input matInput [matDatepicker]="hirePicker" [max]="maxDate" placeholder="Hire Date" readonly formControlName="hireDate"
+                  autocomplete="false">
+                <mat-datepicker-toggle matSuffix [for]="hirePicker"></mat-datepicker-toggle>
+                <mat-datepicker #hirePicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field flex class="join-field mark-field-required" *ngIf="employmentStatus.value == 'former'">
+                <mat-select formControlName="seperationType" placeholder="Seperation Type">
+                  <mat-option value="Retired">Retired</mat-option>
+                  <mat-option value="Resigned">Resigned</mat-option>
+                  <mat-option value="Terminated">Terminated</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field flex class="join-field mark-field-required" *ngIf="employmentStatus.value == 'former'">
+                <input matInput [matDatepicker]="seperationPicker" [max]="maxDate" placeholder="Seperation Date" readonly formControlName="seperationDate"
+                  autocomplete="false">
+                <mat-datepicker-toggle matSuffix [for]="seperationPicker"></mat-datepicker-toggle>
+                <mat-datepicker #seperationPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div layout layout-xs="column" *ngIf="employmentStatus.value == 'current' || employmentStatus.value == 'former'">
+              <mat-form-field flex class="join-field">
+                <input matInput placeholder="Supervisor Name" formControlName="supervisorName" required/>
+              </mat-form-field>
+              <mat-form-field flex class="join-field">
+                <input matInput placeholder="Supervisor Email" formControlName="supervisorEmail" required/>
+              </mat-form-field>
+              <mat-form-field flex="initial" flex-xs="100" class="join-field">
+                <input matInput placeholder="Supervisor Phone" formControlName="supervisorPhone" required/>
+              </mat-form-field>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!employmentGroup.valid; else step7Link">Please complete employment details to unlock step 7.</div>
+            <ng-template #step7Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="disclosureStep.active = true">Move to step 7</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #disclosureStep label="Disclosures" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid || !experienceGroup.valid || !employmentGroup.valid"
+          formGroupName="disclosuresGroup" [state]="determineState('disclosuresGroup')">
+          <div *ngIf="disclosureStep.active">
+            <div class="join-field join-primary mark-required">
+              Have you ever been convicted of a crime?
+            </div>
+            <div class="disclosure-selection">
+              <mat-radio-group formControlName="convicted" class="join-field">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="join-field join-primary mark-required">
+              Have you ever been discharged or released from any branch, department or agency of federal, state, municipal or county government,
+              including the armed services of the United States of America and its Reserve and National Guard affiliates,
+              other than under honorable conditions?
+            </div>
+            <div class="disclosure-selection">
+              <mat-radio-group formControlName="dischargedGov" class="join-field">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="join-field join-primary mark-required">
+              Have you ever been discharged or asked to resign from any employment, organizational membership or society?
+            </div>
+            <div class="disclosure-selection">
+              <mat-radio-group formControlName="dischargedOrg" class="join-field">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!disclosuresGroup.valid; else step8Link">Please complete questions to unlock step 8.</div>
+            <ng-template #step8Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="referencesStep.active = true">Move to step 8</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #referencesStep label="Character References" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid || !experienceGroup.valid || !employmentGroup.valid || !disclosuresGroup.valid"
+          formGroupName="referencesGroup" [state]="determineState('referencesGroup')">
+          <div *ngIf="referencesStep.active">
+            <h3>Please provide three character references. These individuals MUST be polygraphists.</h3>
+            <h4>Character Reference 1</h4>
+            <div formGroupName="ref1">
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Name" formControlName="name" required/>
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Agency" formControlName="agency" required/>
+                </mat-form-field>
+              </div>
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Email" formControlName="email" required/>
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Phone" formControlName="phone" required />
+                </mat-form-field>
+              </div>
+            </div>
+            <h4>Character Reference 2</h4>
+            <div formGroupName="ref2">
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Name" formControlName="name" required/>
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Agency" formControlName="agency" required/>
+                </mat-form-field>
+              </div>
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Email" formControlName="email" required />
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Phone" formControlName="phone" required/>
+                </mat-form-field>
+              </div>
+            </div>
+            <h4>Character Reference 3</h4>
+            <div formGroupName="ref3">
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Name" formControlName="name" required/>
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Agency" formControlName="agency" required/>
+                </mat-form-field>
+              </div>
+              <div layout layout-xs="column">
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Email" formControlName="email" required/>
+                </mat-form-field>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Phone" formControlName="phone" required/>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!referencesGroup.valid; else step9Link">Please add references to unlock step 9.</div>
+            <ng-template #step9Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="paymentStep.active = true">Move to step 9</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #paymentStep label="Payment / Invoice" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid || !experienceGroup.valid || !employmentGroup.valid || !disclosuresGroup.valid || !referencesGroup.valid"
+          formGroupName="paymentGroup" [state]="determineState('paymentGroup')">
+          <div *ngIf="paymentStep.active">
+            <div class="join-field">
+              <h3 class="mark-required">Would you like to pay now with a credit card or be sent an invoice?</h3>
+            </div>
+            <div class="join-field payment-type-selection">
+              <mat-radio-group formControlName="paymentType">
+                <mat-radio-button value="credit">Credit Card</mat-radio-button>
+                <mat-radio-button value="invoice">Invoice</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div *ngIf="paymentType.value == 'credit'">
+              <div layout>
+                <mat-form-field flex class="join-field">
+                  <input matInput placeholder="Credit Card Number" formControlName="cc" />
+                </mat-form-field>
+              </div>
+              <div layout layout-wrap>
+                <mat-form-field flex="33" flex-xs="50" class="join-field">
+                  <input matInput placeholder="Exp Month" formControlName="expMonth" required/>
+                </mat-form-field>
+                <mat-form-field flex="33" flex-xs="50" class="join-field">
+                  <input matInput placeholder="Exp Year" formControlName="expYear" required/>
+                </mat-form-field>
+                <mat-form-field flex="33" flex-xs="50" class="join-field">
+                  <input matInput placeholder="CVV" formControlName="cvv" required/>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="join-error join-error-text" *ngIf="!paymentGroup.valid; else step10Link">Please choose payment option unlock the final step.</div>
+            <ng-template #step10Link>
+              <div class="open-step-link pulse">
+                <mat-icon>arrow_downward</mat-icon>
+                <a (click)="agreementStep.active = true">Move to final step.</a>
+              </div>
+            </ng-template>
+          </div>
+        </td-step>
+        <!-- +++++++++ STEP ++++++++++++ -->
+        <td-step #agreementStep label="Application Agreement" [disabled]="!locked.value || !infoGroup.valid || !classGroup.valid || !trainingGroup.valid || !experienceGroup.valid || !employmentGroup.valid || !disclosuresGroup.valid || !referencesGroup.valid || !paymentGroup.valid"
+          formGroupName="agreementGroup">
+          <div *ngIf="agreementStep.active">
+            <div class="join-field agreement-text">
+              By clicking the "Submit Application" button below, I attest that:
+              <br/> I hereby apply for membership, pursuant and subject to the Constitution and By-laws of the American Association
+              of Police Polygraphists, Inc (hereafter referred to as the AAPP). I further agree to be bound to the AAPP’s
+              Constitution and By-laws. I agree to hold the AAPP, its officers and agents and anyone acting on it behalf
+              free from damage, liabilities or complaint by any action taken in connection with this background or information
+              obtained to determine membership. I hereby request and authorize any and all persons, agencies, firms, companies,
+              educational institutions, courts, law enforcement or government agencies, having information or documents related
+              to or about me, to furnish such information and/or documents to an authorized representative of the AAPP. I
+              understand that $125.00 ($150.00 for foreign members) represents a one-year membership fee, and $25.00 is a
+              non-refundable AAPP filling and administrative fee. I further grant permission to the president of the AAPP,
+              or a designated representative, to release any and all information that the AAPP has learned while conducting
+              a background relative to this application or information concerning my membership. Such information may be
+              released to any national, regional or state polygraph association making such request. The information I have
+              provided is true and accurate.
+            </div>
+          </div>
+          <div class="join-actions">
+            <div layout layout-align="end center">
+              <aapp-loading-button flex="initial" color="primary" [loading]="inProgress" (click)="submitApp()" [disabled]="!joinForm.valid">Submit Application</aapp-loading-button>
+            </div>
+          </div>
+        </td-step>
+        <div class="join-progress-bar-buffer"></div>
+      </td-steps>
+    </div>
+  </form>
+  <div class="join-progress-bar-buffer"></div>
+  <div class="join-progress-bar">
+    <div class="progress-label">{{joinForm.valid ? 'Complete' : 'Progress:'}} {{progress | number:'1.0-0'}}%</div>
+    <mat-progress-bar [color]="joinForm.valid ? 'primary' : 'warn'" mode="determinate" [value]="progress"></mat-progress-bar>
+  </div>
+</div>

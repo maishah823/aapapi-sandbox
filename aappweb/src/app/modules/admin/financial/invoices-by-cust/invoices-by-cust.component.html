@@ -1,0 +1,27 @@
+<div class="filters">
+    <form [formGroup]="searchForm" novalidate>
+      <div layout layout-xs="column" layout-margin layout-align="center center" layout-align-xs="stretch center">
+        <mat-form-field flex>
+          <input matInput formControlName="search" placeholder="Search Users" />
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <td-expansion-panel *ngFor="let user of users" class="user-panel">
+    <ng-template td-expansion-panel-label>
+      <mat-icon >person</mat-icon>
+      <span >{{user._id.name}}</span>
+    </ng-template>
+    <ng-template td-expansion-panel-sublabel *ngIf="media.registerQuery('gt-sm') | async">
+      <span>{{user._id.email}}</span>
+    </ng-template>
+    <div class="user-full">
+      <aapp-invoice-display *ngFor="let invoice of user.invoices" [invoice]="invoice"></aapp-invoice-display>
+    </div>
+  </td-expansion-panel>
+  <div class="users-pagination">
+    <mat-paginator class="school-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit" [pageSizeOptions]="[10, 20, 50, 100]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>

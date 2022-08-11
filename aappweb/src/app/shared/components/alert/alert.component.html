@@ -1,0 +1,18 @@
+<div class="alerts-container" [@slideInFromRight]="true">
+  <div class="alert-outer" [@slideInFromRightChild] *ngFor="let index of (alerts | async)?.indexes">
+    <div class="alert-inner"
+         [ngClass]="{'error':(alerts | async).messages[index].type == 'error','success'
+         :(alerts | async).messages[index].type == 'success','warning'
+         :(alerts | async).messages[index].type == 'warning'}">
+      <div class="alert-title">
+        {{(alerts | async).messages[index].title}}
+      </div>
+      <div class="alert-message">
+          <img class="alert-icon" [src]="'/assets/images/'+(alerts | async).messages[index].type+'2.svg'"/>
+        {{(alerts | async).messages[index].message}}
+      </div>
+
+    </div>
+
+  </div>
+</div>

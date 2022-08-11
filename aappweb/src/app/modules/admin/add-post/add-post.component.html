@@ -1,0 +1,69 @@
+<div class="base-layout">
+  <mat-card class="new-post">
+    <h1>{{edit ? 'Edit Post' : 'New Post'}}</h1>
+    <div class="preview" *ngIf="post">
+      <div layout layout-margin layout-align="start center">
+        <div flex="nogrow">
+          <button mat-button (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon> Back
+          </button>
+        </div>
+        <div flex>
+          <h4 class="centered">Existing Post</h4>
+        </div>
+      </div>
+      <aapp-blog-detail [blogType]="post.type" [post]="post" [preview]="true"></aapp-blog-detail>
+    </div>
+
+    <form [formGroup]="form" [connectForm]="edit? null : 'blog'" novalidate>
+      <div layout="column">
+        <div layout layout-margin layout-xs="column">
+          <mat-form-field flex>
+            <mat-select placeholder="Post Type" formControlName="type" required>
+              <mat-option value="public">Public</mat-option>
+              <mat-option value="member">Members</mat-option>
+              <mat-option value="conf">Seminar</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field flex>
+            <input matInput placeholder="Article Title" formControlName="title" required />
+          </mat-form-field>
+        </div>
+        <div layout layout-margin>
+            <mat-form-field flex>
+              <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="summary" placeholder="Summary Text" required></textarea>
+            </mat-form-field>
+            </div>
+        <div layout layout-margin>
+          <!-- <mat-form-field flex>
+            <textarea [froalaEditor]="options" matInput matTextareaAutosize matAutosizeMinRows="20" matAutosizeMaxRows="40" formControlName="body" placeholder="Article Text"></textarea>
+          </mat-form-field> -->
+          <div flex class="wysiwyg">
+            <textarea [froalaEditor]="options" formControlName="body" placeholder="Article Content" required></textarea>
+          </div>
+        </div>
+        <button hide-gt-xs flex="nogrow" (click)="openFilePicker()" mat-button>
+          <mat-icon>attach_file</mat-icon> Upload Picture
+        </button>
+        <div *ngIf="!uploadInProgress && !file" class="add-image" hide-xs fileDrop [ngClass]="{'add-image-hover': hover}"
+          (error)="showError($event)" (filesChanged)="filesChanged($event)" (fileOver)="fileOver($event)">
+          <span class="stand-out">{{coverImg.value? 'Current Image: ' + coverImg.value + ', Drag and drop new picture to replace.' : 'Drag and drop picture HERE'}}</span>
+          <br />
+        </div>
+        <div class="add-image" *ngIf="uploadInProgress" layout layout-align="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+
+      <input type="file" #fileInput [hidden]="true" (change)="filesChosen($event)" accept="image/*" />
+      <div layout layout-align="center center" *ngIf="file">
+        <img flex="nogrow" class="thumb" [src]="file" />
+      </div>
+
+      <div layout layout-align="end center" layout-margin>
+        <button mat-flat-button color="primary" (click)="submit()" [disabled]="!form.valid">{{edit ? 'Change Post' : '
+          Add New Post' }}</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

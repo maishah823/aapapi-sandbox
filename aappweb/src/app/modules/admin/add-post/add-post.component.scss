@@ -1,0 +1,39 @@
+.new-post{
+    padding-bottom: 15px;
+}
+
+.add-image{
+    text-align:center;
+    margin:15px;
+    background: white;
+    border: 3px gray dashed;
+    border-radius: 15px;
+    padding: 5%;
+    font-size: 1.1em;
+    &.add-image-hover{
+        background:rgb(255, 240, 240);
+    }
+}
+
+.thumb{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.preview{
+    margin:10px;
+    padding:10px;
+    border:1px gray solid;
+    background: rgb(226, 226, 226);
+    opacity: .6;
+}
+
+.centered{
+    text-align: center;
+}
+
+.wysiwyg{
+   overflow:hidden;
+ 
+}

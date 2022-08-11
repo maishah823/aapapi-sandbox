@@ -1,0 +1,10 @@
+<div class="lightbox" [ngStyle]="{'background-image':'url('+data.imageUrl+')'}">
+  <div class="caption">
+    <div>
+        {{data.caption}}
+    </div>
+    <div class="meta">
+      {{data.created_by?.fullname}} on {{data.created_at | date}}
+    </div>
+  </div>
+</div>

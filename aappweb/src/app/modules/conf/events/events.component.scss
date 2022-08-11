@@ -1,0 +1,37 @@
+.times{
+    font-size: 20px;
+    color: darkblue;
+    min-width: 250px;
+    margin-top: 1em;
+}
+
+.conf-events{
+    padding:15px;
+    background:white;
+    text-align:center;
+}
+.day-heading{
+    color:#e22f18;
+}
+
+.event-entry{
+    margin-top: 10px;
+    overflow:hidden;
+    h4{
+        font-size:18px;
+        font-weight: bold;
+    }
+    h5{
+        font-size: 16px;
+        color:rgb(19, 131, 196);
+        white-space: pre-wrap;
+    }
+}
+
+.event-desc{
+    font-style: italic;
+    color:rgb(23, 23, 32);
+    white-space: pre-wrap;
+}
+
+

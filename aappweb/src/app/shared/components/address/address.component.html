@@ -1,0 +1,60 @@
+<form [formGroup]="formGroup" novalidate>
+  <div class="international-checkbox" >
+    <mat-checkbox formControlName="international">International Address</mat-checkbox>
+  </div>
+  <div layout="column" layout-gt-sm="row">
+    <mat-form-field flex class="join-field">
+      <input matInput formControlName="street1" placeholder="Street Address (Line 1)" required/>
+    </mat-form-field>
+    <mat-form-field flex class="join-field">
+      <input matInput formControlName="street2" placeholder="Street Address (Line 2)" />
+    </mat-form-field>
+  </div>
+  <div layout="column" layout-gt-xs="row">
+    <mat-form-field flex class="join-field">
+      <input matInput formControlName="city" placeholder="City" required/>
+    </mat-form-field>
+    <mat-form-field flex="initial" class="join-field">
+      <input matInput formControlName="state" [placeholder]="international.value ? 'State/Province/Region' : 'State (Abbrev)'"
+        [matAutocomplete]="auto" required />
+    </mat-form-field>
+    <mat-form-field flex="initial" class="join-field">
+      <input matInput formControlName="zip" [placeholder]="international.value ? 'Postal Code' : 'Zipcode'" required/>
+    </mat-form-field>
+  </div>
+  <div layout="column" layout-gt-xs="row" *ngIf="international.value">
+    <mat-form-field flex="100" flex-gt-xs="33" class="join-field">
+      <mat-select formControlName="country" placeholder="Country" required>
+        <mat-option value="Canada">Canada</mat-option>
+        <mat-option value="Mexico">Mexico</mat-option>
+        <mat-option value="Columbia">Columbia</mat-option>
+        <mat-option value="Peru">Peru</mat-option>
+        <mat-option value="United Kingdom">United Kingdom</mat-option>
+        <mat-option value="Australia">Australia</mat-option>
+        <mat-option value="Taiwan">Taiwan</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div layout="column" layout-gt-xs="row">
+    <mat-form-field flex class="join-field" *ngIf="workPhone">
+      <input matInput formControlName="workPhone" placeholder="Work Phone" required />
+    </mat-form-field>
+    <mat-form-field flex class="join-field"  *ngIf="cellPhone">
+      <input matInput formControlName="cellPhone" placeholder="Cell Phone" required />
+    </mat-form-field>
+  </div>
+  <div layout="column" layout-gt-xs="row">
+    <mat-form-field flex class="join-field"  *ngIf="homePhone">
+      <input matInput formControlName="homePhone" placeholder="Home Phone" />
+    </mat-form-field>
+    <mat-form-field flex class="join-field"  *ngIf="fax">
+      <input matInput formControlName="fax" placeholder="Fax" />
+    </mat-form-field>
+  </div>
+
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+      {{ state }}
+    </mat-option>
+  </mat-autocomplete>
+</form>

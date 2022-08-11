@@ -1,0 +1,74 @@
+<div class="top-links">
+  <a routerLink="/web/conf/news">News</a> |
+  <a routerLink="/web/conf/custom-schedule">My Schedule</a> |
+  <a routerLink="/web/conf/schedule">Master Schedule</a> |
+  <a routerLink="/web/conf/info">Info</a>
+</div>
+<div>
+  <mat-card class="class-detail-card">
+    <div layout layout-margin>
+      <div flex="nogrow">
+        <button mat-button color="primary" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon> Back
+        </button>
+      </div>
+      <div flex></div>
+      <div flex="nogrow" class="add-to-schedule-button">
+        <button mat-button (click)="addToSchedule()">
+          <mat-icon>star</mat-icon> Add to custom schedule
+        </button>
+      </div>
+    </div>
+    <h1>{{course.name}}</h1>
+    <h3 class="date-heading">{{course.displayDate}}</h3>
+    <h3 class="date-heading">{{course.displayStartTime}} - {{course.displayEndTime}}</h3>
+    <h3 class="date-heading">{{course.room}}</h3>
+    <p class="class-description">{{course.description}}</p>
+    <div class="topics-container">
+      <span class="class-topic" *ngFor="let t of course.topics">{{t.name}}</span>
+    </div>
+
+    <div class="materials" layout="column" layout-align="center center" *ngIf="course.materials.length > 0">
+      <h2>Download Materials</h2>
+      <div *ngFor="let material of course.materials" layout layout-align="center center">
+        <button *ngIf="!devices.isMobile()" flex="nogrow" mat-button
+          (click)="download(material.filename, material.title)">
+          <mat-icon>cloud_download</mat-icon> {{material.title}}
+        </button>
+        <a [href]="FILE_BASE + material.filename" *ngIf="devices.isMobile()">{{material.title}}</a>
+        <button *ngIf="isInstructor()" (click)="deleteMaterial(material._id)" mat-icon-button class="delete"
+          flex="nogrow">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="upload-materials" layout layout-align="center center" *ngIf="isInstructor()">
+      <button (click)="openFilePicker()" mat-button>
+        <mat-icon>attach_file</mat-icon> Upload File
+      </button>
+      <input type="file" #fileInput [hidden]="true" (change)="filesChosen($event)" />
+    </div>
+    <h2 class="instructors-heading">Instructors</h2>
+    <div class="instructor-container" *ngFor="let instructor of course.instructors" layout layout-align="center center">
+      <div flex="nogrow" class="instructor-block">
+        <img class="speaker-picture" [src]="instructorImagesURL +'-thumbs/'+instructor.instructorInfo?.picture" />
+        <h3 class="instructor-name">{{instructor.fullname}}</h3>
+        <h5 class="instructor-title">{{instructor.instructorInfo?.title}}</h5>
+        <div *ngIf="instructor.instructorInfo?.research">
+          <h4>Research</h4>
+          <p>{{instructor.instructorInfo?.research}}</p>
+        </div>
+        <div *ngIf="instructor.instructorInfo?.education">
+          <h4>Education</h4>
+          <p>{{instructor.instructorInfo?.education}}</p>
+        </div>
+        <div *ngIf="instructor.instructorInfo?.summary">
+          <h4>Summary</h4>
+          <p>{{instructor.instructorInfo?.summary}}</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="instructors-heading" *ngIf="course.files?.length > 0">Materials</h2>
+    <div class="file-downloads"></div>
+  </mat-card>
+</div>

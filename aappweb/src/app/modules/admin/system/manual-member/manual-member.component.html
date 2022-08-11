@@ -1,0 +1,45 @@
+<div class="base-layout">
+  <h1>Manual Member Entry</h1>
+  <form [formGroup]="form" novalidate>
+    <div layout layout-margin>
+      <mat-form-field flex>
+        <input matInput formControlName="firstName" placeholder="First Name" required />
+      </mat-form-field>
+      <mat-form-field flex>
+        <input matInput formControlName="lastName" placeholder="Last Name" required />
+      </mat-form-field>
+    </div>
+    <div layout layout-margin>
+      <mat-form-field flex>
+        <input matInput formControlName="email" placeholder="Email" />
+      </mat-form-field>
+      <mat-form-field flex>
+        <input matInput formControlName="membernumber" placeholder="MemberNumber" />
+      </mat-form-field>
+      <mat-form-field flex>
+        <mat-select formControlName="memberLevel" placeholder="Member Level" required>
+          <mat-option value="">Choose Member Level</mat-option>
+          <mat-option value="active">Member</mat-option>
+          <!-- <mat-option value="intern">Intern</mat-option> -->
+          <mat-option value="retired">Retired</mat-option>
+          <mat-option value="affiliate">Affiliate</mat-option>
+          <mat-option value="foreign">Foreign</mat-option>
+          <mat-option value="honorary">Honorary</mat-option>
+          <mat-option value="life">Life</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <div layout layout-margin layout-align="end end">
+        <div flex="nogrow">
+          <mat-checkbox formControlName="needsInvoice">
+            Needs Invoice
+          </mat-checkbox>
+        </div>
+        <div flex="nogrow">
+          <button mat-raised-button [disabled]="!form.valid" (click)="addMember()">Add</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

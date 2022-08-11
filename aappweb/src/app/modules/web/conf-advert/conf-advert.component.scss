@@ -1,0 +1,197 @@
+.conf-advert{
+    background: white;
+    ul{
+        list-style: square;
+    }
+
+}
+.conference-start{
+    background: url(/assets/images/dark-triangles.png);
+}
+
+.sign-up-button{
+    margin-top:20px;
+    border:1px solid white;
+    border-radius: 8px;
+    font-size: calc(1vw + 16px);
+    padding: .3em;
+}
+
+.conf-image-1{
+    width: 100%;
+    height: 20vh;
+    background-image: url(/assets/images/Arizona4.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+
+.hotel-room{
+    width:40vw;
+    height:40vw;
+    background-image: url(/assets/images/Arizona6.jpg);
+    background-position: center center;
+    background-size: cover;
+    float:right;
+    margin: 0 0 10px 10px;
+    border-radius: 10px;
+}
+
+.book-hotel{
+    border-top:1px solid gray;
+    border-bottom:1px solid gray;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.button-container{
+    text-align:center;
+}
+
+.sign-up-button-large{
+    margin:10px;
+    border:1px solid black;
+    border-radius: 8px;
+    font-size: calc(1vw + 16px);
+    height:auto;
+    width:auto;
+    padding:0.5em;
+    overflow:hidden;
+    text-align:center;
+}
+
+.conference-header{
+    padding: 60px 10px;
+    color:white;
+    text-align:center;
+    h1{
+        font-size:8vw;
+        margin:0;
+    }
+    h2{
+        font-size:4vw;
+        margin:0;
+    }
+    h3{
+        font-size:5vw;
+        margin:0;
+    }
+}
+
+.conf-logo{
+    height:calc(10vw + 100px);
+}
+.conference-blurb{
+    background:white;
+    padding: 1em;
+    font-size: calc(.5vw + 16px);
+
+    overflow:hidden;
+}
+
+@media(min-width:'1600px'){
+    .conference-blurb{
+        font-size: 24px;
+    }
+
+}
+@media(min-width:'1300px') and (max-width:'1599px'){
+    .hotel-room{
+        width:30vw;
+        height:30vw;
+    }
+}
+
+@media(min-width:'1600px'){
+    .hotel-room{
+        width:15vw;
+        height:15vw;
+    }
+
+    .download-button{
+        margin-left:20px;
+    }
+
+    .download-p{
+        text-align:left;
+    }
+}
+
+.speakers-heading{
+    color:white;
+    padding: 1em;
+    margin-bottom:0;
+}
+.speakers-section{
+    background: url(/assets/images/dark-triangles_blue.png);
+    margin-top:0;
+    overflow:hidden;
+}
+.picture-frame{
+    padding: 10px;
+    background: rgba(0,0,0,.8);
+}
+
+.speaker-picture{
+    width:200px;
+    
+}
+
+.picture-caption{
+    
+    color:white;
+    text-align:center;
+    h4{
+        width: 200px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: nowrap;
+        font-size: .9em;
+        margin:0;
+    }
+}
+
+.extra-event-container{
+    text-align: center;
+    padding: 1em;
+   font-size: calc(.5vw + 16px);
+    .event-location{
+        font-size: .8em;
+        font-style: italic;
+    }
+}
+
+.prices-section{
+    background: url(/assets/images/dark-triangles_blue.png);
+    margin-top:0;
+    padding-bottom: 30px;
+    overflow:hidden;
+    color: white;
+    font-size: calc(1vw + 16px);
+    text-align: center;
+    h5{
+        margin-bottom:0;
+    }
+    .price-subheading{
+        color: rgb(211, 211, 211);
+        font-size: 16px;
+        margin-top: 0;
+    }
+}
+
+.download-button{
+    font-size: 1.3em;
+    background: rgb(48, 48, 48);
+    color:white;
+    padding:.5em;
+    border-radius: 1em;
+    &:hover{
+        background: darkblue;
+        color:white;
+    }
+}
+.download-p{
+    text-align:center;
+}
+

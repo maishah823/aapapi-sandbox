@@ -1,0 +1,52 @@
+.conf-start{
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/assets/images/reno_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+
+.conf-start-logo{
+    width: 250px;
+}
+
+.conf-start-title{
+    h1,h3{
+        color: white;
+        text-align: center;
+        padding:0;
+        margin:0;
+    }
+    
+}
+
+.conf-start-button{
+    display:block;
+    margin: 8px;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    text-align:center;
+    padding: 1em;
+    text-decoration: none;
+    width: 66vw;
+    border: 6px #1f1867 solid;
+    color: #1f1867;
+    &:hover{
+        background-color:rgb(238, 234, 250);
+       
+    }
+    &:visited{
+        color: #1f1867;
+    }
+
+
+}
+
+@media(max-width: 600px){
+    .conf-start-button{
+        font-size: 16px;
+    }
+}

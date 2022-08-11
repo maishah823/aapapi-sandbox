@@ -1,0 +1,50 @@
+<div *ngIf="invoice" class="invoice-display">
+  <h3 class="invoice-number">Invoice #{{invoice.invoiceNumber}}</h3>
+  <div layout layout-xs="column" layout-margin>
+      <div flex="nogrow" class="invoice-amount">{{invoice.amount | currency}}</div>
+      <div flex class="invoice-paid" [ngClass]="{'invoice-unpaid':!invoice.paid}">{{invoice.paid ? 'PAID' : 'UNPAID'}}</div>
+  </div>
+  <div layout layout-xs="column" layout-margin>
+    <div flex="nogrow">{{invoice.type}}</div>
+    <div flex>{{invoice.memo}}</div>
+  </div>
+  <div layout layout-xs="column" layout-margin *ngIf="invoice.payment" layout-align="start start">
+    <div flex="nogrow"><h4>PAID BY</h4></div>
+    <div flex layout-xs="column">
+      <div flex layout layout-xs="column">
+          <div flex>{{invoice.payment.firstName}} {{invoice.payment.lastName}}</div>
+          <div flex>{{invoice.payment.email}}</div>
+      </div>
+      <div flex layout="column">
+          <div flex>{{invoice.payment.address.street1}}</div>
+          <div flex *ngIf="invoice.payment.address.street2">{{invoice.payment.address.street2}}</div>
+      </div>
+      <div flex layout layout-wrap class="has-space-after">
+          <div flex="nogrow">{{invoice.payment.address.city}}, </div>
+          <div flex="nogrow">{{invoice.payment.address.state}} </div>
+          <div flex="nogrow">{{invoice.payment.address.zip}} </div>
+          <div flex="nogrow">{{invoice.payment.address.country}}</div>
+      </div>
+      
+    </div>
+  </div>
+  <div layout layout-margin layout-wrap *ngIf="invoice.couponCode">
+    <div flex *ngIf="invoice.couponCode.code">Coupon: {{invoice.couponCode.code}}</div>
+    <div flex *ngIf="invoice.couponCode.discount > 0"> Discount: {{invoice.couponCode.discount | currency}}</div>
+    <div flex *ngIf="invoice.couponCode.type">Coupon Type: {{invoice.couponCode.type}}</div>
+  </div>
+  <div layout layout-xs="column" layout-margin layout-wrap>
+      <div flex>Invoice created: {{invoice.created_at | date:'MM/dd/yyyy hh:mm a'}}</div>
+      <ng-container *ngIf="invoice.payment">
+      <div flex>Paid on: {{invoice.payment.created_at | date:'MM/dd/yyyy hh:mm a'}}</div>
+      <div flex *ngIf="invoice.payment.transaction">Stripe Trans#: {{invoice.payment.transaction}}</div>
+      <div flex *ngIf="invoice.payment.manualBy">Manually entered by: {{invoice.payment.manualBy.fullname}}</div>
+      </ng-container>
+
+  </div>
+  <div layout layout-margin layout-align="end end" layout-wrap>
+    <button mat-button color="primary" (click)="printInvoice()">Download/Print Invoice</button>
+    <button mat-button color="primary" (click)="resendInvoice()">Re-send Email</button>
+  </div>
+</div>
+

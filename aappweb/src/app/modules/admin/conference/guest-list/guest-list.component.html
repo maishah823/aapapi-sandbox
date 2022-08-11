@@ -1,0 +1,8 @@
+<div *ngFor="let guestlist of guestlists" class="guestlist">
+  <h2>{{guestlist._id || 'All Events'}}</h2>
+  <div layout="row" layout-wrap layout-margin layout-align="center center">
+    <div flex="20" flex-md="25" flex-sm="30" flex-xs="40" *ngFor="let guest of guestlist.guests" class="guest-name">
+      {{guest.name}}
+    </div>
+  </div>
+</div>

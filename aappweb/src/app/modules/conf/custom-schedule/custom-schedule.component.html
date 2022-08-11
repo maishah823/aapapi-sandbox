@@ -1,0 +1,36 @@
+<div class="top-links">
+        <a routerLink="/web/conf/news">News</a> |
+        <a routerLink="/web/conf/schedule">Master Schedule</a> |
+        <a routerLink="/web/conf/info">Info</a>
+    </div>
+<div class="conf-line-schedule">
+    <h2>My Schedule</h2>
+    <div *ngIf="events.length > 0 && !devices.isMobile()" style="font-size:1.2em"><button mat-button (click)="downloadPdf()"><mat-icon>print</mat-icon> Download Custom Schedule</button></div>
+    <ng-container *ngIf="events.length > 0;else nodata">
+    <div *ngFor="let day of events">
+        <mat-divider></mat-divider>
+        <h3 class="day-heading">{{day._id.displayDate}}</h3>
+        <mat-divider></mat-divider>
+        <div *ngFor="let event of day.events | eventLineSort" class="event-entry">
+            <div layout layout-xs="column" layout-margin layout-align="center center">
+                <div flex="nogrow" class="times" [routerLink]="['/web/conf/schedule',event._id]">
+                     <span> {{event.displayStartTime}} - {{event.displayEndTime}}</span>
+                </div>
+                <div flex class="details" [routerLink]="['/web/conf/schedule',event._id]">
+                    <div layout layout-xs="column" layout-margin layout-align="center center" layout-wrap>
+                        <app-event-line class="event-name" flex [value]="event.name" label="Event"></app-event-line>
+                        <app-event-line flex [value]="event.room" label="Room"></app-event-line>
+                        <app-event-line flex [value]="event.instructors" label="Speaker(s)"></app-event-line>
+                        <app-event-line flex [value]="event.topics" label="Topic(s)"></app-event-line>
+                    </div>
+                </div>
+                <div flex="nogrow"><button mat-icon-button (click)="delete(event)"><mat-icon>delete</mat-icon></button></div>
+            </div>
+        </div>
+
+    </div>
+    </ng-container>
+    <ng-template #nodata>
+      <p>You haven't picked any classes to populate your custom schedule. Visit the <a routerLink="/web/conf/schedule">Master Schedule</a>, click on a class, and click on "Add to Custom Schedule" in the top right corner.</p>
+    </ng-template>
+</div>

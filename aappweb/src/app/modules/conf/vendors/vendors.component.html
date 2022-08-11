@@ -1,0 +1,15 @@
+<div class="top-links">
+    <a routerLink="/web/conf/news">News</a> |
+    <a routerLink="/web/conf/custom-schedule">My Schedule</a> |
+    <a routerLink="/web/conf/schedule">Master Schedule</a> |
+    <a routerLink="/web/conf/info">Info</a>
+</div>
+<div>
+    <mat-card class="vendors-card">
+      <h1>Vendors</h1>
+      <h3 class="vendors-subtitle">{{makeSubtitle()}}</h3>
+        <ul class="vendor-list">
+          <li *ngFor="let vendor of vendors">{{vendor}}</li>
+        </ul>
+    </mat-card>
+    </div>

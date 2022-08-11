@@ -1,0 +1,19 @@
+<div>
+  <div class="login-background" (click)="clickedOutside()" [@fade]></div>
+  <div class="login-container" [@slideDown]>
+    <form [formGroup]="form" novalidate (ngSubmit)="login()">
+      <div layout="column">
+        <mat-form-field flex tabindex="1">
+          <input formControlName="email" matInput placeholder="Email"/>
+        </mat-form-field>
+        <mat-form-field flex  tabindex="2">
+          <input type="password" matInput formControlName="password" placeholder="Password" />
+        </mat-form-field>
+        <button mat-flat-button [disabled]="!form.valid" tabindex="-1">Login</button>
+        <div class="login-links">
+          <a routerLink="/web/join-advert" (click)="close()">Sign Up</a> | <a routerLink="/web/public/forgot" (click)="close()">Reset Password</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

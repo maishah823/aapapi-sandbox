@@ -1,0 +1,50 @@
+<div class="financial-layout-container">
+    <td-layout-manage-list [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+            [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '300px' : '100%'">
+            <mat-toolbar td-sidenav-content color="accent">
+                <h5 class="financial-toolbar-title">Admin</h5>
+            </mat-toolbar>
+            <div td-sidenav-content>
+               <mat-nav-list [tdLayoutManageListClose]="!media.query('gt-sm')">
+                    <mat-list-item routerLink="stats" routerLinkActive="selected">
+                            <mat-icon mat-list-icon>date_range</mat-icon> 
+                          <a mat-line >Y2D</a>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                  <mat-list-item routerLink="invoices" routerLinkActive="selected">
+                      <mat-icon mat-list-icon>pages</mat-icon> 
+                    <a mat-line >Invoices</a>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item routerLink="cust-invoices" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>supervisor_account
+                            </mat-icon> 
+                      <a mat-line >Invoices by User</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                  <mat-list-item routerLink="conf-revenue" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>insert_chart</mat-icon> 
+                      <a mat-line >Conf Revenue</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item routerLink="reminders" routerLinkActive="selected">
+                        <mat-icon mat-list-icon>alarm</mat-icon> 
+                      <a mat-line >Reminders</a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                 
+               </mat-nav-list>     
+            </div>
+            <mat-toolbar color="accent">
+                <div layout="row" layout-align="start center" flex>
+                    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+                            <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <mat-icon>attach_money</mat-icon> 
+                    <h5 class="financial-toolbar-title">Financial</h5>
+                    <span flex></span>
+            </div>  
+            </mat-toolbar>
+            <router-outlet></router-outlet>
+    </td-layout-manage-list>
+</div>

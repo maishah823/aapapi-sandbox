@@ -1,0 +1,72 @@
+<div class="base-layout">
+    <form [formGroup]="searchForm" novalidate>
+    <div layout layout-align="center center">
+       
+        <mat-form-field flex="nogrow">
+        
+        <mat-select formControlName="conf" placeholder="Choose Seminar" (selectionChange)="conferenceChanged()">
+            <mat-option *ngFor="let conference of conferences; let i = index" [value]="conference._id">{{conference.name}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+       
+  </div>
+</form>
+  <mat-card class="card-padded">
+    <h1>General Satisfaction</h1>
+    <div *ngFor="let record of generalRatings">
+      <h3 class="submissions">{{record.votes}} Total Submissions</h3>
+      <div class="rating-box" layout layout-xs="column" layout-margin>
+        <div flex> Organization of class times and content:</div>
+        <div flex></div>
+        <div flex="nogrow"> {{record.organization | number:'1.1-2'}} / 10</div>
+      </div>
+      <div class="rating-box" layout layout-xs="column" layout-margin>
+        <div flex> Relevance of topics:</div>
+        <div flex></div>
+        <div flex="nogrow"> {{record.relevance | number:'1.1-2'}} / 10</div>
+      </div>
+      <div class="rating-box" layout layout-xs="column" layout-margin>
+        <div flex> Topics addressed polygraph issues:</div>
+        <div flex></div>
+        <div flex="nogrow"> {{record.issues | number:'1.1-2'}} / 10</div>
+      </div>
+      <div class="rating-box" layout layout-xs="column" layout-margin>
+        <div flex>Hotel accomodations:</div>
+        <div flex></div>
+        <div flex="nogrow"> {{record.hotel | number:'1.1-2'}} / 10</div>
+      </div>
+      <div class="rating-box" layout layout-xs="column" layout-margin>
+        <div flex> Seminar location:</div>
+        <div flex></div>
+        <div flex="nogrow"> {{record.location | number:'1.1-2'}} / 10</div>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="card-padded">
+    <h1>Course Ratings</h1>
+    <h3 class="submissions">(Click Class/Event to View Comments)</h3>
+    <div *ngFor="let rating of classRatings; let i = index" layout layout-xs="column" layout-margin class="rating-box" (click)="showComments(rating._id._id, rating._id.type, rating.comments)" [ngClass]="{'has-comments':rating.comments > 0}">
+      <div flex="nogrow">
+        {{i+1}}. {{rating._id.name}}
+      </div>
+      <div flex="nogrow"><span class="meta">({{rating.votes}} {{rating.votes == 1 ? 'rating' : 'ratings'}}) ({{rating.comments || 0}} {{rating.comments == 1 ? 'comment' : 'comments'}})</span></div>
+      <div flex></div>
+      <div flex="nogrow">
+        {{rating.rating | number:'1.1-2'}} / 10
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="card-padded">
+    <h1>General Comments</h1>
+    <ul>
+      <li *ngFor="let record of comments">
+        <span class="name">{{record.user?.fullname}}</span>: <span class="comment">{{record.comments}}</span>
+      </li>
+    </ul>
+    <div class="attendees-pagination">
+      <mat-paginator class="attendees-paginator" [pageIndex]="page - 1" [length]="total" [pageSize]="limit"
+        [pageSizeOptions]="[10, 20, 50, 100]" (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+    </mat-card>
+</div>

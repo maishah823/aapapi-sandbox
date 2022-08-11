@@ -1,0 +1,34 @@
+<div layout layout-align="end end">
+  <div class="event-add-container" flex="nogrow">
+      <button mat-raised-button color="secondary" flex="nogrow" (click)="addEvent()"><mat-icon>add</mat-icon> Add Event</button>
+  </div>
+</div>
+
+
+<div class="line-schedule">
+  <h2>Event Schedule</h2>
+  <div *ngFor="let day of events">
+      <h3 class="day-heading">{{day._id.displayDate}}</h3>
+      <div *ngFor="let event of day.events | eventLineSort" class="event-entry">
+          <div layout layout-xs="column" layout-margin layout-align="center center">
+              <div flex="nogrow" class="times">
+                  <button mat-icon-button (click)="addEvent(event)">
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button class="delete-button" mat-icon-button (click)="deleteEvent(event)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                  <span> {{event.displayStartTime}} - {{event.displayEndTime}}</span>
+              </div>
+              <div flex class="details">
+                  <div layout layout-xs="column" layout-margin layout-align="center center" layout-wrap>
+                      <app-event-line flex [value]="event.name" label="Event"></app-event-line>
+                      <app-event-line flex [value]="event.room" label="Location"></app-event-line>
+                      <app-event-line flex [value]="event.cost | currency" label="Cost"></app-event-line>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>

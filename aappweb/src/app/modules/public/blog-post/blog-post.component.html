@@ -1,0 +1,27 @@
+<div class="base-layout">
+    <div *ngIf="post; else loading" class="blog-post">
+      <div layout="column" layout-gt-xs="column">
+        <!-- <div flex flex-order="1" flex-order-gt-xs="2" class="picture">
+            <div layout layout-align="center center">
+                <img flex="nogrow" class="blog-img" [src]="sanitizer.bypassSecurityTrustResourceUrl(imagePath + '/' + post.coverImg)"/>
+                </div>
+        </div> -->
+        <div flex flex-order="2" flex-order-gt-xs="1" class="content">
+            <h1 class="blog-title">{{post.title}}</h1>
+            <h4 class="blog-subtitle">{{post.created_by?.fullname}} - {{post.created_at | date}}</h4>
+            <div class="blog-content" [froalaView]="post.body"></div>
+        </div>
+      </div>
+   
+    
+    </div>
+    <ng-template #loading>
+      <div>... LOADING ...</div>
+    </ng-template>
+    <div *ngIf="isAdmin && post" class="editing-mode">
+      <button mat-flat-button [routerLink]="['/web/admin/edit-post',post._id]">Edit Post</button>
+    </div>
+    <div class="back-button">
+      <button mat-mini-fab color="warn" (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+    </div>
+  </div>
